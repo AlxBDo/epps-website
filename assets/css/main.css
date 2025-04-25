@@ -1,0 +1,90 @@
+@import "tailwindcss";
+@import "@nuxt/ui";
+
+
+body {
+  margin: 0 auto;
+  max-width: 800px;
+}
+
+body, html {
+  background-color: var(--color-slate-100);
+  color: var(--color-slate-900);
+  padding: 10px;
+
+  @variant dark {
+    background-color: var(--color-slate-900);
+    color: var(--color-slate-100);
+  }
+}
+
+h2 {
+	font-size: x-large;
+}
+
+h2, h3{
+	font-weight: bold;
+}
+
+h2, h3, h4 {
+  margin-top: 25px;
+  margin-bottom: 10px;
+}
+
+h3 {
+	width: 100%;
+	border-bottom-width: 2px;
+}
+
+h3, h4 {
+	border-bottom-style: solid;
+  padding: 3px;
+  margin-top: 25px;
+  margin-bottom: 10px;
+}
+
+h4 {
+	border-bottom-width: 1px;
+	font-weight: 600;
+	padding-right: 15px;
+}
+
+header {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+main {
+    &> div {
+        margin: 10px auto;
+        padding: 5px;
+        &> div {
+            margin: 10px auto;
+            padding: 5px;
+            p {
+                margin: 5px 0;
+            }
+        }
+    }
+}
+
+.code {
+  background-color: var(--color-slate-300);
+
+  @variant dark {
+    background-color: var(--color-slate-900);
+  }
+}
+
+code {
+  font-size: small;
+  
+  &> div {
+    margin: 0;
+    
+    div {
+      margin-left: 15px;
+    }
+  }
+}
