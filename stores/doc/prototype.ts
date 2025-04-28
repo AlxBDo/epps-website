@@ -46,7 +46,7 @@ function symbolsObject(start: string, end?: string) {
 }
 
 
-export const usePrototypeStore = defineStore('prototypeStore', () => {
+export const usePrototypeStore = (id: string) => defineStore(`${id}PrototypeStore`, () => {
     const codeSlots = ref<string[]>()
     const declarationSymbols = ref<SymbolsObject>()
     const propsString = ref<string>('')
@@ -136,6 +136,7 @@ export const usePrototypeStore = defineStore('prototypeStore', () => {
 
     function initDeclaration({ properties, props, requiredTypes, returnType, type, value }: InitDeclarationProps): void {
         codeSlots.value = ['typeScript']
+        typesToSee.value = []
 
         addTypesToSeeFromParameters(properties)
         addTypesToSeeFromParameters(props)
@@ -226,4 +227,4 @@ export const usePrototypeStore = defineStore('prototypeStore', () => {
         returnTypeFormatted,
         typesToSee
     }
-})
+})()

@@ -2,7 +2,7 @@
 import { ref } from 'vue'
 import { useListsStore } from '~/stores/demo/lists'
 
-import MethodDemoForm from '../../../shared/form/MethodDemoForm.vue'
+import MethodDemoForm from '../../../common/form/MethodDemoForm.vue'
 
 import type { CollectionState, CollectionStoreMethods, EppsStore } from 'epps'
 import type { List } from '../../../../models/liste'

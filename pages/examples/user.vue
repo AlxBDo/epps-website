@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { log } from '../../utils/log'
-import Page from '~/components/shared/Page.vue'
+import Page from '~/components/common/Page.vue'
 import { useConnectedUserStore } from '../../stores/demo/connectedUser'
 import { user as definition } from '~/utils/pages/resumes'
 

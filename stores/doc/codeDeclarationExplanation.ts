@@ -13,155 +13,157 @@ interface Prototype extends CodeDeclarationPrototype {
     value?: string
 }
 
-export const useCodeDeclarationExplanationStore = defineStore('codeDeclarationExplanantionStore', () => {
-    const description = ref<string>('')
-    const name = ref<string>('')
-    const props = ref<string>('')
-    const propsExplanation = ref<Record<string, string>>({})
-    const requiredTypes = ref<string>('')
-    const returnType = ref<string>('')
-    const type = ref<CodeDeclarationTypes>()
-    const typesToSee: Ref<string[]> = ref([])
-    const value = ref<string>('')
+export const useCodeDeclarationExplanationStore = (id: string) => defineStore(
+    `${id}CodeDeclarationExplanantionStore`,
+    () => {
+        const description = ref<string>('')
+        const name = ref<string>('')
+        const props = ref<string>('')
+        const propsExplanation = ref<ParameterPrototype[]>([])
+        const requiredTypes = ref<string>('')
+        const returnType = ref<string>('')
+        const type = ref<CodeDeclarationTypes>()
+        const typesToSee: Ref<string[]> = ref([])
+        const value = ref<string>('')
 
 
-    function addTypesToSee(type: string): string {
-        const types = extractTypesFromString(type)
+        function addTypesToSee(type: string): string {
+            const types = extractTypesFromString(type)
 
-        if (!isEmpty(types)) {
-            types.forEach(type => !typesToSee.value.includes(type) && typesToSee.value.push(type))
-        }
-
-        return type
-    }
-
-    function addTypesToSeeFromParameters(params?: ParameterPrototype[]): void {
-        if (!isEmpty(params)) {
-            params?.forEach((param: ParameterPrototype) => addTypesToSee(param.type))
-        }
-    }
-
-    function cleanTypesToSee(types: string[]): string[] {
-        return types.reduce((acc: string[], type: string) => {
-            if (type.indexOf('<') >= 0) {
-                type = type.split('<')[0]
+            if (!isEmpty(types)) {
+                types.forEach(type => !typesToSee.value.includes(type) && typesToSee.value.push(type))
             }
 
-            if (type.indexOf('[') >= 0) {
-                type = type.replace('[]', '')
-            }
-
-            type = type.trim()
-
-            if ((pages.doc as AnyObject).types[firstCharToLowerCase(type)]) {
-                acc.push(type)
-            }
-
-            return acc
-        }, [])
-    }
-
-    function createParameterExplanation(parameter: ParameterPrototype): void {
-        if (parameter.description) {
-            propsExplanation.value[parameter.name] = parameter.description
+            return type
         }
-    }
 
-    function extractTypesFromString(str: string): string[] {
-        let types: string[] = []
-
-        if (!isEmpty(str)) {
-            if (str.indexOf('|') >= 0 || str.indexOf('&') >= 0) {
-                types = str.split(/[|&]/)
-            } else {
-                types.push(str)
+        function addTypesToSeeFromParameters(params?: ParameterPrototype[]): void {
+            if (!isEmpty(params)) {
+                params?.forEach((param: ParameterPrototype) => addTypesToSee(param.type))
             }
         }
 
-        return cleanTypesToSee(types)
-    }
-
-    function hasPropsExplanation(): boolean {
-        return !isEmpty(propsExplanation.value)
-    }
-
-    function hasTypesToSee(): boolean {
-        return typesToSee.value.length > 0
-    }
-
-    function initDeclaration(prototype: Prototype): void {
-        addTypesToSeeFromParameters(prototype.properties)
-        initProps(prototype.props)
-        initRequiredType(prototype.requiredTypes)
-
-        if (prototype.returnType) { addTypesToSee(prototype.returnType) }
-        if (prototype.value) { addTypesToSee(prototype.value) }
-    }
-
-    function initProps(declarationProps?: ParameterPrototype[]): void {
-        if (declarationProps && !isEmpty(declarationProps)) {
-            const declarationPropsLength = declarationProps.length
-            const rtn = declarationPropsLength > 1 ? '\r\n' : ''
-            let index = 0
-
-            props.value = declarationProps.reduce((acc: string, curr: ParameterPrototype) => {
-                if (acc.length > 0) {
-                    acc += ', ' + rtn + '   '
-                } else if (declarationPropsLength > 1) {
-                    acc += rtn + '   '
+        function cleanTypesToSee(types: string[]): string[] {
+            return types.reduce((acc: string[], type: string) => {
+                if (type.indexOf('<') >= 0) {
+                    type = type.split('<')[0]
                 }
 
-                acc += `${curr.name}: ${curr.type}`
+                if (type.indexOf('[') >= 0) {
+                    type = type.replace('[]', '')
+                }
 
-                addTypesToSee(curr.type)
-                createParameterExplanation(curr)
-                index++
+                type = type.trim()
 
-                if (declarationPropsLength === index) {
-                    acc += rtn
+                if ((pages.doc as AnyObject).types[firstCharToLowerCase(type)]) {
+                    acc.push(type)
                 }
 
                 return acc
-            }, '')
+            }, [])
         }
-    }
 
-    function initRequiredType(declarationRequiredTypes?: TypeRequired[]) {
-        if (declarationRequiredTypes) {
-            requiredTypes.value = declarationRequiredTypes.reduce((acc: string, curr: TypeRequired) => {
-                if (acc.length > 0) { acc += ', ' }
-
-                acc += curr.name
-                addTypesToSee(curr.name)
-
-                return acc
-            }, '')
+        function createParameterExplanation(parameter: ParameterPrototype): void {
+            if (parameter.description) {
+                propsExplanation.value.push(parameter)
+            }
         }
-    }
 
-    function propsToString(): Ref<string> {
-        return props
-    }
+        function extractTypesFromString(str: string): string[] {
+            let types: string[] = []
 
-    function requiredTypesToString(): Ref<string> {
-        return requiredTypes
-    }
+            if (!isEmpty(str)) {
+                if (str.indexOf('|') >= 0 || str.indexOf('&') >= 0) {
+                    types = str.split(/[|&]/)
+                } else {
+                    types.push(str)
+                }
+            }
 
-    function returnTypeFormatted(returnType?: FunctionReturn) {
-        if (!returnType) return ''
+            return cleanTypesToSee(types)
+        }
 
-        return `: ${returnType}`
-    }
+        function hasPropsExplanation(): boolean {
+            return !isEmpty(propsExplanation.value)
+        }
+
+        function hasTypesToSee(): boolean {
+            return typesToSee.value.length > 0
+        }
+
+        function initDeclaration(prototype: Prototype): void {
+            addTypesToSeeFromParameters(prototype.properties)
+            initProps(prototype.props)
+            initRequiredType(prototype.requiredTypes)
+
+            if (prototype.returnType) { addTypesToSee(prototype.returnType) }
+            if (prototype.value) { addTypesToSee(prototype.value) }
+        }
+
+        function initProps(declarationProps?: ParameterPrototype[]): void {
+            if (declarationProps && !isEmpty(declarationProps)) {
+                const declarationPropsLength = declarationProps.length
+                const rtn = declarationPropsLength > 1 ? '\r\n' : ''
+                let index = 0
+
+                props.value = declarationProps.reduce((acc: string, curr: ParameterPrototype) => {
+                    if (acc.length > 0) {
+                        acc += ', ' + rtn + '   '
+                    } else if (declarationPropsLength > 1) {
+                        acc += rtn + '   '
+                    }
+
+                    acc += `${curr.name}: ${curr.type}`
+
+                    addTypesToSee(curr.type)
+                    createParameterExplanation(curr)
+                    index++
+
+                    if (declarationPropsLength === index) {
+                        acc += rtn
+                    }
+
+                    return acc
+                }, '')
+            }
+        }
+
+        function initRequiredType(declarationRequiredTypes?: TypeRequired[]) {
+            if (declarationRequiredTypes) {
+                requiredTypes.value = declarationRequiredTypes.reduce((acc: string, curr: TypeRequired) => {
+                    if (acc.length > 0) { acc += ', ' }
+
+                    acc += curr.name
+                    addTypesToSee(curr.name)
+
+                    return acc
+                }, '')
+            }
+        }
+
+        function propsToString(): Ref<string> {
+            return props
+        }
+
+        function requiredTypesToString(): Ref<string> {
+            return requiredTypes
+        }
+
+        function returnTypeFormatted(returnType?: FunctionReturn) {
+            if (!returnType) return ''
+
+            return `: ${returnType}`
+        }
 
 
-    return {
-        hasPropsExplanation,
-        hasTypesToSee,
-        initDeclaration,
-        propsExplanation,
-        propsToString,
-        requiredTypesToString,
-        returnTypeFormatted,
-        typesToSee
-    }
-})
+        return {
+            hasPropsExplanation,
+            hasTypesToSee,
+            initDeclaration,
+            propsExplanation,
+            propsToString,
+            requiredTypesToString,
+            returnTypeFormatted,
+            typesToSee
+        }
+    })()

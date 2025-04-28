@@ -1,5 +1,5 @@
 import { defineEppsStore as defineEppsStoreComponent } from "~/utils/components/resumes"
-import defineEppsStoreDefinition from "~/datas/components/defineEppsStore"
+import defineEppsStoreDefinition from "~/data/components/defineEppsStore"
 import { defineEppsStore as defineEppsStorePath } from "../paths";
 
 

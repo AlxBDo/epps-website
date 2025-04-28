@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import Page from '~/components/shared/Page.vue'
-import { home as definition } from '~/utils/pages/resumes'
+import { home as definition, install, usage } from '~/utils/pages/resumes'
+
+import Page from '~/components/common/Page.vue'
 
 const appName = useRuntimeConfig().public.appName
 </script>
@@ -8,34 +9,86 @@ const appName = useRuntimeConfig().public.appName
 <template>
     <Page :definition :display-title="false">
         <div>
+            <h2>What is it ?</h2>
             <p>
-                {{ appName }} is a Pinia plugin. Is an acronym for "Extends and Perist Pinia Store".
+                <b>{{ appName }} is</b> an acronym for <b>"Extends and Perist Pinia Store"</b>.
+                It's a plugin designed for <b>Pinia</b>, the state management library for <b>Vue.js</b>
+                and <b>Nuxt.js</b>.
             </p>
 
             <p>
-                By using it, you can create more powerful and flexible Pinia stores while
-                simplifying state and action management in your Vue.js or Nuxt application, and ensuring the security
-                of your persisted data.
-            </p>
-        </div>
-
-
-        <div>
-            <h2>Store Extension</h2>
-            <p>
-                The plugin allows you to extend existing stores by adding additional actions and states.
-                This facilitates code reuse and dependency management between stores.
+                It offers two core functionalities: <b>Store Extension</b> and <b>State Persistence</b>, making
+                your state management more efficient and flexible.
             </p>
         </div>
 
         <div>
-            <h2>State Persistence and Encryption</h2>
-            <p>
-                The plugin provides persistence and encryption for state properties in the browser.
-                This functionality ensures that critical data stored in the browser is secure.
-                However, the data remains readable within the store as it is decrypted when retrieved
-                from LocalStorage or IndexedDB.
-            </p>
+            <h2>Getting started</h2>
+            <div class="flex justify-between max-w-80 m-auto mt-8">
+                <UButton class="font-bold rounded-full" icon="mdi:console-line" :to="install.path" variant="outline">
+                    {{ install.title }}
+                </UButton>
+                <UButton class="font-bold rounded-full" icon="mdi:code" :to="usage.path">
+                    {{ usage.title }}
+                </UButton>
+            </div>
+        </div>
+
+        <div>
+            <h2>Key features</h2>
+            <div class="flex justify-between align-top">
+                <article class="w-2/5">
+                    <h3>Store Extension</h3>
+                    <ul>
+                        <li>
+                            <span>Inheritance-Based Design:</span> Child stores automatically inherit all methods and
+                            state from their parent stores.
+                        </li>
+                        <li>
+                            <span>Method Extension:</span> Easily extend parent methods in child stores, ensuring
+                            that parent methods are executed after the child methods.
+                        </li>
+                    </ul>
+                    <p>
+                        This facilitates code reuse and dependency management between stores.
+                    </p>
+                </article>
+                <article class="w-2/5">
+                    <h3>State Persistence</h3>
+                    <ul>
+                        <li>
+                            <span>Flexible Storage Options:</span> Choose between localStorage and IndexedDB to persist
+                            your store's state.
+                        </li>
+                        <li>
+                            <span>Selective Persistence:</span> Exclude specific properties from being persisted.
+                        </li>
+                        <li>
+                            <span>Data Encryption:</span> Encrypt sensitive properties to ensure data security.
+                        </li>
+                    </ul>
+                </article>
+            </div>
         </div>
     </Page>
 </template>
+
+<style scoped>
+article li span,
+h2 {
+    color: var(--color-yellow-400);
+}
+
+h3 {
+    color: var(--color-success-400)
+}
+
+li {
+    font-size: small;
+    margin-bottom: 10px;
+
+    span {
+        font-weight: bold;
+    }
+}
+</style>

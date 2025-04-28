@@ -3,9 +3,9 @@ import { capitalize } from 'vue'
 import { error as errorPageDefinition, pages } from '~/utils/pages/resumes'
 import { isEmpty } from '~/utils/validation'
 
-import Page from '~/components/shared/Page.vue'
+import Page from '~/components/common/Page.vue'
 import PageLink from '~/components/pages/PageLink.vue'
-import DynamicPage from '~/components/doc/shared/Page.vue'
+import DynamicPage from '~/components/doc/common/Page.vue'
 
 import type { AnyObject } from '~/types'
 import type { PageDefinitionTypes, PageResume } from '~/types/pages'

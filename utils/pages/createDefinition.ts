@@ -7,7 +7,7 @@ import type { PageDefinitionTypes } from '~/types/pages'
 export async function createDefinition(definitionType: PageDefinitionTypes, definitionName: string) {
     try {
         const prototype = await dynamicImport(
-            `../datas/${definitionType}/${definitionName}.ts`
+            `../data/${definitionType}/${definitionName}.ts`
         ) as FunctionPrototype | InterfacePrototype
 
         const components = [] as ComponentResume[]

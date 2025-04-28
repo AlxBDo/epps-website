@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { configurePlugin } from '~/utils/components/resumes'
 
-import ExplanationContainer from '~/components/shared/ExplanationContainer.vue'
-import Links from '../shared/Links.vue'
+import ExplanationContainer from '~/components/common/ExplanationContainer.vue'
+import Links from '../common/Links.vue'
 
 
 const { id, title } = configurePlugin

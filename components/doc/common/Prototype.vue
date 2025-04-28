@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import type { PropType } from 'vue';
 import { usePrototypeStore } from '~/stores/doc/prototype';
-import ExplanationContainer from '../../shared/ExplanationContainer.vue';
+import ExplanationContainer from '../../common/ExplanationContainer.vue';
 import type { CodeDeclarationTypes, FunctionReturn, ParameterPrototype, TypeRequired } from '~/types/components'
 
 
-const compenentProps = defineProps({
+const componentProps = defineProps({
     name: {
         type: String,
         required: true,
@@ -40,8 +40,8 @@ const compenentProps = defineProps({
 })
 
 
-const store = usePrototypeStore()
-store.initDeclaration(compenentProps)
+const store = usePrototypeStore(componentProps.name)
+store.initDeclaration(componentProps)
 
 const {
     codeSlots,
@@ -111,14 +111,6 @@ onUnmounted(() => store.$reset())
 
                 {{ `${getEndSymbol()}` }}
             </div>
-        </template>
-
-        <template v-if="hasTypesToSee()" #toSee>
-            <ul>
-                <li v-for="typeToSee in typesToSee">
-                    <ULink :to="`/doc/types/${typeToSee}`">{{ typeToSee }}</ULink>
-                </li>
-            </ul>
         </template>
     </ExplanationContainer>
 </template>

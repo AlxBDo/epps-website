@@ -1,13 +1,14 @@
+import { createDefinition } from "./createDefinition"
 import { createPageResume } from "~/utils/create-resume"
 import type { PageResume, PagesResumes } from "~/types/pages"
 
-import defineEppsStoreDefinition from "~/datas/pages/docs/defineEppsStore"
-import extendedStateDefinition from "~/datas/pages/docs/extendedState"
-import homeDefinition from "~/datas/pages/home"
-import installationDefinition from "~/datas/pages/docs/installation"
-import useListsStoreDefinition from "~/datas/pages/examples/useListsStore"
-import useUserStoreDefinition from "~/datas/pages/examples/useUserStore"
-import { createDefinition } from "./createDefinition"
+import defineEppsStoreDefinition from "~/data/pages/docs/defineEppsStore"
+import extendedStateDefinition from "~/data/pages/docs/extendedState"
+import homeDefinition from "~/data/pages/home"
+import installationDefinition from "~/data/pages/docs/installation"
+import usageDefinition from "~/data/pages/docs/usage"
+import useListsStoreDefinition from "~/data/pages/examples/useListsStore"
+import useUserStoreDefinition from "~/data/pages/examples/useUserStore"
 
 export const error = createPageResume({ components: [], description: 'Something is wrong', id: 'error', path: 'error', title: 'Oups!' })
 export const home = createPageResume(homeDefinition)
@@ -18,6 +19,7 @@ export const home = createPageResume(homeDefinition)
  */
 
 export const install = createPageResume(installationDefinition)
+export const usage = createPageResume(usageDefinition)
 
 // Funtions
 export const createPlugin = await createDefinition('functions', 'createPlugin')
@@ -45,6 +47,7 @@ export const pages: PagesResumes = {
 
     doc: {
         install,
+        usage,
 
         functions: {
             createPlugin,

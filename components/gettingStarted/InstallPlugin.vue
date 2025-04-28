@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { installPlugin } from '~/utils/components/resumes'
 
-import ExplanationContainer from '~/components/shared/ExplanationContainer.vue'
+import ExplanationContainer from '~/components/common/ExplanationContainer.vue'
 
 
 const { id, title } = installPlugin

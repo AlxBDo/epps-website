@@ -1,5 +1,5 @@
 import { listsStoreCreation, useListsStore } from "~/utils/components/resumes";
-import { id as useListsStoreId } from '~/datas/stores/useListsStore'
+import { id as useListsStoreId } from '~/data/stores/useListsStore'
 import { lists as listsPath } from "../paths"
 
 

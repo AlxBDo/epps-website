@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-import Form from './Form.vue';
-import DisplayResult from '../../examples/displayResult/DisplayResult.vue';
+import { ref } from 'vue'
+
+import DisplayResult from '~/components/examples/common/displayResult/DisplayResult.vue'
+import Form from './Form.vue'
 
 const props = defineProps({
     cancelBtn: { type: [Boolean, String], default: false },

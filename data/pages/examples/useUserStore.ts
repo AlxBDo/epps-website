@@ -1,4 +1,4 @@
-import { id as useUserStoreId } from '~/datas/stores/useUserStore'
+import { id as useUserStoreId } from '~/data/stores/useUserStore'
 import { user } from "../paths"
 import { userStoreCreation, useUserStore } from "~/utils/components/resumes";
 

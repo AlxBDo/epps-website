@@ -2,7 +2,7 @@
 import { listsStoreCreation } from '~/utils/components/resumes'
 
 import Alert from '~/components/dependencies/Alert.vue';
-import ExplanationContainer from '~/components/shared/ExplanationContainer.vue';
+import ExplanationContainer from '~/components/common/ExplanationContainer.vue';
 
 
 const { id, title } = listsStoreCreation

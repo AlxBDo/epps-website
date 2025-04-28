@@ -2,7 +2,7 @@
 import { ref } from 'vue'
 import { useListsStore } from '~/stores/demo/lists'
 
-import DisplayResult from '~/components/examples/displayResult/DisplayResult.vue'
+import DisplayResult from '~/components/examples/common/displayResult/DisplayResult.vue'
 
 import type { CollectionState, CollectionStoreMethods, EppsStore } from 'epps'
 import type { List } from '~/models/liste'

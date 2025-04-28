@@ -1,5 +1,5 @@
 import { extendedState as extendedStateComponent } from "~/utils/components/resumes"
-import extendedStateDefinition from "~/datas/components/extendedState"
+import extendedStateDefinition from "~/data/components/extendedState"
 import { extendedState as extendedStatePath } from "../paths";
 
 

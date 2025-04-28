@@ -2,7 +2,7 @@
 import { createDefinition } from '~/utils/pages/createDefinition'
 
 import CodeDeclarationExplanation from './CodeDeclarationExplanation.vue'
-import Page from '~/components/shared/Page.vue'
+import Page from '~/components/common/Page.vue'
 
 import type { PageDefinitionTypes, PageResume } from '~/types/pages'
 import type { FunctionPrototype, InterfacePrototype } from '~/types/components'

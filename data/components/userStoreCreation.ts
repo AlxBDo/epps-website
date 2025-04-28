@@ -1,5 +1,5 @@
 import type { ComponentResume } from "~/types/components"
-import { id as storeId, name, title as storeTitle } from '~/datas/stores/useUserStore'
+import { id as storeId, name, title as storeTitle } from '~/data/stores/useUserStore'
 import { storeCreationDescription, storeCreationTitle } from "~/utils/create-resume"
 
 const definition: ComponentResume = {
