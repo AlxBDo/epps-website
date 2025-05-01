@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { defineAEppsStore } from '~/utils/components/resumes'
-import { defineEppsStore } from '~/utils/pages/resumes'
+import { defineEppsStore, extendedState } from '~/utils/pages/resumes'
 
 import ExplanationContainer from '../common/ExplanationContainer.vue'
 import Links from '../common/Links.vue'
@@ -45,7 +45,7 @@ const typeScriptPersonStoreDefinition = `({
                 lastname.value = personData.lastname
             }
         }
-})`
+    })`
 const javascriptScriptPersonStoreDefinition = `({
         firstname: ref(),
         lastname: ref(),
@@ -57,7 +57,7 @@ const javascriptScriptPersonStoreDefinition = `({
                 lastname.value = personData.lastname
             }
         }
-})`
+    })`
 
 const personStoreDefinitions = {
     js: javascriptScriptPersonStoreDefinition,
@@ -96,7 +96,7 @@ const personMethods: TypeRequired = { name: 'UserMethods', description: 'Methods
                 the personStore.setData method will also be executed.
             </p>
 
-            <Store :name="'person'" :store-definitions="personStoreDefinitions">
+            <Store :is-epps-store="false" :name="'person'" :store-definitions="personStoreDefinitions">
                 <template #typesDefinition>{{ personTypesDefinition }}</template>
             </Store>
 
@@ -106,7 +106,7 @@ const personMethods: TypeRequired = { name: 'UserMethods', description: 'Methods
                         To define a Store that will extend the State and methods of other Stores, use the
                         defineEppsStore and extendedState functions.
                     </p>
-                    <p>
+                    <p class="text-sm mt-2">
                         To benefit from the State's persistence function, only the extendedState function is required.
                     </p>
                 </template>
@@ -115,7 +115,9 @@ const personMethods: TypeRequired = { name: 'UserMethods', description: 'Methods
         </template>
 
         <template #toSee>
-            <ULink :to="defineEppsStore.path">{{ defineEppsStore.title }}</ULink>
+            <Links
+                :links="{ [defineEppsStore.title]: `/${defineEppsStore.path}`, [extendedState.title]: `/${extendedState.path}` }">
+            </Links>
         </template>
     </ExplanationContainer>
 </template>

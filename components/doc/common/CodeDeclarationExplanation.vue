@@ -41,9 +41,13 @@ onBeforeUnmount(() => codeDeclarationExplanationStore.$reset())
             <Prototype :description :name :properties="(prototype as InterfacePrototype)?.properties"
                 :props="(prototype as FunctionPrototype)?.props" :required-types
                 :return-type="(prototype as FunctionPrototype)?.returnType" :type
-                :value="(prototype as TypePrototype)?.value" />
+                :value="(prototype as TypePrototype)?.value"></Prototype>
 
-            <ParametersList v-if="hasPropsExplanation()" :params="propsExplanation" title="Parameters" />
+            <ParametersList v-if="hasPropsExplanation()" :params="propsExplanation" title="Parameters"></ParametersList>
+            <div v-else-if="$slots?.propsExplanation">
+                <h4>Parameters</h4>
+                <slot name="propsExplanation"></slot>
+            </div>
 
             <ParametersList v-if="requiredTypes?.length" :params="requiredTypes" title="Type requirements">
                 <template #explanation>
@@ -58,7 +62,7 @@ onBeforeUnmount(() => codeDeclarationExplanationStore.$reset())
             <Links icon="material-symbols:link-rounded" :links="typesToSee.reduce((acc: Record<string, string>, curr: string) => {
                 acc[curr] = `/doc/types/${curr}`
                 return acc
-            }, {})" />
+            }, {})"></Links>
         </template>
     </ExplanationContainer>
 </template>

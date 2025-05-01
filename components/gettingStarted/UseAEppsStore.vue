@@ -78,7 +78,9 @@ function getTemplate() {
         </template>
 
         <template #toSee>
-            <ULink :to="eppsStoreType?.path">{{ eppsStoreType?.name }}</ULink>
+            <ULink class="text-sm" inactive-class="underline" :to="eppsStoreType?.path">
+                {{ eppsStoreType?.name }}
+            </ULink>
         </template>
     </ExplanationContainer>
 </template>

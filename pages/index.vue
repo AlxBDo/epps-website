@@ -23,21 +23,9 @@ const appName = useRuntimeConfig().public.appName
         </div>
 
         <div>
-            <h2>Getting started</h2>
-            <div class="flex justify-between max-w-80 m-auto mt-8">
-                <UButton class="font-bold rounded-full" icon="mdi:console-line" :to="install.path" variant="outline">
-                    {{ install.title }}
-                </UButton>
-                <UButton class="font-bold rounded-full" icon="mdi:code" :to="usage.path">
-                    {{ usage.title }}
-                </UButton>
-            </div>
-        </div>
-
-        <div>
             <h2>Key features</h2>
             <div class="flex justify-between align-top">
-                <article class="w-2/5">
+                <article class="w-1/2 px-6">
                     <h3>Store Extension</h3>
                     <ul>
                         <li>
@@ -49,11 +37,8 @@ const appName = useRuntimeConfig().public.appName
                             that parent methods are executed after the child methods.
                         </li>
                     </ul>
-                    <p>
-                        This facilitates code reuse and dependency management between stores.
-                    </p>
                 </article>
-                <article class="w-2/5">
+                <article class="w-1/2 px-6">
                     <h3>State Persistence</h3>
                     <ul>
                         <li>
@@ -70,17 +55,29 @@ const appName = useRuntimeConfig().public.appName
                 </article>
             </div>
         </div>
+
+        <div>
+            <h2>Getting started</h2>
+            <div class="flex justify-between max-w-80 m-auto mt-8">
+                <UButton class="font-bold rounded-full" icon="mdi:console-line" :to="install.path" variant="outline">
+                    {{ install.title }}
+                </UButton>
+                <UButton class="font-bold rounded-full" icon="mdi:code" :to="usage.path">
+                    {{ usage.title }}
+                </UButton>
+            </div>
+        </div>
     </Page>
 </template>
 
 <style scoped>
-article li span,
 h2 {
-    color: var(--color-yellow-400);
+    color: var(--color-yellow-500);
 }
 
 h3 {
-    color: var(--color-success-400)
+    color: var(--color-yellow-500);
+    margin-top: 0;
 }
 
 li {

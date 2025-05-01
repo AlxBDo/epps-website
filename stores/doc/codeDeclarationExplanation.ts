@@ -13,6 +13,7 @@ interface Prototype extends CodeDeclarationPrototype {
     value?: string
 }
 
+
 export const useCodeDeclarationExplanationStore = (id: string) => defineStore(
     `${id}CodeDeclarationExplanantionStore`,
     () => {
@@ -101,6 +102,7 @@ export const useCodeDeclarationExplanationStore = (id: string) => defineStore(
         }
 
         function initProps(declarationProps?: ParameterPrototype[]): void {
+            propsExplanation.value = []
             if (declarationProps && !isEmpty(declarationProps)) {
                 const declarationPropsLength = declarationProps.length
                 const rtn = declarationPropsLength > 1 ? '\r\n' : ''

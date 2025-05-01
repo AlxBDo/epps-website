@@ -1,6 +1,13 @@
 @import "tailwindcss";
 @import "@nuxt/ui";
 
+:root {
+  --ui-bg: var(--color-yellow-50);
+
+  @variant dark {
+    --ui-bg: var(--color-slate-900);
+  }
+}
 
 body {
   margin: 0 auto;
@@ -8,13 +15,13 @@ body {
 }
 
 body, html {
-  background-color: var(--color-slate-100);
+  background-color: var(--color-yellow-100);
   color: var(--color-slate-900);
   padding: 10px;
 
   @variant dark {
-    background-color: var(--color-slate-900);
-    color: var(--color-slate-100);
+    background-color: var(--color-slate-800);
+    color: var(--color-yellow-100);
   }
 }
 

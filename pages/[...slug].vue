@@ -19,7 +19,7 @@ let pageDefinition: PageResume | undefined
 
 const route = useRoute()
 const [section, type, name] = route.params.slug as unknown as string[]
-const allowedPath = allowedSections.includes(section) && (!type || allowedTypes.includes(type))
+const allowedPath = allowedSections.includes(section) && (!type || allowedTypes.includes(type) || type === section)
 
 const pageFound = (allowedPath && Array.isArray(route.params.slug))
     && route.params.slug.reduce((found: boolean, param: string) => {

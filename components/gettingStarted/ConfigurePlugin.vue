@@ -12,6 +12,10 @@ const { id, title } = configurePlugin
     <ExplanationContainer :id :codeSections="['vue', 'nuxt']" :title>
         <template #explanation>
             <p>To use the plugin, simply import it and add it to your Pinia instance.</p>
+            <p class="text-sm mt-2">
+                In the examples below, the environment variables CRYPT_IV and CRYPT_KEY must be replaced with strings.
+                These variables are used for encrypting data persisted in the browser.
+            </p>
         </template>
         <template #vue>
             <div>
@@ -23,7 +27,7 @@ const { id, title } = configurePlugin
 
                 const epps = createPlugin(
                 <div>
-                    'localStorage', <br />
+                    'localStorage', // define another database name to use IndexedDB <br />
                     import.meta.env.VITE_CRYPT_IV, <br />
                     import.meta.env.VITE_CRYPT_KEY
                 </div>

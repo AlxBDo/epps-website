@@ -62,7 +62,9 @@ onUnmounted(() => store.$reset())
     <ExplanationContainer :id="name" :code-sections="codeSlots">
         <template #subtitle>Prototype</template>
 
-        <template v-if="description" #explanation>{{ description }}</template>
+        <template v-if="description" #explanation>
+            <p class="text-sm">{{ description }}</p>
+        </template>
 
         <template #typeScript :key="`prototype-${name}-${type}-ts`">
             <div>

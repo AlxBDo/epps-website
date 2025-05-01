@@ -17,7 +17,7 @@ defineProps({
         </header>
         <ul class="ml-3 pl-3">
             <li v-for="linkName in Object.keys(links)" class="text-sm">
-                <ULink :to="links[linkName]" class="flex items-center">
+                <ULink :to="links[linkName]" class="flex items-center" inactive-class="underline">
                     <UIcon v-if="icon" :name="icon" class="mr-1 size-3" />
                     {{ linkName }}
                 </ULink>
