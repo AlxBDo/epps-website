@@ -55,6 +55,10 @@ const title = componentProps.displayNameAs === 'title' ? storeName : undefined
             <pre>{{ definition(false) + storeDefinitions.js + endDefinition }}</pre>
         </template>
 
+        <template v-if="$slots?.detailedExplanations" #detailedExplanations>
+            <slot name="detailedExplanations"></slot>
+        </template>
+
         <template v-if="$slots?.toSee" #toSee>
             <slot name="toSee"></slot>
         </template>

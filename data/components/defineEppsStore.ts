@@ -1,8 +1,7 @@
 import type { ComponentResume } from "~/types/components"
 import { description, name } from "../functions/defineEppsStore"
-import { capitalize } from "vue"
 
 
-const definition: ComponentResume = { description, id: name, title: capitalize(name) }
+const definition: ComponentResume = { description, id: name, title: `Function ${name}` }
 
 export default definition

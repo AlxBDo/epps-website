@@ -68,16 +68,20 @@ const slots = useSlots()
             </section>
         </template>
 
+        <section v-if="$slots?.detailedExplanations">
+            <slot name="detailedExplanations"></slot>
+        </section>
+
+        <section v-if="!isEmpty(tipSections)" class="tips">
+            <div v-for="(name, index) of tipSections" :key="`${name}-${index}`" class="tip">
+                <slot :name="name"></slot>
+            </div>
+        </section>
+
         <section v-if="slots?.toSee" class="to-see-section">
             <h4>@see</h4>
             <slot name="toSee"></slot>
         </section>
-
-        <footer v-if="!isEmpty(tipSections)" class="tips">
-            <div v-for="(name, index) of tipSections" :key="`${name}-${index}`" class="tip">
-                <slot :name="name"></slot>
-            </div>
-        </footer>
     </article>
 </template>
 

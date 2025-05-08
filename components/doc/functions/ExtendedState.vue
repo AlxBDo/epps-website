@@ -29,58 +29,67 @@ const prototype = createFunctionPrototype(extendedStatePrototype)
                     </p>
 
                     <table>
-                        <tr>
-                            <th>Key</th>
-                            <th>Description</th>
-                            <th>Default value</th>
-                        </tr>
-                        <tr>
-                            <td>actionsToExtends</td>
-                            <td>list of stores methods to be extended</td>
-                            <td>-</td>
-                        </tr>
-                        <tr>
-                            <td>isOptionApi</td>
-                            <td>Is the store defined with the OptionApi syntax?</td>
-                            <td>false</td>
-                        </tr>
-                        <tr>
-                            <td>persist</td>
-                            <td>object defining Store persistence options</td>
-                            <td>-</td>
-                        </tr>
+                        <caption>options</caption>
+                        <thead>
+                            <tr>
+                                <th class="w-3/12">Key</th>
+                                <th class="w-7/12">Description</th>
+                                <th class="w-2/12">Default value</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>actionsToExtends</td>
+                                <td>list of stores methods to be extended</td>
+                                <td>-</td>
+                            </tr>
+                            <tr>
+                                <td>isOptionApi</td>
+                                <td>Is the store defined with the OptionApi syntax?</td>
+                                <td>false</td>
+                            </tr>
+                            <tr>
+                                <td>persist</td>
+                                <td>object defining Store persistence options</td>
+                                <td>-</td>
+                            </tr>
+                        </tbody>
                     </table>
 
                     <table>
                         <caption>option.persist</caption>
-                        <tr>
-                            <th>Key</th>
-                            <th>Description</th>
-                            <th>Default value</th>
-                        </tr>
-                        <tr>
-                            <td>excludedKeys</td>
-                            <td>list of state properties not persisted</td>
-                            <td>-</td>
-                        </tr>
-                        <tr>
-                            <td>persist</td>
-                            <td>
-                                If set to “true”, the Store benefits from persistence features. Is set to “true”,
-                                if another persistence option is defined.
-                            </td>
-                            <td>undefined | true</td>
-                        </tr>
-                        <tr>
-                            <td>persistedPropertiesToEncrypt</td>
-                            <td>list of state properties to encrypt</td>
-                            <td>-</td>
-                        </tr>
-                        <tr>
-                            <td>watchMutation</td>
-                            <td>If set to “true”, the State will be persisted on each modification</td>
-                            <td>-</td>
-                        </tr>
+                        <thead>
+                            <tr>
+                                <th class="w-3/12">Key</th>
+                                <th class="w-7/12">Description</th>
+                                <th class="w-2/12">Default value</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>excludedKeys</td>
+                                <td>list of state properties not persisted</td>
+                                <td>-</td>
+                            </tr>
+                            <tr>
+                                <td>persist</td>
+                                <td>
+                                    If set to “true”, the Store benefits from persistence features. Is set to “true”,
+                                    if another persistence option is defined.
+                                </td>
+                                <td>undefined | true</td>
+                            </tr>
+                            <tr>
+                                <td>persistedPropertiesToEncrypt</td>
+                                <td>list of state properties to encrypt</td>
+                                <td>-</td>
+                            </tr>
+                            <tr>
+                                <td>watchMutation</td>
+                                <td>If set to “true”, the State will be persisted on each modification</td>
+                                <td>-</td>
+                            </tr>
+                        </tbody>
                     </table>
                 </li>
             </ul>
@@ -91,14 +100,14 @@ const prototype = createFunctionPrototype(extendedStatePrototype)
 <style scoped>
 table {
     margin: 15px auto 0;
-    width: 90%;
+    width: 96%;
     font-size: small;
 
     caption {
-        text-align: left;
+        border-bottom: 1px dashed;
+        margin-bottom: 10px;
         padding: 5px 0;
-        text-decoration: underline;
-        font-weight: bold;
+        text-align: left;
     }
 
     td {

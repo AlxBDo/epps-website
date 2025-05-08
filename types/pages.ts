@@ -7,7 +7,7 @@ export interface PageResume extends ComponentResume {
 }
 
 
-export type PageDefinitionTypes = 'class' | 'functions' | 'types'
+export type PageDefinitionTypes = 'class' | 'functions' | 'stores' | 'types'
 
 export type PageOfPagesResumes = Record<string, Record<string, PageResume> | PageResume>
 export type PagesResumes = Record<string, PageOfPagesResumes | PageResume>

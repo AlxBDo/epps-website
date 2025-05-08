@@ -9,15 +9,18 @@ defineProps({
 <template>
     <form @submit.prevent="$emit('onSubmit')">
         <slot name="title">
-            <h3 v-if="title">{{ title }}</h3>
+            <h4 v-if="title">{{ title }}</h4>
         </slot>
 
         <slot name="inputs"></slot>
 
         <slot name="actions">
             <div v-if="cancelBtn || submitBtn">
-                <button v-if="cancelBtn" type="button" @click="$emit('onCancel')">{{ cancelBtn }}</button>
-                <button v-if="submitBtn" type="submit">{{ submitBtn }}</button>
+                <UButton v-if="cancelBtn" color="neutral" variant="outline" @click="$emit('onCancel')">
+                    {{ cancelBtn }}
+                </UButton>
+                <UButton v-if="submitBtn" variant="outline" @click="$emit('onSubmit')">{{ submitBtn }}
+                </UButton>
             </div>
         </slot>
     </form>

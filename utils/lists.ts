@@ -1,0 +1,1 @@
+export const listTypeLabels = ['wish', 'shopping', 'task']

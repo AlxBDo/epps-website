@@ -1,5 +1,5 @@
 import type { CodeDeclarationTypes, ParameterPrototype, FunctionReturn, TypeRequired, FunctionPrototype } from "~/types/components";
-import { createParameterPrototype, createTypeRequired } from "~/utils/components/code-declaration";
+import { createParameterPrototype } from "~/utils/components/code-declaration";
 
 
 export const description: string = 'Used to extend parent stores and adding persistence options.'
@@ -11,10 +11,7 @@ export const props: ParameterPrototype[] = [
     createParameterPrototype('options', 'ExtendedStateOptions', false)
 ]
 
-export const requiredTypes: TypeRequired[] = [
-    createTypeRequired('StoreMethods', 'Defines the methods available in the store'),
-    createTypeRequired('StateProperties', 'Defines the state properties of the store')
-]
+export const requiredTypes: TypeRequired[] = []
 
 export const returnType: FunctionReturn = 'ExtendedState'
 

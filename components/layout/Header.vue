@@ -9,8 +9,8 @@ import Menu from '~/components/layout/Menu.vue';
         </NuxtLink>
 
         <div class="header flex flex-wrap">
-            <h1>{{ useRuntimeConfig().public.appName }}</h1>
-            <Menu />
+            <h1 class="-mb-24 font-bold text-3xl">{{ useRuntimeConfig().public.appName }}</h1>
+            <Menu></Menu>
         </div>
     </header>
 </template>
@@ -29,12 +29,6 @@ import Menu from '~/components/layout/Menu.vue';
         div {
             text-align: left;
         }
-    }
-
-    h1 {
-        margin-bottom: 0;
-        font-size: xx-large;
-        font-weight: bold;
     }
 
     h1,

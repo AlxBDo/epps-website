@@ -7,7 +7,8 @@ export const description: string = 'Define an extended and persised store'
 export const name: string = 'defineEppsStore'
 
 export const props: ParameterPrototype[] = [
-    createParameterPrototype('storeId', 'string', true)
+    createParameterPrototype('storeId', 'string', true, 'Store id'),
+    createParameterPrototype('storeDefinition', 'function', true, 'Store definition - use setup syntax')
 ]
 
 export const requiredTypes: TypeRequired[] = [

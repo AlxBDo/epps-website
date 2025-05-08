@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import { listTypeLabels } from '~/utils/lists'
 import { useListsStore } from '~/stores/demo/lists'
 
 import MethodDemoForm from '../../../common/form/MethodDemoForm.vue'
@@ -7,13 +8,15 @@ import MethodDemoForm from '../../../common/form/MethodDemoForm.vue'
 import type { CollectionState, CollectionStoreMethods, EppsStore } from 'epps'
 import type { List } from '../../../../models/liste'
 
-
-const itemType = ref('0')
+const items = ref(listTypeLabels)
+const itemType = ref<string>()
 
 function getItemsByType() {
+    if (!itemType.value) { return }
+
     return {
         result: (useListsStore() as EppsStore<CollectionStoreMethods, CollectionState<List>>).getItems({
-            type: itemType.value
+            type: listTypeLabels.findIndex((type: string) => type === itemType.value)
         }),
         name: 'List'
     }
@@ -23,12 +26,7 @@ function getItemsByType() {
 <template>
     <MethodDemoForm :get-result="getItemsByType" title="Get items by type" submit-btn="Get Items">
         <template #inputs>
-            <label for="itemType">Item Type:</label>
-            <select id="itemType" v-model="itemType" required>
-                <option value="0">Wish</option>
-                <option value="1">Shopping</option>
-                <option value="2">Task</option>
-            </select>
+            <USelect placeholder="Select a type" :items v-model="itemType" />
         </template>
     </MethodDemoForm>
 </template>

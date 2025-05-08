@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import { isEmpty } from '~/utils/validation'
 import { useListsStore } from '~/stores/demo/lists'
 
 import MethodDemoForm from '../../../common/form/MethodDemoForm.vue'
@@ -10,27 +11,22 @@ import type { List } from '../../../../models/liste'
 
 const listsStore = useListsStore() as EppsStore<CollectionStoreMethods, CollectionState<List>>
 
-const lists = computed(() => listsStore.items)
-
-const listId = ref<number>()
+const list = ref<string>()
 
 function getResult() {
-    if (!listId.value) { return }
+    if (!list.value) { return }
 
-    listsStore.removeItem({ id: listId.value })
+    const listFound = listsStore.getItem({ name: list.value })
+    listFound?.id && listsStore.removeItem({ id: listFound.id })
 }
 </script>
 
 <template>
-    <MethodDemoForm v-if="lists && lists.length" :get-result title="Remove a list" submit-btn="Remove">
+    <MethodDemoForm v-if="!isEmpty(listsStore.items)" :get-result title="Remove a list" submit-btn="Remove">
         <template #inputs>
             <div>
-                <label for="itemId">Lists :</label>
-                <select v-model="listId" required>
-                    <option v-for="list in lists" :key="`list-rm-opt-${list.id}`" :value="list.id">
-                        {{ list.name }}
-                    </option>
-                </select>
+                <USelect :items="listsStore.items.map(list => list.name) as string[]" placeholder="Select a list"
+                    v-model="list" />
             </div>
         </template>
     </MethodDemoForm>

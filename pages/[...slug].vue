@@ -12,7 +12,7 @@ import type { PageDefinitionTypes, PageResume } from '~/types/pages'
 
 
 const allowedSections = ['doc', 'examples']
-const allowedTypes = ['class', 'functions', 'types']
+const allowedTypes = ['class', 'functions', 'stores', 'types']
 let length = 0
 let tempPage: AnyObject = pages
 let pageDefinition: PageResume | undefined

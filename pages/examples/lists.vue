@@ -1,65 +1,57 @@
 <script lang="ts" setup>
-import type { CollectionState, CollectionStoreMethods, EppsStore } from 'epps'
-import type { List } from '~/models/liste'
-
-import { ref } from 'vue'
 import { lists as definition } from '~/utils/pages/resumes'
-import { useListsStore } from '~/stores/demo/lists'
 
 import AddList from '~/components/examples/lists/demo/AddList.vue'
 import GetById from '~/components/examples/lists/demo/GetById.vue'
 import GetItems from '~/components/examples/lists/demo/GetItems.vue'
-import Page from '~/components/common/Page.vue'
 import RemoveList from '~/components/examples/lists/demo/RemoveList.vue'
-import SectionSelector from '~/components/examples/common/selector/SectionSelector.vue'
 import ShowLists from '~/components/examples/lists/demo/ShowLists.vue'
 import StoreCreation from '~/components/examples/lists/explanation/StoreCreation.vue'
+import StorePage from '~/components/examples/common/StorePage.vue'
 import UseStore from '~/components/examples/lists/explanation/UseStore.vue'
-
-
-const activeSection = ref<'explanation' | 'demo'>('explanation')
-const lists = ref<List[]>([])
-
-function setActiveSection(section: 'explanation' | 'demo') {
-    activeSection.value = section
-}
-
-function resetStore() {
-    listsStore.$reset()
-    lists.value = listsStore.items
-}
-
-
-const listsStore = useListsStore() as EppsStore<CollectionStoreMethods, CollectionState<List>>
 </script>
 
 <template>
-    <Page :definition>
-        <p>
-            This page is an example of creating a collection store of lists. The store called <code>useListsStore</code>
-            extends the <code>useCollectionStore</code> store to benefit from its state properties and methods.
-        </p>
-        <div id="container">
-            <SectionSelector :active-section :sections="['explanation', 'demo']" @setActiveSection="setActiveSection" />
+    <StorePage :definition>
+        <template #pageExplanation>
+            <p>
+                This page is an example of creating a collection store of lists. The store called
+                <code>useListsStore</code> extends the <code>useCollectionStore</code> store to
+                benefit from its state properties and methods.
+            </p>
+            <p>
+                useCollectionStore is supplied with the epps plugin.
+            </p>
+        </template>
 
-            <section v-if="activeSection === 'explanation'" id="explanation">
-                <StoreCreation />
-                <UseStore />
-            </section>
+        <template #storeExplanation>
+            <StoreCreation />
+            <UseStore />
+        </template>
 
-            <section v-if="activeSection === 'demo'" id="forms">
-                <button @click="resetStore">Reset Store</button>
-                <ShowLists />
+        <template #demo>
+            <ShowLists />
+            <div id="forms">
                 <AddList />
                 <RemoveList />
                 <GetById />
                 <GetItems />
-            </section>
-        </div>
-    </Page>
+            </div>
+        </template>
+    </StorePage>
 </template>
 
 <style scoped>
+#demo {
+    position: relative;
+
+    button {
+        position: absolute;
+        right: 15px;
+        top: -15px;
+    }
+}
+
 #forms {
     display: flex;
     justify-content: space-between;
@@ -76,14 +68,14 @@ const listsStore = useListsStore() as EppsStore<CollectionStoreMethods, Collecti
     align-items: center;
     justify-content: space-between;
     flex-wrap: wrap;
-    max-width: 550px;
+    max-width: 350px;
     min-width: 320px;
     width: 100%;
     margin: 2% auto;
 
-    h3 {
+    h4 {
         width: 100%;
-        margin: 0;
+        margin: 0 0 10px;
     }
 }
 </style>

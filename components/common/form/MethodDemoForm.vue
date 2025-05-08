@@ -30,6 +30,10 @@ function onSubmit() {
         }
     }
 }
+
+function resetResult() {
+    result.value = undefined
+}
 </script>
 
 <template>
@@ -39,7 +43,10 @@ function onSubmit() {
         </template>
     </Form>
     <div v-if="result">
-        <h4>{{ title }} result</h4>
+        <div class="flex justify-center items-center">
+            <h4>{{ title }} result</h4>
+            <UButton color="neutral" icon="iconamoon:close-bold" variant="ghost" @click="resetResult"></UButton>
+        </div>
         <div>
             <DisplayResult :name="itemName" :result />
         </div>

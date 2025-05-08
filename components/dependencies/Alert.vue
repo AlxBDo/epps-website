@@ -15,7 +15,7 @@ const props = defineProps({
     type: { type: String as PropType<AlertTypes>, default: 'info' },
 })
 
-const alertColor = props.color ?? (props.type === 'tip' ? 'info' : props.type)
+const alertColor = props.color ?? (props.type === 'tip' ? 'secondary' : props.type)
 const alertIcon = props.icon ? (typeof props.icon === 'string' ? props.icon : icons[props.type]) : undefined
 
 const slots = useSlots()

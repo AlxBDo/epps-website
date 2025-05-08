@@ -1,33 +1,31 @@
 <script setup lang="ts">
-import { log } from '../../utils/log'
-import Page from '~/components/common/Page.vue'
-import { useConnectedUserStore } from '../../stores/demo/connectedUser'
 import { user as definition } from '~/utils/pages/resumes'
 
-import type { UserStore, UserState } from '../../stores/demo/user'
-import type { EppsStore } from 'epps'
-
-
-const connectedUser = useConnectedUserStore() as EppsStore<UserStore, UserState>
-
-connectedUser.setData && connectedUser.setData({
-    id: 1,
-    email: 'connecteduser@mail.com',
-    firstname: 'Mathiew',
-    lastname: 'Zerh',
-    password: 'C4Nn€cT2D@!12'
-})
-
-log('connectedUser', connectedUser.user)
-
-setTimeout(() => {
-    connectedUser.$reset()
-    log('reset user', connectedUser.user)
-}, 3000)
+import ShowUser from '~/components/examples/user/demo/ShowUser.vue'
+import StoreCreation from '~/components/examples/user/explanation/StoreCreation.vue'
+import StorePage from '~/components/examples/common/StorePage.vue'
+import UseStore from '~/components/examples/user/explanation/UseStore.vue'
 </script>
 
 <template>
-    <Page :definition>
-        <p v-if="connectedUser.firstname">Hello {{ connectedUser.firstname }}</p>
-    </Page>
+    <StorePage :definition>
+        <template #pageExplanation>
+            <p>
+                This page is an example of how to create a store representing a user. The store called
+                <code>useUserStore</code> and uses deep inheritance to benefit from the state and methods
+                of several parent stores.
+            </p>
+        </template>
+
+        <template #storeExplanation>
+            <StoreCreation />
+            <UseStore />
+        </template>
+
+        <template #demo>
+            <ShowUser />
+            <div id="forms">
+            </div>
+        </template>
+    </StorePage>
 </template>

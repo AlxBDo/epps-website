@@ -1,15 +1,24 @@
 import { capitalize } from "vue"
 import type { Item } from "../models/item"
+import type { FunctionPrototype, ParameterPrototype } from "~/types/components"
 
 
-export function getStoreDefinition(name: string, description?: string) {
+export function getStoreDefinition(
+    name: string,
+    state?: ParameterPrototype[],
+    methods?: FunctionPrototype[],
+    description?: string
+) {
     const title = capitalize(name)
 
     return {
+        description: description ?? `Store for ${name}`,
         id: `use${title}Store`,
+        methods,
         name,
+        state,
         title,
-        description: description ?? `Store for ${name}`
+        type: 'store'
     }
 }
 

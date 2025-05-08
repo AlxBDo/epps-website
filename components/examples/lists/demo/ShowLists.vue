@@ -27,6 +27,11 @@ listsStore.remember().then(() => {
 <template>
     <div>
         <h3>Lists contains in store</h3>
+
+        <UButton color="neutral" icon="iconamoon:close-bold" @click="() => listsStore.$reset()" variant="outline">
+            Reset Store
+        </UButton>
+
         <DisplayResult :result="listsStore.items" />
     </div>
 </template>

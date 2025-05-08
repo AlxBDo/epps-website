@@ -34,11 +34,6 @@ export const useUserStore = (id?: string) => defineEppsStore<UserStore, UserStat
             { actionsToExtends: ['setData'] }
         )
 
-        const user = computed(() => ({
-            ...(parentsStores ? getParentStorePropertyValue('contact', 0, parentsStores()) : {}),
-            password: password.value
-        }))
-
 
         function setData(data: UserState) {
             if (data.lists) { lists.value = data.lists; }
@@ -53,8 +48,7 @@ export const useUserStore = (id?: string) => defineEppsStore<UserStore, UserStat
             password,
             persist,
             persistedPropertiesToEncrypt,
-            setData,
-            user
+            setData
         }
     }
 )()

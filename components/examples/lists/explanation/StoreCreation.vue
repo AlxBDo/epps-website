@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { listsStoreCreation } from '~/utils/components/resumes'
+import { extendedState, useCollectionStore } from '~/utils/pages/resumes'
 
 import Alert from '~/components/dependencies/Alert.vue';
 import ExplanationContainer from '~/components/common/ExplanationContainer.vue';
@@ -9,25 +10,18 @@ const { id, title } = listsStoreCreation
 </script>
 
 <template>
-    <ExplanationContainer :code-sections="['optionApi', 'setup']" :id :tip-sections="['store-creation-tip']" :title>
-        <template #explanation>
-            We create an instance of the lists store using <code>useListsStore</code> and type it
-            with the appropriate methods and state.
-        </template>
-
+    <ExplanationContainer :code-sections="['setup']" :id :tip-sections="['store-creation-tip']" :title>
         <template #optionApi>
             <div>
                 export const useListsStore = {{ '(' }}<br />
                 <div>id?: string</div>
-                {{') => defineEppsStore<CollectionStoreMethods, CollectionState<List>>(id ?? defaultStoreId, {'}}
+                {{') => defineEppsStore<CollectionStoreMethods, CollectionState<List>>(id ?? defaultStoreId, ({'}}
                     <div>
                         <div>
-                            state: (): ExtendedState => ({
-                            <div>parentsStores: [useCollectionStore('listsCollection')]</div>
-                            })
+                            ...extendedState => (parentsStores: [useCollectionStore('listsCollection')])
                         </div>
                     </div>
-                    {{ '})()' }}
+                    {{ '}))()' }}
             </div>
         </template>
 
@@ -60,9 +54,15 @@ const { id, title } = listsStoreCreation
                         Uses the <code>extendedState</code> function to obtain default and required state properties
                         for the plugin.
                     </p>
-                    <a>See <code>extendedState</code> function documentation</a>
+                    <ULink class="text-yellow-50" :to="`/${extendedState.path}`">
+                        See <code>extendedState</code> function documentation
+                    </ULink>
                 </template>
             </Alert>
+        </template>
+
+        <template #toSee>
+            <ULink :to="`/${useCollectionStore.path}`">{{ useCollectionStore.id }}</ULink>
         </template>
     </ExplanationContainer>
 </template>

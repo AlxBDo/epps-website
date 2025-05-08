@@ -3,9 +3,10 @@ import { createDefinition } from '~/utils/pages/createDefinition'
 
 import CodeDeclarationExplanation from './CodeDeclarationExplanation.vue'
 import Page from '~/components/common/Page.vue'
+import StorePrototype from './StorePrototype.vue'
 
 import type { PageDefinitionTypes, PageResume } from '~/types/pages'
-import type { FunctionPrototype, InterfacePrototype } from '~/types/components'
+import type { FunctionPrototype, InterfacePrototype, StorePrototype as StorePrototypeInterface } from '~/types/components'
 
 
 const pageProps = defineProps({
@@ -21,14 +22,17 @@ const pageProps = defineProps({
 
 const definition = await createDefinition(
     pageProps.type, pageProps.name
-) as PageResume & (FunctionPrototype | InterfacePrototype)
+) as PageResume & (FunctionPrototype | InterfacePrototype | StorePrototypeInterface)
 </script>
 
 <template>
     <Suspense>
         <template #default>
             <Page :definition>
-                <CodeDeclarationExplanation :display-title="false" :prototype="definition" />
+                <StorePrototype v-if="type === 'stores'" :prototype="(definition as StorePrototypeInterface)">
+                </StorePrototype>
+                <CodeDeclarationExplanation v-else :display-title="false"
+                    :prototype="(definition as FunctionPrototype | InterfacePrototype)" />
             </Page>
         </template>
         <template #fallback>

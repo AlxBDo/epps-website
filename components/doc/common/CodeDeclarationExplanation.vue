@@ -6,8 +6,10 @@ import Links from '~/components/common/Links.vue'
 import ParametersList from './ParametersList.vue'
 import Prototype from './Prototype.vue'
 
+import type { EppsStore } from 'epps'
 import type { PropType } from 'vue'
-import type { TypePrototype, FunctionPrototype, InterfacePrototype } from '~/types/components'
+import type { CodeDeclarationState, CodeDeclarationStore } from '~/stores/doc/codeDeclarationExplanation'
+import type { FunctionPrototype, InterfacePrototype, TypePrototype } from '~/types/components'
 
 
 const componentProps = defineProps({
@@ -21,7 +23,9 @@ const componentProps = defineProps({
     }
 })
 
-const codeDeclarationExplanationStore = useCodeDeclarationExplanationStore(componentProps.prototype.name)
+const codeDeclarationExplanationStore = useCodeDeclarationExplanationStore(
+    componentProps.prototype.name
+) as EppsStore<CodeDeclarationStore, CodeDeclarationState>
 codeDeclarationExplanationStore.initDeclaration(componentProps.prototype)
 
 const { hasTypesToSee, hasPropsExplanation, propsExplanation, typesToSee } = codeDeclarationExplanationStore

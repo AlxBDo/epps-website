@@ -17,7 +17,7 @@ export interface CodeDeclarationPrototype extends Omit<PrototypeBase, 'type'> {
 
 export interface FunctionPrototype extends Omit<PrototypeWithTypeParams, 'type'> {
     type: 'function'
-    props: ParameterPrototype[]
+    props?: ParameterPrototype[]
     returnType: string
 }
 
@@ -31,6 +31,13 @@ export interface ObjectPrototype extends PrototypeWithTypeParams {
 
 export interface ParameterPrototype extends PrototypeBase {
     required: boolean
+}
+
+export interface StorePrototype extends PrototypeBase {
+    id: string
+    methods?: FunctionPrototype[]
+    state: ParameterPrototype[]
+    type: 'store'
 }
 
 export interface TypePrototype extends Omit<PrototypeWithTypeParams, 'type'> {

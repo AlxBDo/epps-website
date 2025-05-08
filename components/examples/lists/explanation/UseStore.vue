@@ -29,6 +29,28 @@ const { id, title } = useListsStore
         </template>
     </ExplanationContainer>
 
+    <ExplanationContainer id="get-list" :code-sections="['vue']">
+        <template #subtitle>Get a list</template>
+        <template #explanation>
+            Use getItem method to get list. The “name” or “id” properties can be used as selection criteria.
+        </template>
+
+        <template #vue>
+            {{ `listsStore.getItem({ id: 1 })` }}
+        </template>
+    </ExplanationContainer>
+
+    <ExplanationContainer id="get-lists" :code-sections="['vue']">
+        <template #subtitle>Get lists</template>
+        <template #explanation>
+            Use the getItems method to obtain all lists or those corresponding to the criterion passed as a parameter.
+        </template>
+
+        <template #vue>
+            {{ `listsStore.getItems({ type: 2 })` }}
+        </template>
+    </ExplanationContainer>
+
     <ExplanationContainer id="remove-list" :code-sections="['vue']">
         <template #subtitle>Remove a list</template>
         <template #explanation>

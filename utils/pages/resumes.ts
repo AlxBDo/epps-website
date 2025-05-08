@@ -26,6 +26,9 @@ export const createPlugin = await createDefinition('functions', 'createPlugin')
 export const defineEppsStore = createPageResume(defineEppsStoreDefinition)
 export const extendedState = createPageResume(extendedStateDefinition)
 
+// Stores
+export const useCollectionStore = await createDefinition('stores', 'useCollectionStore')
+
 // Types
 export const eppsStoreType = await createDefinition('types', 'eppsStore')
 export const extendedStateInterface = await createDefinition('types', 'extendedState')
@@ -62,6 +65,10 @@ export const pages: PagesResumes = {
             extendedStore,
             persistedState,
             persistedStore
+        } as Record<string, PageResume>,
+
+        stores: {
+            useCollectionStore
         } as Record<string, PageResume>
     },
 
