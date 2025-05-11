@@ -9,9 +9,8 @@ import ExplanationContainer from '~/components/common/ExplanationContainer.vue';
 const { id, title } = userStoreCreation
 
 const definition = `export const useUserStore = (id?: string) => defineEppsStore<UserStore, UserState>(
-    id ?? 'contact',
+    id ?? 'user',
     () => {
-        const lists = ref<List[]>()
         const password = ref<string>()
 
         const {
@@ -21,8 +20,14 @@ const definition = `export const useUserStore = (id?: string) => defineEppsStore
             persist,
             persistedPropertiesToEncrypt
         } = extendedState(
-            [useContactStore(defineStoreId(id ?? 'user', 'contact'))],
-            { actionsToExtends: ['setData'] }
+            [useContactStore(defineStoreId(id, 'contact'))],
+            { 
+                actionsToExtends: ['setData'], 
+                persist: {
+                    persistedPropertiesToEncrypt: ref(['email', 'password']),
+                    watchMutation: ref(true)
+                }
+            }
         )
 
 
@@ -51,10 +56,16 @@ const definition = `export const useUserStore = (id?: string) => defineEppsStore
             <p>
                 This store inherits from the useContactStore, which in turn inherits from the useItemStore.
             </p>
-            <p>
+            <p class="text-sm">
                 In addition, the Store extends the setData method also declared in the parent Store useItemStore.
                 For the setData method to be extended, it must be declared in the
                 extendedState.options.actionsToExtends parameter.
+            </p>
+            <p class="text-sm">
+                The store is also persisted every time its state is modified, thanks to the
+                extendedState.options.watchMutation option, and sensitive data is encrypted thanks to the
+                extendedState.options.persist.persistedPropertiesToEncrypt option (see localStorage "connectedUser"
+                key).
             </p>
         </template>
 
@@ -66,10 +77,12 @@ const definition = `export const useUserStore = (id?: string) => defineEppsStore
 
         <template #toSee>
             <div>
-                <p>For more information on parent stores extended by useUserStore :</p>
-                <ULink :external="true" to="https://github.com/AlxBDo/Epps/tree/main/src/stores" target="_blank">
-                    Repo
-                </ULink>
+                <p>
+                    For more information on parent stores extended by useUserStore :
+                    <ULink :external="true" to="https://github.com/AlxBDo/Epps/tree/main/src/stores" target="_blank">
+                        Repo
+                    </ULink>
+                </p>
             </div>
         </template>
 

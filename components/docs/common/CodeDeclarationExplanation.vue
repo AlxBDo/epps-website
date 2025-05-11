@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useCodeDeclarationExplanationStore } from '~/stores/doc/codeDeclarationExplanation'
+import { useCodeDeclarationExplanationStore } from '~/stores/docs/codeDeclarationExplanation'
 
 import ExplanationContainer from '../../common/ExplanationContainer.vue'
 import Links from '~/components/common/Links.vue'
@@ -8,7 +8,7 @@ import Prototype from './Prototype.vue'
 
 import type { EppsStore } from 'epps'
 import type { PropType } from 'vue'
-import type { CodeDeclarationState, CodeDeclarationStore } from '~/stores/doc/codeDeclarationExplanation'
+import type { CodeDeclarationState, CodeDeclarationStore } from '~/stores/docs/codeDeclarationExplanation'
 import type { FunctionPrototype, InterfacePrototype, TypePrototype } from '~/types/components'
 
 
@@ -64,7 +64,7 @@ onBeforeUnmount(() => codeDeclarationExplanationStore.$reset())
 
         <template v-if="hasTypesToSee()" #toSee>
             <Links icon="material-symbols:link-rounded" :links="typesToSee.reduce((acc: Record<string, string>, curr: string) => {
-                acc[curr] = `/doc/types/${curr}`
+                acc[curr] = `/docs/types/${curr}`
                 return acc
             }, {})"></Links>
         </template>

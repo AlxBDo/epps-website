@@ -20,11 +20,8 @@ const appName = useRuntimeConfig().public.appName
                 It offers two core functionalities: <b>Store Extension</b> and <b>State Persistence</b>, making
                 your state management more efficient and flexible.
             </p>
-        </div>
 
-        <div>
-            <h2>Key features</h2>
-            <div class="flex justify-between align-top">
+            <div class="flex justify-between align-top mt-6 ">
                 <article class="w-1/2 px-6">
                     <h3>Store Extension</h3>
                     <ul>
@@ -38,6 +35,7 @@ const appName = useRuntimeConfig().public.appName
                         </li>
                     </ul>
                 </article>
+
                 <article class="w-1/2 px-6">
                     <h3>State Persistence</h3>
                     <ul>
@@ -56,16 +54,14 @@ const appName = useRuntimeConfig().public.appName
             </div>
         </div>
 
-        <div>
-            <h2>Getting started</h2>
-            <div class="flex justify-between max-w-80 m-auto mt-8">
-                <UButton class="font-bold rounded-full" icon="mdi:console-line" :to="install.path" variant="outline">
-                    {{ install.title }}
-                </UButton>
-                <UButton class="font-bold rounded-full" icon="mdi:code" :to="usage.path">
-                    {{ usage.title }}
-                </UButton>
-            </div>
+        <div class="flex justify-between items-center max-w-80 m-auto mt-8">
+            <UButton class="font-bold rounded-full" color="warning" icon="mdi:console-line" size="xl" :to="install.path"
+                variant="outline">
+                Getting started
+            </UButton>
+            <UButton class="font-bold rounded-full" icon="mdi:code" size="lg" :to="usage.path">
+                {{ usage.title }}
+            </UButton>
         </div>
     </Page>
 </template>

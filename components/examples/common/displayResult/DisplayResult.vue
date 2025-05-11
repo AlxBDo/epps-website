@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { isEmpty } from '~/utils/validation';
 import DisplayObject from './DisplayObject.vue';
 import DisplayText from './DisplayText.vue';
 
@@ -13,9 +14,9 @@ defineProps({
         <template v-if="Array.isArray(result)">
             <div class="code" v-if="result.length">
                 <template v-for="(item, index) in result" :key="`${name ?? 'item'}-${index}`">
-                    <DisplayObject v-if="typeof item === 'object'" :name="name ? `${name} ${index + 1}` : undefined"
-                        :value="item" />
-                    <DisplayText v-else :name="name ? `${name} ${index + 1}` : undefined" :value="item" />
+                    <DisplayObject v-if="typeof item === 'object' && !isEmpty(item)"
+                        :name="name ? `${name} ${index + 1}` : undefined" :value="item" />
+                    <DisplayText v-else-if="item" :name="name ? `${name} ${index + 1}` : undefined" :value="item" />
                 </template>
             </div>
             <div v-else class="code">

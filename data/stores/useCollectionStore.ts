@@ -46,7 +46,7 @@ const getItems: FunctionPrototype = {
 
 const removeItemProps: ParameterPrototype[] = [
     {
-        description: 'Uses the object\'s “id” property to remove the corresponding item from the collection.',
+        description: 'Uses any properties of the “item” object to remove the corresponding item from the collection.',
         name: 'item',
         required: true,
         type: 'object'
@@ -111,8 +111,11 @@ const state: ParameterPrototype[] = [
     { name: 'item', required: true, type: 'array<object>' }
 ]
 
+export const description = `useCollectionStore makes it easy to use object collections. 
+It comes with the Epps plugin so you can extend it to your stores.`
+
 const definition = getStoreDefinition('collection', state, methods)
 
-export const { description, id, name, title, type } = definition
+export const { id, name, title, type } = definition
 
-export default definition
+export default { ...definition, description }

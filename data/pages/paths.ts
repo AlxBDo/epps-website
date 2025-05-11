@@ -4,9 +4,9 @@ import { pathFromArray } from "~/utils/create-resume"
 /**
  * PATHS
  */
-const doc = 'doc'
+const docs = 'docs'
 const examples = 'examples'
-const functions = [doc, 'functions']
+const functions = [docs, 'functions']
 
 export const home = '/'
 
@@ -15,8 +15,8 @@ export const home = '/'
  * --- DOCS ---
  */
 
-export const installation = pathFromArray([doc, 'install'])
-export const usage = pathFromArray([doc, 'usage'])
+export const installation = pathFromArray([docs, 'install'])
+export const usage = pathFromArray([docs, 'usage'])
 
 /**
  * FUNCTIONS

@@ -21,11 +21,11 @@ const { id, title } = useListsStore
     <ExplanationContainer id="add-list" :code-sections="['vue']">
         <template #subtitle>Add a list</template>
         <template #explanation>
-            We add a new list to <code>listsStore</code> using the <code>addItem</code> method.
+            We add a new list to <code>listsStore</code> using the <code>newList</code> method.
         </template>
 
         <template #vue>
-            {{ `listsStore.addItem({ id: 1, name: 'My list', type: '0' })` }}
+            {{ `listsStore.newList(name: 'My list', type: '0')` }}
         </template>
     </ExplanationContainer>
 

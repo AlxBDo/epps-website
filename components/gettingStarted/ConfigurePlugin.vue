@@ -66,7 +66,7 @@ const { id, title } = configurePlugin
         </template>
 
         <template #toSee>
-            <Links :links="{ createPlugin: '/doc/functions/createPlugin' }" />
+            <Links :links="{ createPlugin: '/docs/functions/createPlugin' }" />
         </template>
     </ExplanationContainer>
 </template>

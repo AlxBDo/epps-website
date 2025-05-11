@@ -4,6 +4,7 @@ import { user as definition } from '~/utils/pages/resumes'
 import ShowUser from '~/components/examples/user/demo/ShowUser.vue'
 import StoreCreation from '~/components/examples/user/explanation/StoreCreation.vue'
 import StorePage from '~/components/examples/common/StorePage.vue'
+import UpdateUser from '~/components/examples/user/demo/UpdateUser.vue'
 import UseStore from '~/components/examples/user/explanation/UseStore.vue'
 </script>
 
@@ -25,7 +26,17 @@ import UseStore from '~/components/examples/user/explanation/UseStore.vue'
         <template #demo>
             <ShowUser />
             <div id="forms">
+                <UpdateUser />
             </div>
         </template>
     </StorePage>
 </template>
+
+<style scoped>
+#forms :deep(form) {
+    div {
+        display: inline-block;
+        margin: auto 5px;
+    }
+}
+</style>

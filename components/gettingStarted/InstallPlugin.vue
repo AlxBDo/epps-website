@@ -8,12 +8,15 @@ const { id, title } = installPlugin
 </script>
 
 <template>
-    <ExplanationContainer :id :codeSections="['npm', 'yarn']" :title>
+    <ExplanationContainer :id :codeSections="['npm', 'pnpm', 'yarn']" :title>
         <template #explanation>
-            <p>To install the plugin, you can use npm or yarn:</p>
+            <p>Install the dependency with your favorite package manager:</p>
         </template>
         <template #npm>
             <p>npm install epps</p>
+        </template>
+        <template #pnpm>
+            <p>pnpm add epps</p>
         </template>
         <template #yarn>
             <p>yarn add epps</p>

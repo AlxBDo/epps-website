@@ -1,8 +1,10 @@
 <script setup lang="ts">
+import { usePrototypeStore } from '~/stores/docs/prototype';
+
 import type { PropType } from 'vue';
-import { usePrototypeStore } from '~/stores/doc/prototype';
-import ExplanationContainer from '../../common/ExplanationContainer.vue';
 import type { FunctionPrototype } from '~/types/components'
+import type { PrototypeState, PrototypeStore } from '~/stores/docs/prototype';
+import type { EppsStore } from 'epps';
 
 
 const componentProps = defineProps({
@@ -21,7 +23,7 @@ const componentProps = defineProps({
 })
 
 
-const store = usePrototypeStore(componentProps.prototype.name)
+const store = usePrototypeStore(componentProps.prototype.name) as EppsStore<PrototypeStore, PrototypeState>
 store.initDeclaration(componentProps.prototype)
 
 const {

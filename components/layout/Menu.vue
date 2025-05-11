@@ -27,7 +27,7 @@ function createItem(label: string, item: PageResume | Record<string, PageResume>
     } else {
         const children = item as Record<string, PageResume>
         const to = parent ?? undefined
-        const slot = parent === 'doc' ? 'docs' as const : undefined
+        const slot = parent === 'docs' ? 'docs' as const : undefined
 
         return {
             children: Object.keys(children).map((key: string) => createItem(key, children[key], parent ? `/${parent}/${key}` : key)),
@@ -40,13 +40,35 @@ function createItem(label: string, item: PageResume | Record<string, PageResume>
 
 const items = ref<NavigationMenuItem[]>(
     Object.keys(pages).map(
-        (page: string) => createItem(page, pages[page] as PageResume | Record<string, PageResume>, page)
+        (page: string) => createItem((pages[page]?.title as string) ?? page, pages[page] as PageResume | Record<string, PageResume>, page)
     )
 )
 
 
 function displayChildren(parent: NavigationMenuItem) {
     return Array.isArray(parent.children) && parent.label !== parent.children[0].label
+}
+
+function menuDescription(menu: NavigationMenuItem): string {
+    const descriptionFromLabel: Record<string, string> = {
+        functions: 'Functions provided with the plugin to make it easy to use',
+        stores: 'Stores provided by the plugin and to be extended in your stores',
+        types: 'Types and interfaces required to use the plugin with TypeScript.'
+    }
+
+    if (!menu?.description && menu.label) {
+        return descriptionFromLabel[menu.label] ?? ''
+    }
+
+    return menu?.description
+}
+
+function menuLabel(menu: NavigationMenuItem): string {
+    if (!menu?.description) {
+        return `Epps ${menu.label}`
+    }
+
+    return menu.label as string
 }
 </script>
 
@@ -57,10 +79,10 @@ function displayChildren(parent: NavigationMenuItem) {
                 <li v-for="child in (item as NavigationMenuItem).children" :key="child.label" class="w-5/12 p-3">
                     <ULink class="text-left rounded-md transition-colors hover:bg-elevated/50" :to="child.to">
                         <p class="font-bold">
-                            {{ child.label }}
+                            {{ menuLabel(child) }}
                         </p>
                         <p class="text-muted line-clamp-2 text-xs">
-                            {{ child.description }}
+                            {{ menuDescription(child) }}
                         </p>
                     </ULink>
                     <ul v-if="displayChildren((child as NavigationMenuItem))" class="my-1 ml-3 mr-0 p-0">

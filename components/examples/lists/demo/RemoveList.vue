@@ -25,7 +25,7 @@ function getResult() {
     <MethodDemoForm v-if="!isEmpty(listsStore.items)" :get-result title="Remove a list" submit-btn="Remove">
         <template #inputs>
             <div>
-                <USelect :items="listsStore.items.map(list => list.name) as string[]" placeholder="Select a list"
+                <USelect :items="(listsStore.items.map(list => list.name) as string[])" placeholder="Select a list"
                     v-model="list" />
             </div>
         </template>

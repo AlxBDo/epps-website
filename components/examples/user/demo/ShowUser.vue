@@ -9,12 +9,16 @@ import type { UserStore, UserState } from '~/stores/demo/user'
 
 const connectedUser = useConnectedUserStore() as EppsStore<UserStore, UserState>
 
-connectedUser.setData({
-    id: 1,
-    email: 'connecteduser@mail.com',
-    firstname: 'Mathiew',
-    lastname: 'Zerh',
-    password: 'C4Nn€cT2D@!12'
+connectedUser.remember().then(() => {
+    if (!connectedUser.id) {
+        connectedUser.setData({
+            id: 1,
+            email: 'connecteduser@mail.com',
+            firstname: 'Mathiew',
+            lastname: 'Zerh',
+            password: 'C4Nn€cT2D@!12'
+        })
+    }
 })
 
 const user = computed(() => ({

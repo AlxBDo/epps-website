@@ -14,18 +14,30 @@ const { id, title } = useUserStore
         </template>
 
         <template #typescript>
-            {{ `const listsStore = useUserStore() as EppsStore<UserStore, UserState>` }}
+            {{ `const userStore = useUserStore() as EppsStore<UserStore, UserState>` }}
         </template>
     </ExplanationContainer>
 
-    <ExplanationContainer id="add-list" :code-sections="['vue']">
-        <template #subtitle>Add a list</template>
+    <ExplanationContainer id="set-data" :code-sections="['vue']">
+        <template #subtitle>Set data</template>
         <template #explanation>
-            We add a new list to <code>listsStore</code> using the <code>addItem</code> method.
+            Use setData method to set or update user data.
         </template>
 
         <template #vue>
-            {{ `listsStore.addItem({ id: 1, name: 'My list', type: '0' })` }}
+            <p>// Set data</p>
+            <p>
+                {{ `userStore.setData({ id: 1, email: 'matz@mail.com' firstname: 'Mathiew', lastname: 'Zehr', password:
+                'M!!-Str0ng_P1$$w4Rd' })
+
+                `
+                }}
+            </p>
+            <p>// Update data</p>
+            <p>
+                {{ `userStore.setData({ email: 'new-email@mail.com' })`
+                }}
+            </p>
         </template>
     </ExplanationContainer>
 </template>

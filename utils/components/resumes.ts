@@ -9,7 +9,7 @@ import listsStoreCreationDefinition from "~/data/components/listsStoreCreation"
 import useAEppsStoreDefinition from "~/data/components/useAEppsStore"
 import useListsStoreDefinition from "~/data/components/useListsStore"
 import userStoreCreationDefinition from "~/data/components/userStoreCreation"
-import useUserStoreDefinition from "~/data/components/useListsStore"
+import useUserStoreDefinition from "~/data/components/useUserStore"
 
 
 export const configurePlugin = createResume(configurePluginDefinition)

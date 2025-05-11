@@ -14,15 +14,15 @@ export async function createDefinition(definitionType: PageDefinitionTypes, defi
         const components = [] as ComponentResume[]
         const { name, type } = prototype
         const nameToDisplay = type === 'store' ? prototype.id : name
-        const path = `doc/${definitionType}/${nameToDisplay}`
+        const path = `docs/${definitionType}/${nameToDisplay}`
         const title = `${capitalize(type)} ${nameToDisplay}`
 
         return {
+            ...(prototype as AnyObject).default,
             components,
             id: nameToDisplay.toLowerCase(),
             path,
-            title,
-            ...(prototype as AnyObject).default,
+            title
         }
     } catch (e) {
         logError('pages/createDefinition', e)

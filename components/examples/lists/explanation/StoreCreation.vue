@@ -7,6 +7,37 @@ import ExplanationContainer from '~/components/common/ExplanationContainer.vue';
 
 
 const { id, title } = listsStoreCreation
+
+const storeDefinition = `export const useListsStore = (
+    id?: string
+) => defineEppsStore<CollectionStoreMethods, CollectionState<List>>(
+    id ?? defaultStoreId, 
+    () => {
+        const { parentsStores, persist } = extendedState(
+            [useCollectionStore('listsCollection')],
+            { persist: { watchMutation: ref(true) } }
+        )
+
+        function newList(name: string, type: ListTypes): void {
+            const collectionStore = parentsStores && parentsStores()[0] as EppsStore<
+                CollectionStoreMethods, CollectionState<List>
+            >
+
+            if (!collectionStore) { return }
+
+            getParentStoreMethod('addItem', collectionStore)({
+                id: collectionStore.items.length + 1,
+                name,
+                type
+            })
+        }
+
+        return {
+            newList,
+            parentsStores,
+            persist
+        }
+})()`
 </script>
 
 <template>
@@ -26,25 +57,7 @@ const { id, title } = listsStoreCreation
         </template>
 
         <template #setup>
-            <div>
-                export const useListsStore = {{ '(' }}<br />
-                <div>id?: string</div>
-                {{') => defineEppsStore<CollectionStoreMethods, CollectionState<List>>('}}
-                    <div>
-                        id ?? defaultStoreId, <br />
-                        {{'() => ({'}}
-                        <div>
-                            {{ '...extendedState(' }}
-                            <div>
-                                [useCollectionStore('listsCollection')], <br />
-                                { persist: { watchMutation: ref(true) } }
-                            </div>
-                            {{ ')' }}
-                        </div>
-                        {{ '})' }}
-                    </div>
-                    {{ ')()' }}
-            </div>
+            <pre>{{ storeDefinition }}</pre>
         </template>
 
         <template #store-creation-tip>

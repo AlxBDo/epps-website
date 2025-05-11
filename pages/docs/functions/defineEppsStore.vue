@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import DefineEppsStore from '~/components/doc/functions/DefineEppsStore.vue';
+import DefineEppsStore from '~/components/docs/functions/DefineEppsStore.vue';
 import Page from '~/components/common/Page.vue';
 
 import { defineEppsStore as definition } from '~/utils/pages/resumes'

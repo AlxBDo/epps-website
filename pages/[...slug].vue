@@ -5,13 +5,13 @@ import { isEmpty } from '~/utils/validation'
 
 import Page from '~/components/common/Page.vue'
 import PageLink from '~/components/pages/PageLink.vue'
-import DynamicPage from '~/components/doc/common/Page.vue'
+import DynamicPage from '~/components/docs/common/Page.vue'
 
 import type { AnyObject } from '~/types'
 import type { PageDefinitionTypes, PageResume } from '~/types/pages'
 
 
-const allowedSections = ['doc', 'examples']
+const allowedSections = ['docs', 'examples']
 const allowedTypes = ['class', 'functions', 'stores', 'types']
 let length = 0
 let tempPage: AnyObject = pages
@@ -40,7 +40,7 @@ const pageFound = (allowedPath && Array.isArray(route.params.slug))
 
 if (!pageFound && !pageDefinition) {
     if (allowedPath && !isEmpty(tempPage)) {
-        const titleSectionMapping: Record<string, string> = { doc: 'documentation', examples: 'examples' }
+        const titleSectionMapping: Record<string, string> = { docs: 'documentation', examples: 'examples' }
         const typeParam = type ?? 'summary'
 
         pageDefinition = {

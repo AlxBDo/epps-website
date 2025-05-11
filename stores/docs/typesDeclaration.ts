@@ -57,7 +57,7 @@ export const useTypeDeclarationStore = (id: string) => defineStore(
 
                 type = type.trim()
 
-                if ((pages.doc as AnyObject).types[firstCharToLowerCase(type)]) {
+                if ((pages.docs as AnyObject).types[firstCharToLowerCase(type)]) {
                     acc.push(type)
                 }
 

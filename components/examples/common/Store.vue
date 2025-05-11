@@ -3,7 +3,7 @@ import ExplanationContainer from '~/components/common/ExplanationContainer.vue'
 
 import type { PropType } from 'vue'
 import type { ParameterPrototype, TypeRequired } from '~/types/components'
-import { useStoreStore } from '~/stores/doc/store'
+import { useStoreStore } from '~/stores/docs/store'
 
 
 interface StoreDefinitions {

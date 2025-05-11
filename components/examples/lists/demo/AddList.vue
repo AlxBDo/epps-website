@@ -6,20 +6,17 @@ import { useListsStore } from '~/stores/demo/lists'
 import MethodDemoForm from '../../../common/form/MethodDemoForm.vue'
 
 import type { CollectionState, CollectionStoreMethods, EppsStore } from 'epps'
-import type { List } from '../../../../models/liste'
+import type { List } from '~/models/liste'
+import type { ListsStoreMethods } from '~/stores/demo/lists'
 
 const items = ref(listTypeLabels)
 const newListName = ref('')
 const newListType = ref('0')
 
 async function addNewList() {
-    const listsStore = useListsStore() as EppsStore<CollectionStoreMethods, CollectionState<List>>
+    const listsStore = useListsStore() as EppsStore<ListsStoreMethods, CollectionState<List>>
 
-    listsStore.addItem({
-        id: listsStore.items.length + 1,
-        name: newListName.value,
-        type: listTypeLabels.findIndex((type: string) => newListType.value === type)
-    })
+    listsStore.newList(newListName.value, listTypeLabels.findIndex((type: string) => newListType.value === type))
 
     initForm()
 }

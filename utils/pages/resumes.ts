@@ -25,6 +25,8 @@ export const usage = createPageResume(usageDefinition)
 export const createPlugin = await createDefinition('functions', 'createPlugin')
 export const defineEppsStore = createPageResume(defineEppsStoreDefinition)
 export const extendedState = createPageResume(extendedStateDefinition)
+export const getParentStoreMethod = await createDefinition('functions', 'getParentStoreMethod')
+export const getParentStorePropertyValue = await createDefinition('functions', 'getParentStorePropertyValue')
 
 // Stores
 export const useCollectionStore = await createDefinition('stores', 'useCollectionStore')
@@ -48,14 +50,16 @@ export const user = createPageResume(useUserStoreDefinition)
 export const pages: PagesResumes = {
     home,
 
-    doc: {
+    docs: {
         install,
         usage,
 
         functions: {
             createPlugin,
             defineEppsStore,
-            extendedState
+            extendedState,
+            getParentStoreMethod,
+            getParentStorePropertyValue
         } as Record<string, PageResume>,
 
         types: {

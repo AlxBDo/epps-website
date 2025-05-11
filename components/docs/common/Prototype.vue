@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import type { PropType } from 'vue';
-import { usePrototypeStore } from '~/stores/doc/prototype';
+import { usePrototypeStore, type PrototypeState, type PrototypeStore } from '~/stores/docs/prototype';
 import ExplanationContainer from '../../common/ExplanationContainer.vue';
 import type { CodeDeclarationTypes, FunctionReturn, ParameterPrototype, TypeRequired } from '~/types/components'
+import type { EppsStore } from 'epps';
 
 
 const componentProps = defineProps({
@@ -40,7 +41,7 @@ const componentProps = defineProps({
 })
 
 
-const store = usePrototypeStore(componentProps.name)
+const store = usePrototypeStore(componentProps.name) as EppsStore<PrototypeStore, PrototypeState>
 store.initDeclaration(componentProps)
 
 const {
@@ -48,11 +49,9 @@ const {
     displayJsSlot,
     getEndSymbol,
     getStartSymbol,
-    hasTypesToSee,
     propsToString,
     requiredTypesToString,
-    returnTypeFormatted,
-    typesToSee
+    returnTypeFormatted
 } = store
 
 onUnmounted(() => store.$reset())
@@ -71,7 +70,7 @@ onUnmounted(() => store.$reset())
                 <span class="font-light italic mr-2">{{ type }}</span>
                 <span class="font-bold">{{ name }}</span>
                 <span class="italic">{{ requiredTypesToString() }}</span>
-                <pre class="inline">{{ propsToString() }}</pre>{{
+                <pre v-if="type === 'function'" class="inline">{{ propsToString() }}</pre>{{
                     `${returnTypeFormatted(returnType)} ${getStartSymbol()} `
                 }}
 
