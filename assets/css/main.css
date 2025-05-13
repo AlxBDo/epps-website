@@ -60,6 +60,11 @@ header {
   align-items: center;
   display: flex;
   flex-wrap: wrap;
+
+  nav {
+    position: relative;
+    z-index: 99;
+  }
 }
 
 main {

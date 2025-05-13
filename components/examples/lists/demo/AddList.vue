@@ -16,7 +16,7 @@ const newListType = ref('0')
 async function addNewList() {
     const listsStore = useListsStore() as EppsStore<ListsStoreMethods, CollectionState<List>>
 
-    listsStore.newList(newListName.value, listTypeLabels.findIndex((type: string) => newListType.value === type))
+    listsStore.newList(newListName.value, `${listTypeLabels.findIndex((type: string) => newListType.value === type)}`)
 
     initForm()
 }

@@ -1,20 +1,36 @@
 <script setup lang="ts">
 import { useListsStore } from '~/utils/components/resumes'
 
+import CodeBlock from '~/components/dependencies/CodeBlock.vue';
 import ExplanationContainer from '~/components/common/ExplanationContainer.vue';
 
+
 const { id, title } = useListsStore
+
+const setItemsDeclaration = `listsStore.setItems([
+    { id: 1, name: 'My first list', type: '0' },
+    { id: 2, name: 'My second list', type: '1' },
+    { id: 3, name: 'My third list', type: '2' }
+])`
+
+const useListsStoreDeclaration = 'const listsStore = useListsStore()'
+const useListsStoreDeclarationTypeScript = useListsStoreDeclaration
+    + ' as EppsStore<CollectionStoreMethods, CollectionState<List>>'
 </script>
 
 <template>
-    <ExplanationContainer :id :title :code-sections="['typescript']">
+    <ExplanationContainer :id :title :code-sections="['typescript', 'javascript']">
         <template #explanation>
             We create an instance of the lists store using <code>useListsStore</code> and type it
             with the appropriate methods and state.
         </template>
 
         <template #typescript>
-            {{ `const listsStore = useListsStore() as EppsStore<CollectionStoreMethods, CollectionState<List>>` }}
+            <CodeBlock :code="useListsStoreDeclarationTypeScript" lang="typeScript" />
+        </template>
+
+        <template #javascript>
+            <CodeBlock :code="useListsStoreDeclaration" lang="javascript" />
         </template>
     </ExplanationContainer>
 
@@ -25,7 +41,7 @@ const { id, title } = useListsStore
         </template>
 
         <template #vue>
-            {{ `listsStore.newList(name: 'My list', type: '0')` }}
+            <CodeBlock code="listsStore.newList(name: 'My list', type: '0')" lang="javascript" />
         </template>
     </ExplanationContainer>
 
@@ -36,7 +52,7 @@ const { id, title } = useListsStore
         </template>
 
         <template #vue>
-            {{ `listsStore.getItem({ id: 1 })` }}
+            <CodeBlock code="listsStore.getItem({ id: 1 })" lang="javascript" />
         </template>
     </ExplanationContainer>
 
@@ -47,7 +63,7 @@ const { id, title } = useListsStore
         </template>
 
         <template #vue>
-            {{ `listsStore.getItems({ type: 2 })` }}
+            <CodeBlock code="listsStore.getItems({ type: 2 })" lang="javascript" />
         </template>
     </ExplanationContainer>
 
@@ -58,7 +74,7 @@ const { id, title } = useListsStore
         </template>
 
         <template #vue>
-            {{ `listsStore.removeItem({ id: 5 })` }}
+            <CodeBlock code="listsStore.removeItem({ id: 5 })" lang="javascript" />
         </template>
     </ExplanationContainer>
 
@@ -69,12 +85,7 @@ const { id, title } = useListsStore
         </template>
 
         <template #vue>
-            <pre>{{ `listsStore.setItems([
-    { id: 1, name: 'My first list', type: '0' },
-    { id: 2, name: 'My second list', type: '1' },
-    { id: 3, name: 'My third list', type: '2' }
-])`
-            }}</pre>
+            <CodeBlock :code="setItemsDeclaration" lang="javascript" />
         </template>
     </ExplanationContainer>
 </template>

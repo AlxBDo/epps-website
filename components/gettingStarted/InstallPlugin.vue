@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { installPlugin } from '~/utils/components/resumes'
 
+import CodeBlock from '../dependencies/CodeBlock.vue'
 import ExplanationContainer from '~/components/common/ExplanationContainer.vue'
 
 
@@ -13,13 +14,13 @@ const { id, title } = installPlugin
             <p>Install the dependency with your favorite package manager:</p>
         </template>
         <template #npm>
-            <p>npm install epps</p>
+            <CodeBlock code="npm install epps" lang="sh" />
         </template>
         <template #pnpm>
-            <p>pnpm add epps</p>
+            <CodeBlock code="pnpm add epps" lang="sh" />
         </template>
         <template #yarn>
-            <p>yarn add epps</p>
+            <CodeBlock code="yarn add epps" lang="sh" />
         </template>
     </ExplanationContainer>
 </template>

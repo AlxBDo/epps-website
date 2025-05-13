@@ -48,6 +48,7 @@ export const useCodeDeclarationExplanationStore = (id: string) => defineEppsStor
         }
 
         function initDeclaration(prototype: Prototype): void {
+            propsExplanation.value = []
             const ps = parentsStores && parentsStores()
 
             getParentStoreMethod('addTypesToSeeFromParameters', 0, ps)(prototype.properties)
@@ -55,15 +56,15 @@ export const useCodeDeclarationExplanationStore = (id: string) => defineEppsStor
             getParentStoreMethod('initRequiredType', 0, ps)(prototype.requiredTypes)
 
             if (prototype.returnType) {
-                getParentStoreMethod('addTypesToSee', 0)(prototype.returnType)
+                getParentStoreMethod('addTypesToSee', 0, ps)(prototype.returnType)
             }
             if (prototype.value) {
-                getParentStoreMethod('addTypesToSee', 0)(prototype.value)
+                getParentStoreMethod('addTypesToSee', 0, ps)(prototype.value)
             }
         }
 
         function propCallback(prop: ParameterPrototype): void {
-            getParentStoreMethod('addTypesToSee', 0)(prop.type)
+            getParentStoreMethod('addTypesToSee', 0, parentsStores && parentsStores())(prop.type)
             createParameterExplanation(prop)
         }
 

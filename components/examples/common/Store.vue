@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import CodeBlock from '~/components/dependencies/CodeBlock.vue'
 import ExplanationContainer from '~/components/common/ExplanationContainer.vue'
 
 import type { PropType } from 'vue'
@@ -18,7 +19,8 @@ const componentProps = defineProps({
     isEppsStore: { type: Boolean, default: true },
     name: { type: String, required: true },
     requiredTypes: { type: Array as PropType<TypeRequired[]>, default: () => [] },
-    storeDefinitions: { type: Object as PropType<StoreDefinitions>, required: true }
+    storeDefinitions: { type: Object as PropType<StoreDefinitions>, required: true },
+    typesDefinition: { type: String, default: undefined }
 })
 
 const storeStore = useStoreStore(componentProps.name)
@@ -33,6 +35,8 @@ const endDefinition = `
 )`
 
 const title = componentProps.displayNameAs === 'title' ? storeName : undefined
+
+const typesDefinitionString = componentProps.typesDefinition ?? ''
 </script>
 
 <template>
@@ -46,13 +50,16 @@ const title = componentProps.displayNameAs === 'title' ? storeName : undefined
         </template>
 
         <template #typescript>
-            <pre v-if="$slots.typesDefinition"><slot name="typesDefinition"></slot></pre>
-            <br />
-            <pre>{{ definition(true) + storeDefinitions.ts + endDefinition }}</pre>
+            <template v-if="!typesDefinition && $slots.typesDefinition">
+                <pre><slot name="typesDefinition"></slot></pre>
+                <br />
+            </template>
+            <CodeBlock :code="typesDefinitionString + definition(true) + storeDefinitions.ts + endDefinition"
+                lang="typeScript" />
         </template>
 
         <template #javascript>
-            <pre>{{ definition(false) + storeDefinitions.js + endDefinition }}</pre>
+            <CodeBlock :code="definition(false) + storeDefinitions.js + endDefinition" lang="typeScript" />
         </template>
 
         <template v-if="$slots?.detailedExplanations" #detailedExplanations>

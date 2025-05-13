@@ -16,26 +16,30 @@ export const usePropsDeclarationStore = (id: string) => defineStore(`${id}PropsS
     const props = ref<string>('')
 
 
-    function initProps(declarationProps: ParameterPrototype[], propCallback?: (type: ParameterPrototype) => void): void {
+    function initProps(
+        declarationProps: ParameterPrototype[],
+        propCallback?: (type: ParameterPrototype) => void,
+        indentNumber: number = 0
+    ): void {
         if (!isEmpty(declarationProps)) {
             const propsLength = declarationProps.length
-            const rtn = propsLength > 1 ? '\r\n' : ''
+            const hasLineReturn = propsLength > 1
+            const indentText = hasLineReturn ? (indentNumber + 1) : indentNumber
+            const rtn = hasLineReturn ? `\r\n${indent('', indentText)}` : ''
             let index = 0
 
             props.value = declarationProps.reduce((acc: string, curr: ParameterPrototype) => {
                 if (acc.length > 0) {
-                    acc += ', ' + rtn + '   '
-                } else if (propsLength > 1) {
-                    acc += rtn + '   '
+                    acc += ', '
                 }
 
-                acc += `${curr.name}: ${curr.type}`
+                acc += `${rtn}${curr.name}: ${curr.type}`
 
                 propCallback && propCallback(curr)
                 index++
 
-                if (propsLength === index) {
-                    acc += rtn
+                if (propsLength === index && propsLength > 1) {
+                    acc += `\r\n${indentNumber ? indent('', indentNumber) : ''}`
                 }
 
                 return acc

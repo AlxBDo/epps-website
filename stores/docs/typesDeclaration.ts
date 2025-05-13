@@ -20,6 +20,11 @@ export interface TypeDeclarationStore {
     returnTypeFormatted: (returnType?: FunctionReturn) => string
 }
 
+interface TypesProps {
+    requiredTypes?: TypeRequired[]
+    returnType: string
+}
+
 
 export const useTypeDeclarationStore = (id: string) => defineStore(
     `${id}TypeDeclarationStore`,
@@ -96,8 +101,20 @@ export const useTypeDeclarationStore = (id: string) => defineStore(
             }
         }
 
-        function requiredTypesToString(): Ref<string> {
-            return requiredTypes
+        function initTypes(types: TypesProps): void {
+            if (!isEmpty(types.requiredTypes)) {
+                initRequiredType(types.requiredTypes)
+            }
+
+            returnType.value = types.returnType
+        }
+
+        function requiredTypesToString(): string {
+            if (requiredTypes.value) {
+                return `<${requiredTypes.value}>`
+            }
+
+            return ''
         }
 
         function returnTypeFormatted(returnType?: FunctionReturn): string {
@@ -112,6 +129,7 @@ export const useTypeDeclarationStore = (id: string) => defineStore(
             addTypesToSeeFromParameters,
             hasTypesToSee,
             initRequiredType,
+            initTypes,
             requiredTypesToString,
             returnType,
             returnTypeFormatted,

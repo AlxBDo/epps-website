@@ -2,8 +2,9 @@
 import { extendedState } from '~/utils/pages/resumes'
 import { userStoreCreation } from '~/utils/components/resumes'
 
-import Alert from '~/components/dependencies/Alert.vue';
-import ExplanationContainer from '~/components/common/ExplanationContainer.vue';
+import Alert from '~/components/dependencies/Alert.vue'
+import CodeBlock from '~/components/dependencies/CodeBlock.vue'
+import ExplanationContainer from '~/components/common/ExplanationContainer.vue'
 
 
 const { id, title } = userStoreCreation
@@ -71,7 +72,7 @@ const definition = `export const useUserStore = (id?: string) => defineEppsStore
 
         <template #setup>
             <div>
-                <pre>{{ definition }}</pre>
+                <CodeBlock :code="definition" lang="typeScript" />
             </div>
         </template>
 

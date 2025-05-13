@@ -35,6 +35,7 @@ export interface ParameterPrototype extends PrototypeBase {
 
 export interface StorePrototype extends PrototypeBase {
     id: string
+    idIsParam?: true
     methods?: FunctionPrototype[]
     state: ParameterPrototype[]
     type: 'store'

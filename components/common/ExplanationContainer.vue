@@ -57,15 +57,10 @@ const slots = useSlots()
                 </UTabs>
             </template>
 
-            <section class="code-ctn">
-                <template v-for="(slot, index) in codeSlots">
-                    <div v-if="display(index)" class="code" :key="`slot-ctn-${slot.type}-${slot.name}${index}`">
-                        <code :key="`slot-code-${slot.name}-${index}`">
-                            <slot :name="slot.name"></slot> 
-                        </code>
-                    </div>
-                </template>
-            </section>
+            <template v-for="(slot, index) in codeSlots">
+                <slot v-if="display(index)" :key="`slot-ctn-${slot.type}-${slot.name}${index}`" :name="slot.name">
+                </slot>
+            </template>
         </template>
 
         <section v-if="$slots?.detailedExplanations">

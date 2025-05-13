@@ -5,9 +5,12 @@ import type { TypeDeclarationState, TypeDeclarationStore } from "./typesDeclarat
 import { defineEppsStore, extendedState, getParentStoreMethod } from "epps";
 import { usePropsDeclarationStore } from "./propsDeclaration";
 import { useTypeDeclarationStore } from "./typesDeclaration";
+import { isEmpty } from "~/utils/validation";
 
 
 interface InitDeclarationProps {
+    description?: string
+    name: string
     properties?: ParameterPrototype[]
     props?: ParameterPrototype[]
     requiredTypes?: TypeRequired[]
@@ -24,10 +27,11 @@ export interface PrototypeState extends PropsDeclarationState, TypeDeclarationSt
 export interface PrototypeStore extends PropsDeclarationStore, TypeDeclarationStore {
     displayJsSlot: () => boolean
     getDeclarationSymbol: (position: 'end' | 'start') => string | undefined
+    getCode: (lang?: 'javascript' | 'typeScript') => string
     getEndSymbol: () => string
     getParamsFormatted: (params: string, symbols?: SymbolsObject) => string
     getStartSymbol: () => string
-    initDeclaration: ({ properties, props, requiredTypes, returnType, type, value }: InitDeclarationProps) => void
+    initDeclaration: ({ properties, props, requiredTypes, returnType, type, value }: InitDeclarationProps, indent?: number) => void
 }
 
 type DeclarationSymbols = Record<string, SymbolsObject>
@@ -60,12 +64,55 @@ function symbolsObject(start: string, end?: string) {
 
 export const usePrototypeStore = (id: string) => defineEppsStore<PrototypeStore, PrototypeState>(`${id}PrototypeStore`, () => {
     const codeSlots = ref<string[]>()
+    const declaration = ref<InitDeclarationProps>()
     const declarationSymbols = ref<SymbolsObject>()
     const { parentsStores } = extendedState([useTypeDeclarationStore(id), usePropsDeclarationStore(id)])
 
 
     function displayJsSlot(): boolean {
         return !!codeSlots.value?.includes('javascript')
+    }
+
+    function getCode(lang: 'javascript' | 'typeScript' = 'typeScript'): string {
+        let code: string = ''
+
+        if (declaration.value) {
+            const ps = parentsStores && parentsStores()
+            const { name, properties, returnType, type, value } = declaration.value
+
+            code = `${type} ${name}`
+
+            if (lang === 'typeScript') {
+                code += getParentStoreMethod('requiredTypesToString', 0, ps)()
+            }
+
+            if (type === 'function') {
+                code += getParentStoreMethod('propsToString', 1, ps)()
+            }
+
+            code += `${getParentStoreMethod('returnTypeFormatted', 0, ps)(returnType)} ${getStartSymbol()} `
+
+            if (!isEmpty(properties)) {
+                if (type !== 'interface') {
+                    code += `
+                        `
+                }
+
+                properties?.forEach((property: ParameterPrototype) => {
+                    code += `
+    ${property.name + (property.required ? '' : '?')}: ${property.type}`
+                })
+
+                code += `
+`
+            }
+
+            if (value) { code += value }
+
+            code += getEndSymbol()
+        }
+
+        return code
     }
 
     function getDeclarationSymbol(position: 'end' | 'start'): string | undefined {
@@ -82,14 +129,31 @@ export const usePrototypeStore = (id: string) => defineEppsStore<PrototypeStore,
         return getDeclarationSymbol('start') ?? ''
     }
 
-    function initDeclaration({ properties, props, requiredTypes, returnType, type, value }: InitDeclarationProps): void {
+    function initDeclaration(
+        {
+            description,
+            name,
+            properties,
+            props,
+            requiredTypes,
+            returnType,
+            type,
+            value
+        }: InitDeclarationProps,
+        indent: number = 0
+    ): void {
+        declaration.value = { description, name, properties, props, requiredTypes, returnType, type, value }
         codeSlots.value = ['typeScript']
         declarationSymbols.value = declarationsSymbols[type]
         const ps = parentsStores && parentsStores()
 
         getParentStoreMethod('addTypesToSeeFromParameters', 0, ps)(properties)
-        getParentStoreMethod('initProps', 1, ps)(props, (prop: ParameterPrototype) => getParentStoreMethod('addTypesToSeeFromParameters', 0)(prop))
-        getParentStoreMethod('initRequiredType', 0, ps)(requiredTypes)
+        getParentStoreMethod('initProps', 1, ps)(
+            props,
+            (prop: ParameterPrototype) => getParentStoreMethod('addTypesToSeeFromParameters', 0)(prop),
+            indent
+        )
+        getParentStoreMethod('initTypes', 0, ps)(declaration.value)
 
         if (typesNeedJsCode.includes(type)) {
             codeSlots.value.push('javascript')
@@ -102,6 +166,7 @@ export const usePrototypeStore = (id: string) => defineEppsStore<PrototypeStore,
     return {
         codeSlots,
         displayJsSlot,
+        getCode,
         getEndSymbol,
         getStartSymbol,
         initDeclaration,

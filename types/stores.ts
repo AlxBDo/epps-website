@@ -1,0 +1,1 @@
+export type StoreSyntax = 'optionApi' | 'setup'

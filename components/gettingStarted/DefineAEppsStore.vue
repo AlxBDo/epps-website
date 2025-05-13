@@ -20,7 +20,7 @@ const typeScriptStoreDefinition = `({
                 password.value = userData.password
             }
         }
-})`
+    })`
 const javascriptScriptStoreDefinition = `({
         ...extendedState(
             [usePersonStore('userPersonStore')],
@@ -32,7 +32,7 @@ const javascriptScriptStoreDefinition = `({
                 password.value = userData.password
             }
         }
-})`
+    })`
 
 const typeScriptPersonStoreDefinition = `({
         firstname: ref<string>(),
@@ -72,22 +72,26 @@ const storeDefinitions = {
 const personTypesDefinition = `export interface PersonState {
     firstname: string
     lastname: string
-}`
+}
+
+`
 
 const userTypesDefinition = `export interface UserState extends PersonState {
     password: string
 }
+
 export interface UserMethods {
     setData: (data: UserState) => void
-}`
+}
 
-const personState: TypeRequired = { name: 'PersonState', description: 'State of store' }
+`
+
 const userState: TypeRequired = { name: 'UserState', description: 'State of store' }
 const personMethods: TypeRequired = { name: 'UserMethods', description: 'Methods of store' }
 </script>
 
 <template>
-    <ExplanationContainer :id :title>
+    <ExplanationContainer :code-sections="['userStore', 'personStore']" :id :title>
         <template #explanation>
             <p>
                 Let's take a Store representing a user as an example.
@@ -95,12 +99,11 @@ const personMethods: TypeRequired = { name: 'UserMethods', description: 'Methods
                 It will also extend the “setData” method, so when useStore.setData is executed,
                 the personStore.setData method will also be executed.
             </p>
+        </template>
 
-            <Store :is-epps-store="false" :name="'person'" :store-definitions="personStoreDefinitions">
-                <template #typesDefinition>{{ personTypesDefinition }}</template>
-            </Store>
-
-            <Store :name="'user'" :store-definitions="storeDefinitions" :required-types="[userState, personMethods]">
+        <template #userStore>
+            <Store :name="'user'" :store-definitions="storeDefinitions" :required-types="[userState, personMethods]"
+                :types-definition="userTypesDefinition">
                 <template #explanation>
                     <p>
                         To define a Store that will extend the State and methods of other Stores, use the
@@ -110,7 +113,12 @@ const personMethods: TypeRequired = { name: 'UserMethods', description: 'Methods
                         To benefit from the State's persistence function, only the extendedState function is required.
                     </p>
                 </template>
-                <template #typesDefinition>{{ userTypesDefinition }}</template>
+            </Store>
+        </template>
+
+        <template #personStore>
+            <Store :is-epps-store="false" :name="'person'" :store-definitions="personStoreDefinitions"
+                :types-definition="personTypesDefinition">
             </Store>
         </template>
 

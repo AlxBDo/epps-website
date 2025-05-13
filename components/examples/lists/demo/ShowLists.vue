@@ -2,7 +2,7 @@
 import { ref } from 'vue'
 import { useListsStore } from '~/stores/demo/lists'
 
-import DisplayResult from '~/components/examples/common/displayResult/DisplayResult.vue'
+import DisplayResult from '~/components/examples/common/DisplayResult.vue'
 
 import type { CollectionState, CollectionStoreMethods, EppsStore } from 'epps'
 import type { List } from '~/models/liste'
@@ -28,10 +28,11 @@ listsStore.remember().then(() => {
     <div>
         <h3>Lists contains in store</h3>
 
-        <UButton color="neutral" icon="iconamoon:close-bold" @click="() => listsStore.$reset()" variant="outline">
+        <DisplayResult :result="listsStore.items" />
+
+        <UButton class="mt-4" color="neutral" icon="iconamoon:close-bold" @click="() => listsStore.$reset()"
+            variant="outline">
             Reset Store
         </UButton>
-
-        <DisplayResult :result="listsStore.items" />
     </div>
 </template>

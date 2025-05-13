@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useConnectedUserStore } from '~/stores/demo/connectedUser'
 
-import DisplayResult from '~/components/examples/common/displayResult/DisplayResult.vue'
+import DisplayResult from '~/components/examples/common/DisplayResult.vue'
 
 import type { EppsStore } from 'epps'
 import type { UserStore, UserState } from '~/stores/demo/user'

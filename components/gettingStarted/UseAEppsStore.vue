@@ -1,14 +1,17 @@
 <script setup lang="ts">
 import { eppsStoreType } from '~/utils/pages/resumes'
+import { getScriptSetup } from '~/utils/docs'
 import { useAEppsStore } from '~/utils/components/resumes'
 
+import CodeBlock from '../dependencies/CodeBlock.vue'
 import ExplanationContainer from '../common/ExplanationContainer.vue'
-import Links from '../common/Links.vue'
-import Store from '../examples/common/Store.vue'
-import type { TypeRequired } from '~/types/components'
 
 
 const { id, title } = useAEppsStore
+
+function getCode(isJs: boolean = false): string {
+    return getScriptSetup(getScript(isJs), isJs) + getTemplate()
+}
 
 function getScript(isJs: boolean = false): string {
     const asEppsStore = ' as EppsStore<UserStore, UserState>'
@@ -37,6 +40,7 @@ const userStore = useUserStore()`
 
 function getTemplate() {
     return `
+<template>
     <div>
         <h2>User</h2>
 
@@ -50,7 +54,8 @@ function getTemplate() {
             <span>Password:</span> {{ password }}
         </p>
     </div>
-    `
+</template>
+`
 }
 </script>
 
@@ -61,26 +66,11 @@ function getTemplate() {
         </template>
 
         <template #typescript>
-            <pre>{{ getScript() }}</pre>
+            <CodeBlock :code="getCode()" lang="html" />
         </template>
 
         <template #javascript>
-            <pre>{{ getScript(true) }}</pre>
-        </template>
-    </ExplanationContainer>
-    <ExplanationContainer :code-sections="['template']" id="template-example">
-        <template #explanation>
-            <p>In template</p>
-        </template>
-
-        <template #template>
-            <pre>{{ getTemplate() }}</pre>
-        </template>
-
-        <template #toSee>
-            <ULink class="text-sm" inactive-class="underline" :to="`/${eppsStoreType?.path}`">
-                {{ eppsStoreType?.name }}
-            </ULink>
+            <CodeBlock :code="getCode(true)" lang="html" />
         </template>
     </ExplanationContainer>
 </template>

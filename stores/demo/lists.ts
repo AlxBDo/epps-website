@@ -14,7 +14,7 @@ export interface List {
 
 
 export interface ListsStoreMethods extends CollectionStoreMethods {
-    newList: (name: string, type: number) => void
+    newList: (name: string, type: string) => void
 }
 
 export const useListsStore = (
@@ -22,13 +22,14 @@ export const useListsStore = (
 ) => defineEppsStore<ListsStoreMethods, CollectionState<List>>(
     id ?? defaultStoreId,
     () => {
-        const { parentsStores, persist } = extendedState(
+        const { parentsStores, persist, watchMutation } = extendedState(
             [useCollectionStore('listsCollection')],
             { persist: { watchMutation: ref(true) } }
         )
 
         function newList(name: string, type: ListTypes): void {
-            const collectionStore = parentsStores && parentsStores()[0] as EppsStore<CollectionStoreMethods, CollectionState<List>>
+            const stores = parentsStores && parentsStores()
+            const collectionStore = Array.isArray(stores) && stores[0] as EppsStore<CollectionStoreMethods, CollectionState<List>>
 
             if (!collectionStore) { return }
 
@@ -43,7 +44,8 @@ export const useListsStore = (
         return {
             newList,
             parentsStores,
-            persist
+            persist,
+            watchMutation
         }
     }
 )()
