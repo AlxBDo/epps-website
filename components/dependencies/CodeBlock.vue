@@ -8,5 +8,5 @@ defineProps({
 </script>
 
 <template>
-    <VCodeBlock :code :lang highlightjs theme="agate" />
+    <VCodeBlock :code :lang highlightjs theme="github-dark" />
 </template>

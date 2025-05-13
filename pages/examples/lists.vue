@@ -19,7 +19,7 @@ import UseStore from '~/components/examples/lists/explanation/UseStore.vue'
                 <code>useListsStore</code> extends the <code>useCollectionStore</code> store to
                 benefit from its state properties and methods.
             </p>
-            <p>
+            <p class="text-sm mt-2">
                 useCollectionStore is supplied with the epps plugin.
             </p>
         </template>

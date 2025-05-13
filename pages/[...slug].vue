@@ -60,27 +60,29 @@ if (!pageFound && !pageDefinition) {
 </script>
 
 <template>
-    <Page v-if="!pageFound && pageDefinition" :definition="pageDefinition">
-        <ul v-if="!isEmpty(pageDefinition.components)">
-            <li v-for="(item, index) in (Object.keys(tempPage) as string[])" :key="`page-${item}-${index}`"
-                class="mb-6">
-                <PageLink v-if="tempPage[item].path" v-bind="tempPage[item]" />
+    <div>
+        <Page v-if="!pageFound && pageDefinition" :definition="pageDefinition">
+            <ul v-if="!isEmpty(pageDefinition.components)">
+                <li v-for="(item, index) in (Object.keys(tempPage) as string[])" :key="`page-${item}-${index}`"
+                    class="mb-6">
+                    <PageLink v-if="tempPage[item].path" v-bind="tempPage[item]" />
 
-                <template v-else-if="typeof tempPage[item] === 'object' && !isEmpty(tempPage[item])">
-                    <ULink :to="`${section}/${item}`">
-                        <h4>{{ item }}</h4>
-                    </ULink>
+                    <template v-else-if="typeof tempPage[item] === 'object' && !isEmpty(tempPage[item])">
+                        <ULink :to="`${section}/${item}`">
+                            <h4>{{ item }}</h4>
+                        </ULink>
 
-                    <ul class="pl-3">
-                        <li v-for="(subitem, index) in (Object.keys(tempPage[item]) as string[])"
-                            :key="`page-${item}-${index}`" class="mb-6">
-                            <PageLink v-if="tempPage[item][subitem].path" v-bind="tempPage[item][subitem]" />
-                        </li>
-                    </ul>
-                </template>
-            </li>
-        </ul>
-        <p v-else>{{ pageDefinition.description }}</p>
-    </Page>
-    <DynamicPage v-else :name :type="(type as PageDefinitionTypes)" />
+                        <ul class="pl-3">
+                            <li v-for="(subitem, index) in (Object.keys(tempPage[item]) as string[])"
+                                :key="`page-${item}-${index}`" class="mb-6">
+                                <PageLink v-if="tempPage[item][subitem].path" v-bind="tempPage[item][subitem]" />
+                            </li>
+                        </ul>
+                    </template>
+                </li>
+            </ul>
+            <p v-else>{{ pageDefinition.description }}</p>
+        </Page>
+        <DynamicPage v-else :name :type="(type as PageDefinitionTypes)" />
+    </div>
 </template>

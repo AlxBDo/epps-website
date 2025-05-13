@@ -61,10 +61,6 @@ function getTemplate() {
 
 <template>
     <ExplanationContainer :code-sections="['typescript', 'javascript']" :id :title>
-        <template #explanation>
-            <p>In script setup</p>
-        </template>
-
         <template #typescript>
             <CodeBlock :code="getCode()" lang="html" />
         </template>

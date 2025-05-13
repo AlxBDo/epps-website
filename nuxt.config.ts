@@ -4,7 +4,8 @@ export default defineNuxtConfig({
   app: {
     head: {
       title: 'Epps!'
-    }
+    },
+    pageTransition: { name: 'page', mode: 'out-in' }
   },
 
   compatibilityDate: '2024-11-01',

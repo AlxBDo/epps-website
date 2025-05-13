@@ -105,7 +105,7 @@ const personMethods: TypeRequired = { name: 'UserMethods', description: 'Methods
             <Store :name="'user'" :store-definitions="storeDefinitions" :required-types="[userState, personMethods]"
                 :types-definition="userTypesDefinition">
                 <template #explanation>
-                    <p>
+                    <p class="text-sm">
                         To define a Store that will extend the State and methods of other Stores, use the
                         defineEppsStore and extendedState functions.
                     </p>

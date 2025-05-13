@@ -52,21 +52,26 @@ const appName = useRuntimeConfig().public.appName
                     </ul>
                 </article>
             </div>
-        </div>
 
-        <div class="flex justify-between items-center max-w-80 m-auto mt-8">
-            <UButton class="font-bold rounded-full" color="warning" icon="mdi:console-line" size="xl" :to="install.path"
-                variant="outline">
-                Getting started
-            </UButton>
-            <UButton class="font-bold rounded-full" icon="mdi:code" size="lg" :to="usage.path">
-                {{ usage.title }}
-            </UButton>
+            <div class="flex justify-between items-center max-w-80 m-auto mt-8">
+                <UButton class="font-bold rounded-full" color="warning" icon="mdi:console-line" size="xl"
+                    :to="install.path" variant="outline">
+                    Getting started
+                </UButton>
+                <UButton class="font-bold rounded-full" icon="mdi:code" size="lg" :to="usage.path">
+                    {{ usage.title }}
+                </UButton>
+            </div>
         </div>
     </Page>
 </template>
 
 <style scoped>
+.card {
+    max-width: 225px;
+    margin: 15px auto;
+}
+
 h2 {
     color: var(--color-yellow-500);
 }
