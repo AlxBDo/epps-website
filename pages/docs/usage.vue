@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { usage as definition } from '~/utils/pages/resumes'
-
 import DefineAEppsStore from '~/components/gettingStarted/DefineAEppsStore.vue';
 import UseAEppsStore from '~/components/gettingStarted/UseAEppsStore.vue';
 import Page from '~/components/common/Page.vue'
+
+const { usage: definition } = await usePagesDefinitions()
 </script>
 
 <template>

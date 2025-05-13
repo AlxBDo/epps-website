@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { extendedState } from '~/utils/pages/resumes'
 import { userStoreCreation } from '~/utils/components/resumes'
 
 import Alert from '~/components/dependencies/Alert.vue'
@@ -7,6 +6,7 @@ import CodeBlock from '~/components/dependencies/CodeBlock.vue'
 import ExplanationContainer from '~/components/common/ExplanationContainer.vue'
 
 
+const { extendedState } = await usePagesDefinitions()
 const { id, title } = userStoreCreation
 
 const definition = `export const useUserStore = (id?: string) => defineEppsStore<UserStore, UserState>(

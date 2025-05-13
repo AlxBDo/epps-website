@@ -56,10 +56,24 @@ h4 {
 	padding-right: 15px;
 }
 
-header {
+header:not(article header) {
   align-items: center;
+  background-color: var(--color-yellow-100);
+  border-bottom: 2px solid;
+  border-bottom-color: var(--color-yellow-200);
   display: flex;
   flex-wrap: wrap;
+  max-width: 800px;
+  padding: 25px 5px 15px;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 99;
+
+  @variant dark {
+    background-color: var(--color-slate-800);
+    border-bottom-color: var(--color-slate-900);
+  }
 
   nav {
     position: relative;
@@ -69,7 +83,7 @@ header {
 
 main {
     &> div {
-        margin: 10px auto;
+        margin: 60px auto 0;
         padding: 5px;
         &> div {
             margin: 10px auto;

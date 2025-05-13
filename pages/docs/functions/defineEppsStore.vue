@@ -2,7 +2,7 @@
 import DefineEppsStore from '~/components/docs/functions/DefineEppsStore.vue';
 import Page from '~/components/common/Page.vue';
 
-import { defineEppsStore as definition } from '~/utils/pages/resumes'
+const { defineEppsStore: definition } = await usePagesDefinitions()
 </script>
 
 <template>

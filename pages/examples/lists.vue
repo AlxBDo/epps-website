@@ -1,6 +1,4 @@
 <script lang="ts" setup>
-import { lists as definition } from '~/utils/pages/resumes'
-
 import AddList from '~/components/examples/lists/demo/AddList.vue'
 import GetById from '~/components/examples/lists/demo/GetById.vue'
 import GetItems from '~/components/examples/lists/demo/GetItems.vue'
@@ -9,6 +7,8 @@ import ShowLists from '~/components/examples/lists/demo/ShowLists.vue'
 import StoreCreation from '~/components/examples/lists/explanation/StoreCreation.vue'
 import StorePage from '~/components/examples/common/StorePage.vue'
 import UseStore from '~/components/examples/lists/explanation/UseStore.vue'
+
+const { lists: definition } = await usePagesDefinitions()
 </script>
 
 <template>

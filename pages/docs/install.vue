@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import { install as definition, usage } from '~/utils/pages/resumes'
-
 import ConfigurePlugin from '~/components/gettingStarted/ConfigurePlugin.vue'
 import InstallPlugin from '~/components/gettingStarted/InstallPlugin.vue'
 import Page from '~/components/common/Page.vue'
+
+
+const { install: definition, usage } = await usePagesDefinitions()
 </script>
 
 <template>

@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { user as definition } from '~/utils/pages/resumes'
-
 import ShowUser from '~/components/examples/user/demo/ShowUser.vue'
 import StoreCreation from '~/components/examples/user/explanation/StoreCreation.vue'
 import StorePage from '~/components/examples/common/StorePage.vue'
 import UpdateUser from '~/components/examples/user/demo/UpdateUser.vue'
 import UseStore from '~/components/examples/user/explanation/UseStore.vue'
+
+const { user: definition } = await usePagesDefinitions()
 </script>
 
 <template>

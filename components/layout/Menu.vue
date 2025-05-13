@@ -1,10 +1,14 @@
 <script setup lang="ts">
 import UNavigationMenu from '@nuxt/ui/components/NavigationMenu.vue'
-import { pages } from '~/utils/pages/resumes'
 
 import type { NavigationMenuItem } from '@nuxt/ui'
 import type { ComponentResume } from '~/types/components'
 import type { PageResume } from '~/types/pages'
+import { usePagesDefinitions } from '~/composables/pagesDefinitions'
+
+
+const pagesDefinitions = await usePagesDefinitions()
+const { pages } = pagesDefinitions
 
 function createChildren(children: ComponentResume[], path: string): NavigationMenuItem[] {
     return children.map((child) => {

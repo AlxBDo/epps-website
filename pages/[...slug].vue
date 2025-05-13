@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { capitalize } from 'vue'
-import { error as errorPageDefinition, pages } from '~/utils/pages/resumes'
 import { isEmpty } from '~/utils/validation'
 
 import Page from '~/components/common/Page.vue'
@@ -11,6 +10,7 @@ import type { AnyObject } from '~/types'
 import type { PageDefinitionTypes, PageResume } from '~/types/pages'
 
 
+const { error: errorPageDefinition, pages } = await usePagesDefinitions()
 const allowedSections = ['docs', 'examples']
 const allowedTypes = ['class', 'functions', 'stores', 'types']
 let length = 0
@@ -60,7 +60,7 @@ if (!pageFound && !pageDefinition) {
 </script>
 
 <template>
-    <div>
+    <Suspense>
         <Page v-if="!pageFound && pageDefinition" :definition="pageDefinition">
             <ul v-if="!isEmpty(pageDefinition.components)">
                 <li v-for="(item, index) in (Object.keys(tempPage) as string[])" :key="`page-${item}-${index}`"
@@ -84,5 +84,6 @@ if (!pageFound && !pageDefinition) {
             <p v-else>{{ pageDefinition.description }}</p>
         </Page>
         <DynamicPage v-else :name :type="(type as PageDefinitionTypes)" />
-    </div>
+        <template #fallback>Loading</template>
+    </Suspense>
 </template>

@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { home as definition, install, usage } from '~/utils/pages/resumes'
-
 import Page from '~/components/common/Page.vue'
+
+const pageDef = await usePagesDefinitions()
+const { home: definition, install, usage } = pageDef
 
 const appName = useRuntimeConfig().public.appName
 </script>

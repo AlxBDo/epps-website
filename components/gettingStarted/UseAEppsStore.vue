@@ -1,11 +1,9 @@
 <script setup lang="ts">
-import { eppsStoreType } from '~/utils/pages/resumes'
 import { getScriptSetup } from '~/utils/docs'
 import { useAEppsStore } from '~/utils/components/resumes'
 
 import CodeBlock from '../dependencies/CodeBlock.vue'
 import ExplanationContainer from '../common/ExplanationContainer.vue'
-
 
 const { id, title } = useAEppsStore
 

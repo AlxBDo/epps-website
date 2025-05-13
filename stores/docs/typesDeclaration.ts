@@ -1,5 +1,4 @@
-import { isEmpty } from "~/utils/validation";
-import { pages } from "~/utils/pages/resumes";
+import { isEmpty } from "~/utils/validation"
 
 import type { AnyObject } from "epps";
 import type { ParameterPrototype, TypeRequired, FunctionReturn } from "~/types/components";
@@ -12,7 +11,7 @@ export interface TypeDeclarationState {
 }
 
 export interface TypeDeclarationStore {
-    addTypesToSee: (type: string) => string
+    addTypesToSee: (type: string) => Promise<string>
     addTypesToSeeFromParameters: (params?: ParameterPrototype[]) => void
     hasTypesToSee: () => boolean
     initRequiredType: (declarationRequiredTypes?: TypeRequired[]) => void
@@ -34,8 +33,8 @@ export const useTypeDeclarationStore = (id: string) => defineStore(
         const typesToSee: Ref<string[]> = ref([])
 
 
-        function addTypesToSee(type: string): string {
-            const types = extractTypesFromString(type)
+        async function addTypesToSee(type: string): Promise<string> {
+            const types = await extractTypesFromString(type)
 
             if (!isEmpty(types)) {
                 types.forEach(type => !typesToSee.value.includes(type) && typesToSee.value.push(type))
@@ -50,7 +49,10 @@ export const useTypeDeclarationStore = (id: string) => defineStore(
             }
         }
 
-        function cleanTypesToSee(types: string[]): string[] {
+        async function cleanTypesToSee(types: string[]): Promise<string[]> {
+            const pagesDef = await usePagesDefinitions()
+            const { pages } = pagesDef
+
             return types.reduce((acc: string[], type: string) => {
                 if (type.indexOf('<') >= 0) {
                     type = type.split('<')[0]
@@ -70,7 +72,7 @@ export const useTypeDeclarationStore = (id: string) => defineStore(
             }, [])
         }
 
-        function extractTypesFromString(str: string): string[] {
+        async function extractTypesFromString(str: string): Promise<string[]> {
             let types: string[] = []
 
             if (!isEmpty(str)) {
@@ -81,7 +83,7 @@ export const useTypeDeclarationStore = (id: string) => defineStore(
                 }
             }
 
-            return cleanTypesToSee(types)
+            return await cleanTypesToSee(types)
         }
 
         function hasTypesToSee(): boolean {

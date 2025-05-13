@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { defineAEppsStore } from '~/utils/components/resumes'
-import { defineEppsStore, extendedState } from '~/utils/pages/resumes'
 
 import ExplanationContainer from '../common/ExplanationContainer.vue'
 import Links from '../common/Links.vue'
@@ -8,6 +7,7 @@ import Store from '../examples/common/Store.vue'
 import type { TypeRequired } from '~/types/components'
 
 
+const { defineEppsStore, extendedState } = await usePagesDefinitions()
 const { id, title } = defineAEppsStore
 const typeScriptStoreDefinition = `({
         ...extendedState(
