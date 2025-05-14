@@ -7,8 +7,7 @@ import type { PageResume } from '~/types/pages'
 import { usePagesDefinitions } from '~/composables/pagesDefinitions'
 
 
-const pagesDefinitions = await usePagesDefinitions()
-const { pages } = pagesDefinitions
+const { pages } = await usePagesDefinitions()
 
 function createChildren(children: ComponentResume[], path: string): NavigationMenuItem[] {
     return children.map((child) => {
@@ -77,29 +76,34 @@ function menuLabel(menu: NavigationMenuItem): string {
 </script>
 
 <template>
-    <UNavigationMenu class="w-full justify-center" :items="items">
-        <template #docs-content="{ item }">
-            <ul v-if="(item as NavigationMenuItem)?.children" class="flex flex-wrap">
-                <li v-for="child in (item as NavigationMenuItem).children" :key="child.label" class="w-5/12 p-3">
-                    <ULink class="text-left rounded-md transition-colors hover:bg-elevated/50" :to="child.to">
-                        <p class="font-bold">
-                            {{ menuLabel(child) }}
-                        </p>
-                        <p class="text-muted line-clamp-2 text-xs">
-                            {{ menuDescription(child) }}
-                        </p>
-                    </ULink>
-                    <ul v-if="displayChildren((child as NavigationMenuItem))" class="my-1 ml-3 mr-0 p-0">
-                        <li v-for="c in (child as NavigationMenuItem).children" :key="c.label" class="m-0 mt-1 p-0">
-                            <ULink :to="c.to">
-                                <p class="font-bold text-xs text-left m-0 p-0">
-                                    {{ c.label }}
-                                </p>
-                            </ULink>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
+    <Suspense>
+        <UNavigationMenu class="w-full justify-center" :items="items">
+            <template #docs-content="{ item }">
+                <ul v-if="(item as NavigationMenuItem)?.children" class="flex flex-wrap">
+                    <li v-for="child in (item as NavigationMenuItem).children" :key="child.label" class="w-5/12 p-3">
+                        <ULink class="text-left rounded-md transition-colors hover:bg-elevated/50" :to="child.to">
+                            <p class="font-bold">
+                                {{ menuLabel(child) }}
+                            </p>
+                            <p class="text-muted line-clamp-2 text-xs">
+                                {{ menuDescription(child) }}
+                            </p>
+                        </ULink>
+                        <ul v-if="displayChildren((child as NavigationMenuItem))" class="my-1 ml-3 mr-0 p-0">
+                            <li v-for="c in (child as NavigationMenuItem).children" :key="c.label" class="m-0 mt-1 p-0">
+                                <ULink :to="c.to">
+                                    <p class="font-bold text-xs text-left m-0 p-0">
+                                        {{ c.label }}
+                                    </p>
+                                </ULink>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </template>
+        </UNavigationMenu>
+        <template #fallback>
+            Loading...
         </template>
-    </UNavigationMenu>
+    </Suspense>
 </template>
