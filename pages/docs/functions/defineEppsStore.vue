@@ -6,7 +6,12 @@ const { defineEppsStore: definition } = await usePagesDefinitions()
 </script>
 
 <template>
-    <Page :definition :display-title="false">
-        <DefineEppsStore />
-    </Page>
+    <Suspense>
+        <Page :definition :display-title="false">
+            <DefineEppsStore />
+        </Page>
+        <template #fallback>
+            Loading...
+        </template>
+    </Suspense>
 </template>

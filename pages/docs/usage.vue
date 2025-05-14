@@ -7,12 +7,17 @@ const { usage: definition } = await usePagesDefinitions()
 </script>
 
 <template>
-    <Page :definition>
-        <p>
-            The package is installed and the plugin configured.
-            Now let's define our first EppsStore and use it in a component.
-        </p>
-        <DefineAEppsStore />
-        <UseAEppsStore />
-    </Page>
+    <Suspense>
+        <Page :definition>
+            <p>
+                The package is installed and the plugin configured.
+                Now let's define our first EppsStore and use it in a component.
+            </p>
+            <DefineAEppsStore />
+            <UseAEppsStore />
+        </Page>
+        <template #fallback>
+            Loading...
+        </template>
+    </Suspense>
 </template>

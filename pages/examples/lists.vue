@@ -12,33 +12,38 @@ const { lists: definition } = await usePagesDefinitions()
 </script>
 
 <template>
-    <StorePage :definition>
-        <template #pageExplanation>
-            <p>
-                This page is an example of creating a collection store of lists. The store called
-                <code>useListsStore</code> extends the <code>useCollectionStore</code> store to
-                benefit from its state properties and methods.
-            </p>
-            <p class="text-sm mt-2">
-                useCollectionStore is supplied with the epps plugin.
-            </p>
-        </template>
+    <Suspense>
+        <StorePage :definition>
+            <template #pageExplanation>
+                <p>
+                    This page is an example of creating a collection store of lists. The store called
+                    <code>useListsStore</code> extends the <code>useCollectionStore</code> store to
+                    benefit from its state properties and methods.
+                </p>
+                <p class="text-sm mt-2">
+                    useCollectionStore is supplied with the epps plugin.
+                </p>
+            </template>
 
-        <template #storeExplanation>
-            <StoreCreation />
-            <UseStore />
-        </template>
+            <template #storeExplanation>
+                <StoreCreation />
+                <UseStore />
+            </template>
 
-        <template #demo>
-            <ShowLists />
-            <div id="forms">
-                <AddList />
-                <RemoveList />
-                <GetById />
-                <GetItems />
-            </div>
+            <template #demo>
+                <ShowLists />
+                <div id="forms">
+                    <AddList />
+                    <RemoveList />
+                    <GetById />
+                    <GetItems />
+                </div>
+            </template>
+        </StorePage>
+        <template #fallback>
+            Loading...
         </template>
-    </StorePage>
+    </Suspense>
 </template>
 
 <style scoped>

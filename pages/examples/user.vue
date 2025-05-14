@@ -9,27 +9,32 @@ const { user: definition } = await usePagesDefinitions()
 </script>
 
 <template>
-    <StorePage :definition>
-        <template #pageExplanation>
-            <p>
-                This page is an example of how to create a store representing a user. The store called
-                <code>useUserStore</code> and uses deep inheritance to benefit from the state and methods
-                of several parent stores.
-            </p>
-        </template>
+    <Suspense>
+        <StorePage :definition>
+            <template #pageExplanation>
+                <p>
+                    This page is an example of how to create a store representing a user. The store called
+                    <code>useUserStore</code> and uses deep inheritance to benefit from the state and methods
+                    of several parent stores.
+                </p>
+            </template>
 
-        <template #storeExplanation>
-            <StoreCreation />
-            <UseStore />
-        </template>
+            <template #storeExplanation>
+                <StoreCreation />
+                <UseStore />
+            </template>
 
-        <template #demo>
-            <ShowUser />
-            <div id="forms">
-                <UpdateUser />
-            </div>
+            <template #demo>
+                <ShowUser />
+                <div id="forms">
+                    <UpdateUser />
+                </div>
+            </template>
+        </StorePage>
+        <template #fallback>
+            Loading...
         </template>
-    </StorePage>
+    </Suspense>
 </template>
 
 <style scoped>

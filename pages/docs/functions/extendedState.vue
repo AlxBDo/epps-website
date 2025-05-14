@@ -6,7 +6,12 @@ const { extendedState: definition } = await usePagesDefinitions()
 </script>
 
 <template>
-    <Page :definition :display-title="false">
-        <ExtendedState />
-    </Page>
+    <Suspense>
+        <Page :definition :display-title="false">
+            <ExtendedState />
+        </Page>
+        <template #fallback>
+            Loading...
+        </template>
+    </Suspense>
 </template>

@@ -8,13 +8,18 @@ const { install: definition, usage } = await usePagesDefinitions()
 </script>
 
 <template>
-    <Page :definition>
-        <InstallPlugin />
-        <ConfigurePlugin />
-        <div class="w-full text-right">
-            <UButton class="font-bold rounded-full" icon="mdi:code" :to="`/${usage.path}`">
-                {{ usage.title }}
-            </UButton>
-        </div>
-    </Page>
+    <Suspense>
+        <Page :definition>
+            <InstallPlugin />
+            <ConfigurePlugin />
+            <div class="w-full text-right">
+                <UButton class="font-bold rounded-full" icon="mdi:code" :to="`/${usage.path}`">
+                    {{ usage.title }}
+                </UButton>
+            </div>
+        </Page>
+        <template #fallback>
+            Loading...
+        </template>
+    </Suspense>
 </template>
