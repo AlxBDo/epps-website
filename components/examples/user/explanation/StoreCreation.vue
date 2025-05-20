@@ -6,7 +6,7 @@ import CodeBlock from '~/components/dependencies/CodeBlock.vue'
 import ExplanationContainer from '~/components/common/ExplanationContainer.vue'
 
 
-const { extendedState } = await usePagesDefinitions()
+const { extendedState } = usePagesDefinitions()
 const { id, title } = userStoreCreation
 
 const definition = `export const useUserStore = (id?: string) => defineEppsStore<UserStore, UserState>(

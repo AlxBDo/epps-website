@@ -3,7 +3,7 @@ import DefineAEppsStore from '~/components/gettingStarted/DefineAEppsStore.vue';
 import UseAEppsStore from '~/components/gettingStarted/UseAEppsStore.vue';
 import Page from '~/components/common/Page.vue'
 
-const { usage: definition } = await usePagesDefinitions()
+const { usage: definition } = usePagesDefinitions()
 </script>
 
 <template>

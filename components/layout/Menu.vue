@@ -7,7 +7,7 @@ import type { PageResume } from '~/types/pages'
 import { usePagesDefinitions } from '~/composables/pagesDefinitions'
 
 
-const { pages } = await usePagesDefinitions()
+const { pages } = usePagesDefinitions()
 
 function createChildren(children: ComponentResume[], path: string): NavigationMenuItem[] {
     return children.map((child) => {

@@ -33,8 +33,8 @@ export const useTypeDeclarationStore = (id: string) => defineStore(
         const typesToSee: Ref<string[]> = ref([])
 
 
-        async function addTypesToSee(type: string): Promise<string> {
-            const types = await extractTypesFromString(type)
+        function addTypesToSee(type: string): string {
+            const types = extractTypesFromString(type)
 
             if (!isEmpty(types)) {
                 types.forEach(type => !typesToSee.value.includes(type) && typesToSee.value.push(type))
@@ -49,8 +49,8 @@ export const useTypeDeclarationStore = (id: string) => defineStore(
             }
         }
 
-        async function cleanTypesToSee(types: string[]): Promise<string[]> {
-            const pagesDef = await usePagesDefinitions()
+        function cleanTypesToSee(types: string[]): string[] {
+            const pagesDef = usePagesDefinitions()
             const { pages } = pagesDef
 
             return types.reduce((acc: string[], type: string) => {
@@ -72,7 +72,7 @@ export const useTypeDeclarationStore = (id: string) => defineStore(
             }, [])
         }
 
-        async function extractTypesFromString(str: string): Promise<string[]> {
+        function extractTypesFromString(str: string): string[] {
             let types: string[] = []
 
             if (!isEmpty(str)) {
@@ -83,7 +83,7 @@ export const useTypeDeclarationStore = (id: string) => defineStore(
                 }
             }
 
-            return await cleanTypesToSee(types)
+            return cleanTypesToSee(types)
         }
 
         function hasTypesToSee(): boolean {

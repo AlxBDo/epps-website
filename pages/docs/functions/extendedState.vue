@@ -2,7 +2,7 @@
 import ExtendedState from '~/components/docs/functions/ExtendedState.vue';
 import Page from '~/components/common/Page.vue';
 
-const { extendedState: definition } = await usePagesDefinitions()
+const { extendedState: definition } = usePagesDefinitions()
 </script>
 
 <template>

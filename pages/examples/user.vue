@@ -5,7 +5,7 @@ import StorePage from '~/components/examples/common/StorePage.vue'
 import UpdateUser from '~/components/examples/user/demo/UpdateUser.vue'
 import UseStore from '~/components/examples/user/explanation/UseStore.vue'
 
-const { user: definition } = await usePagesDefinitions()
+const { user: definition } = usePagesDefinitions()
 </script>
 
 <template>

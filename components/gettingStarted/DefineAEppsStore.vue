@@ -7,7 +7,7 @@ import Store from '../examples/common/Store.vue'
 import type { TypeRequired } from '~/types/components'
 
 
-const { defineEppsStore, extendedState } = await usePagesDefinitions()
+const { defineEppsStore, extendedState } = usePagesDefinitions()
 const { id, title } = defineAEppsStore
 const typeScriptStoreDefinition = `({
         ...extendedState(

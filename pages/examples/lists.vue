@@ -8,7 +8,7 @@ import StoreCreation from '~/components/examples/lists/explanation/StoreCreation
 import StorePage from '~/components/examples/common/StorePage.vue'
 import UseStore from '~/components/examples/lists/explanation/UseStore.vue'
 
-const { lists: definition } = await usePagesDefinitions()
+const { lists: definition } = usePagesDefinitions()
 </script>
 
 <template>

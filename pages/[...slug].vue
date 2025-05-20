@@ -10,7 +10,7 @@ import type { AnyObject } from '~/types'
 import type { PageDefinitionTypes, PageResume } from '~/types/pages'
 
 
-const { error: errorPageDefinition, pages } = await usePagesDefinitions()
+const { error: errorPageDefinition, pages } = usePagesDefinitions()
 const allowedSections = ['docs', 'examples']
 const allowedTypes = ['class', 'functions', 'stores', 'types']
 let length = 0
@@ -37,6 +37,8 @@ const pageFound = (allowedPath && Array.isArray(route.params.slug))
 
         return found
     }, false)
+
+console.log('[...slug].vue', pageDefinition, pageFound, tempPage)
 
 if (!pageFound && !pageDefinition) {
     if (allowedPath && !isEmpty(tempPage)) {
