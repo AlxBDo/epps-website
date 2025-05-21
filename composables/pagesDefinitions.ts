@@ -1,5 +1,8 @@
+import { capitalize } from "vue"
 import { createDefinition } from "~/utils/pages/createDefinition"
 import { createPageResume } from "~/utils/create-resume"
+import { firstCharToLowerCase } from "~/utils/string"
+
 import createPluginDefinition from "~/data/functions/createPlugin"
 import defineEppsStoreDefinition from "~/data/pages/docs/defineEppsStore"
 import eppsStoreDefinition from "~/data/types/eppsStore"
@@ -19,7 +22,6 @@ import useListsStoreDefinition from "~/data/pages/examples/useListsStore"
 import useUserStoreDefinition from "~/data/pages/examples/useUserStore"
 
 import type { PageDefinitionTypes, PageResume, PagesResumes } from "~/types/pages"
-import { capitalize } from "vue"
 import type { ComponentResume, FunctionPrototype, InterfacePrototype, StorePrototype, TypePrototype } from "~/types/components"
 import type { AnyObject } from "epps"
 
@@ -65,54 +67,6 @@ export function usePagesDefinitions() {
     /**
      * Utils
      */
-    function createDefinition(
-        definitionType: PageDefinitionTypes,
-        prototype: FunctionPrototype | InterfacePrototype | StorePrototype | TypePrototype
-    ) {
-        try {
-            const components = [] as ComponentResume[]
-            const { name, type } = prototype
-            const nameToDisplay = type === 'store' ? prototype.id : name
-            const path = `docs/${definitionType}/${nameToDisplay}`
-            const title = `${capitalize(type)} ${nameToDisplay}`
-
-            return {
-                ...(prototype as AnyObject).default,
-                components,
-                id: nameToDisplay.toLowerCase(),
-                path,
-                title
-            }
-        } catch (e) {
-            logError('pages/createDefinition', e)
-        }
-    }
-
-    async function createDynamicDefinition(definitionType: PageDefinitionTypes, definitionName: string) {
-        try {
-            const prototype = await dynamicImport(
-                `../data/${definitionType}/${definitionName}.ts`
-            ) as FunctionPrototype | InterfacePrototype | StorePrototype
-
-            const components = [] as ComponentResume[]
-            const { name, type } = prototype
-            const nameToDisplay = type === 'store' ? prototype.id : name
-            const path = `docs/${definitionType}/${nameToDisplay}`
-            const title = `${capitalize(type)} ${nameToDisplay}`
-
-            return {
-                ...(prototype as AnyObject).default,
-                components,
-                id: nameToDisplay.toLowerCase(),
-                path,
-                title
-            }
-        } catch (e) {
-            logError('pages/createDefinition', e)
-        }
-    }
-
-
     const pages: PagesResumes = {
         home,
 
@@ -145,8 +99,20 @@ export function usePagesDefinitions() {
         examples: { lists, user }
     }
 
+    function getPageDefinition(definitionType: PageDefinitionTypes, definitionName: string) {
+        try {
+            const pagesGroups: AnyObject = (pages.docs as AnyObject)[definitionType]
+
+            if (!pagesGroups) return
+
+            return pagesGroups[firstCharToLowerCase(definitionName)] as PageResume
+        } catch (e) {
+            logError('pages/createDefinition', e)
+        }
+    }
+
+
     return {
-        createDynamicDefinition,
         createPlugin,
         defineEppsStore,
         eppsStoreType,
@@ -155,6 +121,7 @@ export function usePagesDefinitions() {
         extendedStateInterface,
         extendedStateOptions,
         extendedStore,
+        getPageDefinition,
         getParentStoreMethod,
         getParentStorePropertyValue,
         home,

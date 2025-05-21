@@ -11,6 +11,7 @@ import type {
 import type { PageDefinitionTypes } from '~/types/pages'
 import type { AnyObject } from "epps"
 
+
 export function createDefinition(
     definitionType: PageDefinitionTypes, prototype: FunctionPrototype | InterfacePrototype | StorePrototype | TypePrototype
 ) {
@@ -22,7 +23,7 @@ export function createDefinition(
         const title = `${capitalize(type)} ${nameToDisplay}`
 
         return {
-            ...(prototype as AnyObject).default,
+            ...prototype,
             components,
             id: nameToDisplay.toLowerCase(),
             path,

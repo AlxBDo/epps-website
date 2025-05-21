@@ -57,7 +57,7 @@ const prototype = createFunctionPrototype(extendedStatePrototype)
                     </table>
 
                     <table>
-                        <caption>option.persist</caption>
+                        <caption>options.persist</caption>
                         <thead>
                             <tr>
                                 <th class="w-3/12">Key</th>

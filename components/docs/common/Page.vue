@@ -18,9 +18,9 @@ const pageProps = defineProps({
     },
 })
 
-const { createDynamicDefinition } = usePagesDefinitions()
+const { getPageDefinition } = usePagesDefinitions()
 
-const definition = await createDynamicDefinition(
+const definition = getPageDefinition(
     pageProps.type, pageProps.name
 ) as PageResume & (FunctionPrototype | InterfacePrototype | StorePrototypeInterface)
 </script>

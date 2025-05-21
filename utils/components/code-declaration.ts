@@ -7,7 +7,7 @@ export function createParameterPrototype(name: string, type: string, required: b
 
 type CreateFunctionPrototypeProps = {
     name: string,
-    props: ParameterPrototype[],
+    props?: ParameterPrototype[],
     returnType: FunctionReturn,
     requiredTypes?: TypeRequired[],
     description?: string
