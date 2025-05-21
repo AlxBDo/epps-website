@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { createDefinition, createDynamicDefinition } from '~/utils/pages/createDefinition'
-
 import CodeDeclarationExplanation from './CodeDeclarationExplanation.vue'
 import Page from '~/components/common/Page.vue'
 import StorePrototype from './StorePrototype.vue'
@@ -19,6 +17,8 @@ const pageProps = defineProps({
         required: true,
     },
 })
+
+const { createDynamicDefinition } = usePagesDefinitions()
 
 const definition = await createDynamicDefinition(
     pageProps.type, pageProps.name

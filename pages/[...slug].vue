@@ -38,8 +38,6 @@ const pageFound = (allowedPath && Array.isArray(route.params.slug))
         return found
     }, false)
 
-console.log('[...slug].vue', pageDefinition, pageFound, tempPage)
-
 if (!pageFound && !pageDefinition) {
     if (allowedPath && !isEmpty(tempPage)) {
         const titleSectionMapping: Record<string, string> = { docs: 'documentation', examples: 'examples' }

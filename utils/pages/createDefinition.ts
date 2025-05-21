@@ -14,8 +14,6 @@ import type { AnyObject } from "epps"
 export function createDefinition(
     definitionType: PageDefinitionTypes, prototype: FunctionPrototype | InterfacePrototype | StorePrototype | TypePrototype
 ) {
-
-    console.log('createDefinition', definitionType, prototype)
     try {
         const components = [] as ComponentResume[]
         const { name, type } = prototype

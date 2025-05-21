@@ -18,7 +18,10 @@ import useCollectionStoreDefinition from "~/data/stores/useCollectionStore"
 import useListsStoreDefinition from "~/data/pages/examples/useListsStore"
 import useUserStoreDefinition from "~/data/pages/examples/useUserStore"
 
-import type { PageResume, PagesResumes } from "~/types/pages"
+import type { PageDefinitionTypes, PageResume, PagesResumes } from "~/types/pages"
+import { capitalize } from "vue"
+import type { ComponentResume, FunctionPrototype, InterfacePrototype, StorePrototype, TypePrototype } from "~/types/components"
+import type { AnyObject } from "epps"
 
 
 export function usePagesDefinitions() {
@@ -59,6 +62,56 @@ export function usePagesDefinitions() {
     const lists = createPageResume(useListsStoreDefinition)
     const user = createPageResume(useUserStoreDefinition)
 
+    /**
+     * Utils
+     */
+    function createDefinition(
+        definitionType: PageDefinitionTypes,
+        prototype: FunctionPrototype | InterfacePrototype | StorePrototype | TypePrototype
+    ) {
+        try {
+            const components = [] as ComponentResume[]
+            const { name, type } = prototype
+            const nameToDisplay = type === 'store' ? prototype.id : name
+            const path = `docs/${definitionType}/${nameToDisplay}`
+            const title = `${capitalize(type)} ${nameToDisplay}`
+
+            return {
+                ...(prototype as AnyObject).default,
+                components,
+                id: nameToDisplay.toLowerCase(),
+                path,
+                title
+            }
+        } catch (e) {
+            logError('pages/createDefinition', e)
+        }
+    }
+
+    async function createDynamicDefinition(definitionType: PageDefinitionTypes, definitionName: string) {
+        try {
+            const prototype = await dynamicImport(
+                `../data/${definitionType}/${definitionName}.ts`
+            ) as FunctionPrototype | InterfacePrototype | StorePrototype
+
+            const components = [] as ComponentResume[]
+            const { name, type } = prototype
+            const nameToDisplay = type === 'store' ? prototype.id : name
+            const path = `docs/${definitionType}/${nameToDisplay}`
+            const title = `${capitalize(type)} ${nameToDisplay}`
+
+            return {
+                ...(prototype as AnyObject).default,
+                components,
+                id: nameToDisplay.toLowerCase(),
+                path,
+                title
+            }
+        } catch (e) {
+            logError('pages/createDefinition', e)
+        }
+    }
+
 
     const pages: PagesResumes = {
         home,
@@ -93,6 +146,7 @@ export function usePagesDefinitions() {
     }
 
     return {
+        createDynamicDefinition,
         createPlugin,
         defineEppsStore,
         eppsStoreType,
