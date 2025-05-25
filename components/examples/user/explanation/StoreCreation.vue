@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { storesRepoPath } from '~/utils/constantes';
 import { userStoreCreation } from '~/utils/components/resumes'
 
 import Alert from '~/components/dependencies/Alert.vue'
@@ -80,8 +81,8 @@ const definition = `export const useUserStore = (id?: string) => defineEppsStore
             <div>
                 <p>
                     For more information on parent stores extended by useUserStore :
-                    <ULink :external="true" to="https://github.com/AlxBDo/Epps/tree/main/src/stores" target="_blank">
-                        Repo
+                    <ULink :external="true" :to="storesRepoPath" target="_blank">
+                        Github repo
                     </ULink>
                 </p>
             </div>

@@ -30,8 +30,8 @@ listsStore.remember().then(() => {
 
         <DisplayResult :result="listsStore.items" />
 
-        <UButton class="mt-4" color="neutral" icon="iconamoon:close-bold" @click="() => listsStore.$reset()"
-            variant="outline">
+        <UButton class="mt-4 cursor-pointer" color="neutral" icon="iconamoon:close-bold"
+            @click="() => listsStore.$reset()" variant="outline">
             Reset Store
         </UButton>
     </div>

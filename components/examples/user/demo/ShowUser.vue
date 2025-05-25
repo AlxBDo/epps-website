@@ -36,8 +36,8 @@ const user = computed(() => ({
 
         <DisplayResult :result="user" />
 
-        <UButton class="mt-4" color="neutral" icon="iconamoon:close-bold" @click="() => connectedUser.$reset()"
-            variant="outline">
+        <UButton class="mt-4 cursor-pointer" color="neutral" icon="iconamoon:close-bold"
+            @click="() => connectedUser.$reset()" variant="outline">
             Reset Store
         </UButton>
     </div>

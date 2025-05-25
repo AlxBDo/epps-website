@@ -16,10 +16,12 @@ defineProps({
 
         <slot name="actions">
             <div v-if="cancelBtn || submitBtn">
-                <UButton v-if="cancelBtn" color="neutral" variant="outline" @click="$emit('onCancel')">
+                <UButton v-if="cancelBtn" class="cursor-pointer" color="neutral" variant="outline"
+                    @click="$emit('onCancel')">
                     {{ cancelBtn }}
                 </UButton>
-                <UButton v-if="submitBtn" variant="outline" @click="$emit('onSubmit')">{{ submitBtn }}
+                <UButton v-if="submitBtn" class="cursor-pointer" variant="outline" @click="$emit('onSubmit')">
+                    {{ submitBtn }}
                 </UButton>
             </div>
         </slot>

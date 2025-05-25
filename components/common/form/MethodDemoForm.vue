@@ -58,6 +58,12 @@ h4 {
     width: 100%;
 }
 
+:deep(form) {
+    div {
+        margin-bottom: 5px;
+    }
+}
+
 :deep(.code > div) {
     width: 320px;
     flex-wrap: wrap;

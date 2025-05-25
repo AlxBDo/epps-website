@@ -21,8 +21,8 @@ const appName = useRuntimeConfig().public.appName
                     your state management more efficient and flexible.
                 </p>
 
-                <div class="flex justify-between align-top mt-6 ">
-                    <article class="w-1/2 px-6">
+                <div class="sm:flex justify-between align-top mt-12 ">
+                    <article class="sm:w-1/2 px-6">
                         <h3>Store Extension</h3>
 
                         <ul>
@@ -38,7 +38,7 @@ const appName = useRuntimeConfig().public.appName
                         </ul>
                     </article>
 
-                    <article class="w-1/2 px-6">
+                    <article class="sm:w-1/2 px-6">
                         <h3>State Persistence</h3>
 
                         <ul>

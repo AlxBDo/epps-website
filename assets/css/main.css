@@ -11,7 +11,7 @@
 
 body {
   margin: 0 auto;
-  max-width: 800px;
+  max-width: 1040px;
 }
 
 body, html {
@@ -63,11 +63,11 @@ header:not(article header) {
   border-bottom-color: var(--color-yellow-200);
   display: flex;
   flex-wrap: wrap;
-  max-width: 800px;
-  padding: 25px 5px 15px;
+  max-width: 1040px;
+  padding: 5% 2% 15px;
   position: fixed;
   top: 0;
-  width: 100%;
+  width: 96%;
   z-index: 99;
 
   @variant dark {
@@ -83,11 +83,10 @@ header:not(article header) {
 
 main {
     &> div {
-        margin: 60px auto 0;
-        padding: 5px;
+        margin: 10% auto 0;
+        padding: 2% 4%;
         &> div {
-            margin: 10px auto;
-            padding: 5px;
+            padding: 2%;
             p {
                 margin-bottom: 5px;
                 margin-top: 5px;
