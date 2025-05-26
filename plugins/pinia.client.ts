@@ -11,7 +11,8 @@ export default defineNuxtPlugin({
             createPlugin(
                 'localStorage',
                 useRuntimeConfig().public.cryptIv as string,
-                useRuntimeConfig().public.cryptKey as string
+                useRuntimeConfig().public.cryptKey as string,
+                true
             ))
     }
 })

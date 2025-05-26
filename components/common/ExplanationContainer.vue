@@ -81,11 +81,9 @@ const slots = useSlots()
 </template>
 
 <style scoped>
-.explanation,
-.code-ctn,
 .code-selection-nav,
 .tips {
-    padding: 5px;
+    padding: 1%;
 }
 
 .code-selection-nav {

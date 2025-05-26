@@ -37,7 +37,6 @@ import Menu from '~/components/layout/Menu.vue';
 
 .logo {
     margin-right: 15px;
-    margin-top: -15px;
     width: 60px;
 
     &:hover {
