@@ -3457,10 +3457,10 @@ env-paths@^3.0.0:
   resolved "https://registry.yarnpkg.com/env-paths/-/env-paths-3.0.0.tgz#2f1e89c2f6dbd3408e1b1711dd82d62e317f58da"
   integrity sha512-dtJUTepzMW3Lm/NPxRf3wP4642UWhjL2sQxc+ym2YMj1m/H2zDNQOlezafzkHwn6sMstjHTwG6iQQsctDW/b1A==
 
-epps@^0.1.81:
-  version "0.1.81"
-  resolved "https://registry.yarnpkg.com/epps/-/epps-0.1.81.tgz#baf358467e73bc729ac0fe0d4fe750c3ca318f1a"
-  integrity sha512-steAUZJkJ4M0yRrcmMN32/cLw1OjUxk8hr8cWy6iN3EBtn/JShiETTfPRum6Nc/UOELKxe2ObribW4ZwC8mlCQ==
+epps@^0.1.82:
+  version "0.1.82"
+  resolved "https://registry.yarnpkg.com/epps/-/epps-0.1.82.tgz#f50776733c0d98a61ac1c593c813491410f52fb3"
+  integrity sha512-VrAsP372MCQKZ2khv1XSgwApfXeyRUXh2YrN2FPPNir/GMFw738NCtBDuvMhoqU48uqIaqyrzrWJCmkidVGfkQ==
   dependencies:
     crypto-js "^4.2.0"
     pinia "^3.0.1"
@@ -7133,7 +7133,7 @@ vue-router@^4.5.0, vue-router@^4.5.1:
   dependencies:
     "@vue/devtools-api" "^6.6.4"
 
-vue@^3.4.31, vue@^3.4.5, vue@^3.5.13:
+vue@3.5.13, vue@^3.4.31, vue@^3.4.5, vue@^3.5.13:
   version "3.5.13"
   resolved "https://registry.yarnpkg.com/vue/-/vue-3.5.13.tgz#9f760a1a982b09c0c04a867903fc339c9f29ec0a"
   integrity sha512-wmeiSMxkZCSc+PM2w2VRsOYAZC8GdipNFRTsLSfodVqI9mbejKeXEGr8SckuLnrQPGe3oJN5c3K0vpoU9q/wCQ==
@@ -7144,7 +7144,7 @@ vue@^3.4.31, vue@^3.4.5, vue@^3.5.13:
     "@vue/server-renderer" "3.5.13"
     "@vue/shared" "3.5.13"
 
-vue@^3.5.14, vue@^3.5.15:
+vue@^3.5.14:
   version "3.5.15"
   resolved "https://registry.yarnpkg.com/vue/-/vue-3.5.15.tgz#5896569a33a1bcafd764c6b27e4e6f8cb55f4bee"
   integrity sha512-aD9zK4rB43JAMK/5BmS4LdPiEp8Fdh8P1Ve/XNuMF5YRf78fCyPE6FUbQwcaWQ5oZ1R2CD9NKE0FFOVpMR7gEQ==
