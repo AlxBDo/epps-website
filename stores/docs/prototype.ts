@@ -150,7 +150,7 @@ export const usePrototypeStore = (id: string) => defineEppsStore<PrototypeStore,
         getParentStoreMethod('addTypesToSeeFromParameters', 0, ps)(properties)
         getParentStoreMethod('initProps', 1, ps)(
             props,
-            (prop: ParameterPrototype) => getParentStoreMethod('addTypesToSeeFromParameters', 0)(prop),
+            (prop: ParameterPrototype) => getParentStoreMethod('addTypesToSeeFromParameters', 0, ps)(prop),
             indent
         )
         getParentStoreMethod('initTypes', 0, ps)(declaration.value)

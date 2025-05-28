@@ -3309,10 +3309,10 @@ env-paths@^3.0.0:
   resolved "https://registry.yarnpkg.com/env-paths/-/env-paths-3.0.0.tgz#2f1e89c2f6dbd3408e1b1711dd82d62e317f58da"
   integrity sha512-dtJUTepzMW3Lm/NPxRf3wP4642UWhjL2sQxc+ym2YMj1m/H2zDNQOlezafzkHwn6sMstjHTwG6iQQsctDW/b1A==
 
-epps@^0.1.82:
-  version "0.1.82"
-  resolved "https://registry.yarnpkg.com/epps/-/epps-0.1.82.tgz#f50776733c0d98a61ac1c593c813491410f52fb3"
-  integrity sha512-VrAsP372MCQKZ2khv1XSgwApfXeyRUXh2YrN2FPPNir/GMFw738NCtBDuvMhoqU48uqIaqyrzrWJCmkidVGfkQ==
+epps@^0.1.83:
+  version "0.1.83"
+  resolved "https://registry.yarnpkg.com/epps/-/epps-0.1.83.tgz#1f68e15b3113c7f9b88a0d13abbf6dc45f706727"
+  integrity sha512-pHife2osZXEMNeE1MWTMRCcfXgGSAMdyPNnlPbo2B3GHt5uyc/tMzCZGNHODe/xlOl4dz368eI8t/fkcFlPMiA==
   dependencies:
     crypto-js "^4.2.0"
     pinia "^3.0.1"
