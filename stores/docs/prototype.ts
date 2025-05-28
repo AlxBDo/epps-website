@@ -145,21 +145,29 @@ export const usePrototypeStore = (id: string) => defineEppsStore<PrototypeStore,
         declaration.value = { description, name, properties, props, requiredTypes, returnType, type, value }
         codeSlots.value = ['typeScript']
         declarationSymbols.value = declarationsSymbols[type]
+
         const ps = parentsStores && parentsStores()
 
-        getParentStoreMethod('addTypesToSeeFromParameters', 0, ps)(properties)
-        getParentStoreMethod('initProps', 1, ps)(
+        if (!Array.isArray(ps)) {
+            throw new Error('Prototype store requires TypeDeclarationStore and PropsDeclarationStore as parents')
+        }
+
+        const typesStore = ps[0]
+        const propsStore = ps[1]
+
+        getParentStoreMethod('addTypesToSeeFromParameters', typesStore)(properties)
+        getParentStoreMethod('initProps', propsStore)(
             props,
-            (prop: ParameterPrototype) => getParentStoreMethod('addTypesToSeeFromParameters', 0, ps)(prop),
+            (prop: ParameterPrototype) => getParentStoreMethod('addTypesToSeeFromParameters', typesStore)(prop),
             indent
         )
-        getParentStoreMethod('initTypes', 0, ps)(declaration.value)
+        getParentStoreMethod('initTypes', typesStore)(declaration.value)
 
         if (typesNeedJsCode.includes(type)) {
             codeSlots.value.push('javascript')
         }
-        if (returnType) { getParentStoreMethod('addTypesToSee', 0, ps)(returnType) }
-        if (value) { getParentStoreMethod('addTypesToSee', 0, ps)(value) }
+        if (returnType) { getParentStoreMethod('addTypesToSee', typesStore)(returnType) }
+        if (value) { getParentStoreMethod('addTypesToSee', typesStore)(value) }
     }
 
 

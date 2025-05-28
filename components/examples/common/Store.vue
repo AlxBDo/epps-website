@@ -5,6 +5,7 @@ import ExplanationContainer from '~/components/common/ExplanationContainer.vue'
 import type { PropType } from 'vue'
 import type { ParameterPrototype, TypeRequired } from '~/types/components'
 import { useStoreStore } from '~/stores/docs/store'
+import { isEmpty } from '~/utils/validation'
 
 
 interface StoreDefinitions {
@@ -29,7 +30,7 @@ storeStore.init(componentProps)
 const { definitionParameterToString, defineStoreToString, requiredTypesToString, storeName } = storeStore
 
 const definition = (withTypes: boolean) => `const ${storeName} = ${definitionParameterToString() + defineStoreToString() + (withTypes ? requiredTypesToString() : '')}(
-    ${componentProps.name}Store,
+    ${!isEmpty(componentProps.definitionParameter) ? componentProps.definitionParameter.name : "'" + (componentProps.name + 'Store') + "'"},
     () => `
 const endDefinition = `
 )`

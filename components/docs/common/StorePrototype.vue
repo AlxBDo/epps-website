@@ -4,10 +4,9 @@ import { useStorePrototype } from '~/stores/docs/storePrototype'
 
 import CodeBlock from '~/components/dependencies/CodeBlock.vue'
 import ExplanationContainer from '../../common/ExplanationContainer.vue'
-import FunctionPrototype from './FunctionPrototype.vue'
 
 import type { PropType } from 'vue'
-import type { FunctionPrototype as FunctionPrototypeInterface, StorePrototype } from '~/types/components'
+import type { StorePrototype } from '~/types/components'
 
 
 const componentProps = defineProps({
@@ -17,7 +16,7 @@ const componentProps = defineProps({
     },
 })
 
-const { description, id, methods, state, type } = componentProps.prototype
+const { id, methods, state } = componentProps.prototype
 
 const storePrototype = useStorePrototype(id)
 storePrototype.setPrototype(componentProps.prototype)
@@ -84,3 +83,10 @@ const setupStorePrototype = storePrototype.prototypeToString()
         </template>
     </ExplanationContainer>
 </template>
+
+<style scoped>
+li div p {
+    padding: 0 5px;
+    margin: 0px 10px;
+}
+</style>

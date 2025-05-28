@@ -4,7 +4,7 @@ import { defineAEppsStore } from '~/utils/components/resumes'
 import ExplanationContainer from '../common/ExplanationContainer.vue'
 import Links from '../common/Links.vue'
 import Store from '../examples/common/Store.vue'
-import type { TypeRequired } from '~/types/components'
+import type { ParameterPrototype, TypeRequired } from '~/types/components'
 
 
 const { defineEppsStore, extendedState } = usePagesDefinitions()
@@ -64,6 +64,8 @@ const personStoreDefinitions = {
     ts: typeScriptPersonStoreDefinition
 }
 
+const personStoreDefParams: ParameterPrototype = { name: 'storeId', type: 'string', required: true }
+
 const storeDefinitions = {
     js: javascriptScriptStoreDefinition,
     ts: typeScriptStoreDefinition
@@ -117,8 +119,8 @@ const personMethods: TypeRequired = { name: 'UserMethods', description: 'Methods
         </template>
 
         <template #personStore>
-            <Store :is-epps-store="false" :name="'person'" :store-definitions="personStoreDefinitions"
-                :types-definition="personTypesDefinition">
+            <Store :definition-parameter="personStoreDefParams" :is-epps-store="false" :name="'person'"
+                :store-definitions="personStoreDefinitions" :types-definition="personTypesDefinition">
             </Store>
         </template>
 

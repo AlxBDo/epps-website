@@ -11,7 +11,7 @@ const { extendedState } = usePagesDefinitions()
 const { id, title } = userStoreCreation
 
 const definition = `export const useUserStore = (id?: string) => defineEppsStore<UserStore, UserState>(
-    id ?? 'user',
+    id ?? 'userStore',
     () => {
         const password = ref<string>()
 
@@ -22,7 +22,7 @@ const definition = `export const useUserStore = (id?: string) => defineEppsStore
             persist,
             persistedPropertiesToEncrypt
         } = extendedState(
-            [useContactStore(defineStoreId(id, 'contact'))],
+            [useContactStore(id ?? 'userContactStore')],
             { 
                 actionsToExtends: ['setData'], 
                 persist: {

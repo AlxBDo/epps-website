@@ -1,6 +1,7 @@
 import { capitalize } from "vue"
-import type { ParameterPrototype, TypeRequired } from "~/types/components"
 import { isEmpty } from "~/utils/validation"
+import type { ParameterPrototype, TypeRequired } from "~/types/components"
+
 
 interface StoreState {
     definitionParameter?: ParameterPrototype
@@ -8,6 +9,7 @@ interface StoreState {
     name: string
     requiredTypes?: TypeRequired[]
 }
+
 
 export const useStoreStore = (id: string) => defineStore(`${id}Store`, () => {
     const definitionParameter = ref<ParameterPrototype>()
@@ -23,7 +25,7 @@ export const useStoreStore = (id: string) => defineStore(`${id}Store`, () => {
 
     function definitionParameterToString() {
         return isEmpty(definitionParameter.value) ? ''
-            : `('${definitionParameter.value?.name}${definitionParameter.value?.required ? '' : '?'}: ${definitionParameter.value?.type}') => `
+            : `(${definitionParameter.value?.name}${definitionParameter.value?.required ? '' : '?'}: ${definitionParameter.value?.type}) => `
     }
 
     function init(store: StoreState) {

@@ -51,15 +51,22 @@ export const useCodeDeclarationExplanationStore = (id: string) => defineEppsStor
             propsExplanation.value = []
             const ps = parentsStores && parentsStores()
 
-            getParentStoreMethod('addTypesToSeeFromParameters', 0, ps)(prototype.properties)
-            getParentStoreMethod('initProps', 1, ps)(prototype.props, propCallback)
-            getParentStoreMethod('initRequiredType', 0, ps)(prototype.requiredTypes)
+            if (!Array.isArray(ps)) {
+                throw new Error('TypeDeclarationStore and PropsDeclarationStore not found')
+            }
+
+            const typesStore = ps[0]
+            const propsStore = ps[1]
+
+            getParentStoreMethod('addTypesToSeeFromParameters', typesStore)(prototype.properties)
+            getParentStoreMethod('initProps', propsStore)(prototype.props, propCallback)
+            getParentStoreMethod('initRequiredType', typesStore)(prototype.requiredTypes)
 
             if (prototype.returnType) {
-                getParentStoreMethod('addTypesToSee', 0, ps)(prototype.returnType)
+                getParentStoreMethod('addTypesToSee', typesStore)(prototype.returnType)
             }
             if (prototype.value) {
-                getParentStoreMethod('addTypesToSee', 0, ps)(prototype.value)
+                getParentStoreMethod('addTypesToSee', typesStore)(prototype.value)
             }
         }
 
