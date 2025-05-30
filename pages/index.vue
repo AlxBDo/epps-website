@@ -12,7 +12,7 @@ const appName = useRuntimeConfig().public.appName
                 <h2>What is it ?</h2>
 
                 <p>
-                    <b>{{ appName }} is</b> an acronym for <b>"Extends and Perist Pinia Store"</b>.
+                    <b>{{ appName }} is</b> an acronym for <b>"Extends and Persist Pinia Store"</b>.
                     It's a plugin designed for <b>Pinia</b>, the state management library for <b>Vue.js</b>
                     and <b>Nuxt.js</b>.
                 </p>

@@ -47,7 +47,7 @@ export const useCodeDeclarationExplanationStore = (id: string) => defineEppsStor
             return !isEmpty(propsExplanation.value)
         }
 
-        function initDeclaration(prototype: Prototype): void {
+        function initDeclaration(prototype: Prototype, indent: number = 0): void {
             propsExplanation.value = []
             const ps = parentsStores && parentsStores()
 
@@ -57,22 +57,32 @@ export const useCodeDeclarationExplanationStore = (id: string) => defineEppsStor
 
             const typesStore = ps[0]
             const propsStore = ps[1]
-
-            getParentStoreMethod('addTypesToSeeFromParameters', typesStore)(prototype.properties)
-            getParentStoreMethod('initProps', propsStore)(prototype.props, propCallback)
-            getParentStoreMethod('initRequiredType', typesStore)(prototype.requiredTypes)
-
-            if (prototype.returnType) {
-                getParentStoreMethod('addTypesToSee', typesStore)(prototype.returnType)
-            }
-            if (prototype.value) {
-                getParentStoreMethod('addTypesToSee', typesStore)(prototype.value)
-            }
+            getParentStoreMethod('initProps', propsStore)(prototype.props, propCallback, indent)
+            getParentStoreMethod('initTypes', typesStore)(prototype)
         }
 
         function propCallback(prop: ParameterPrototype): void {
-            getParentStoreMethod('addTypesToSee', 0, parentsStores && parentsStores())(prop.type)
+            const ps = parentsStores && parentsStores()
+            if (!Array.isArray(ps)) {
+                throw new Error('TypeDeclarationStore and PropsDeclarationStore not found')
+            }
+            const typesStore = ps[0]
+
+            getParentStoreMethod('addTypesToSee', typesStore)(prop.type)
+            getParentStoreMethod('addTypesToSeeFromParameters', typesStore)(prop)
             createParameterExplanation(prop)
+        }
+
+        function propsToString(): string {
+            return getParentStoreMethod('propsToString', 1, parentsStores && parentsStores())()
+        }
+
+        function requiredTypesToString(): string {
+            return getParentStoreMethod('requiredTypesToString', 0, parentsStores && parentsStores())()
+        }
+
+        function returnTypeFormatted(returnType?: string): string {
+            return getParentStoreMethod('returnTypeFormatted', 0, parentsStores && parentsStores())(returnType)
         }
 
 
@@ -80,6 +90,9 @@ export const useCodeDeclarationExplanationStore = (id: string) => defineEppsStor
             hasPropsExplanation,
             initDeclaration,
             parentsStores,
-            propsExplanation
+            propsExplanation,
+            propsToString,
+            requiredTypesToString,
+            returnTypeFormatted
         }
     })()

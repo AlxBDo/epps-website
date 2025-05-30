@@ -30,6 +30,7 @@ export const useStorePrototype = (id: string) => defineStore(`${id}StorePrototyp
             if (!isState) {
                 const prototypeStore = usePrototypeStore(property.name) as EppsStore<PrototypeStore, PrototypeState>
                 prototypeStore.initDeclaration(property as FunctionPrototype, indentNumber)
+                prototypeStore.initProps((property as FunctionPrototype).props, undefined, 3)
 
                 code += indent('', indentNumber)
 
@@ -44,7 +45,7 @@ export const useStorePrototype = (id: string) => defineStore(`${id}StorePrototyp
                 }
 
                 if (!isJs) {
-                    code += prototypeStore.requiredTypes
+                    code += prototypeStore.requiredTypesToString()
                 }
 
                 code += prototypeStore.propsToString()
@@ -55,7 +56,7 @@ export const useStorePrototype = (id: string) => defineStore(`${id}StorePrototyp
                     code += ': '
                 }
 
-                code += `${prototypeStore.returnType}
+                code += `${(property as FunctionPrototype)?.returnType}
 `
             } else {
                 if (!isOptionApi) {

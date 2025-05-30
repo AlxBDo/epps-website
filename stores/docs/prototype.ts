@@ -1,10 +1,8 @@
+import type { CodeDeclarationState, CodeDeclarationStore } from "./codeDeclarationExplanation";
 import type { CodeDeclarationTypes, FunctionReturn, ParameterPrototype, TypeRequired } from "~/types/components"
-import type { PropsDeclarationState, PropsDeclarationStore } from "./propsDeclaration";
-import type { TypeDeclarationState, TypeDeclarationStore } from "./typesDeclaration";
 
 import { defineEppsStore, extendedState, getParentStoreMethod } from "epps";
-import { usePropsDeclarationStore } from "./propsDeclaration";
-import { useTypeDeclarationStore } from "./typesDeclaration";
+import { useCodeDeclarationExplanationStore } from "./codeDeclarationExplanation";
 import { isEmpty } from "~/utils/validation";
 
 
@@ -19,12 +17,12 @@ interface InitDeclarationProps {
     value?: string
 }
 
-export interface PrototypeState extends PropsDeclarationState, TypeDeclarationState {
+export interface PrototypeState extends CodeDeclarationState {
     codeSlots: string[]
     declarationSymbols: SymbolsObject
 }
 
-export interface PrototypeStore extends PropsDeclarationStore, TypeDeclarationStore {
+export interface PrototypeStore extends CodeDeclarationStore {
     displayJsSlot: () => boolean
     getDeclarationSymbol: (position: 'end' | 'start') => string | undefined
     getCode: (lang?: 'javascript' | 'typeScript') => string
@@ -66,7 +64,10 @@ export const usePrototypeStore = (id: string) => defineEppsStore<PrototypeStore,
     const codeSlots = ref<string[]>()
     const declaration = ref<InitDeclarationProps>()
     const declarationSymbols = ref<SymbolsObject>()
-    const { parentsStores } = extendedState([useTypeDeclarationStore(id), usePropsDeclarationStore(id)])
+    const { parentsStores } = extendedState(
+        [useCodeDeclarationExplanationStore(id)],
+        { actionsToExtends: ['initDeclaration'] }
+    )
 
 
     function displayJsSlot(): boolean {
@@ -78,19 +79,25 @@ export const usePrototypeStore = (id: string) => defineEppsStore<PrototypeStore,
 
         if (declaration.value) {
             const ps = parentsStores && parentsStores()
+
+            if (!Array.isArray(ps)) {
+                throw new Error('Prototype store requires CodeDeclarationExplanationStore as parent')
+            }
+
+            const codeDeclarationStore = ps[0]
             const { name, properties, returnType, type, value } = declaration.value
 
             code = `${type} ${name}`
 
             if (lang === 'typeScript') {
-                code += getParentStoreMethod('requiredTypesToString', 0, ps)()
+                code += getParentStoreMethod('requiredTypesToString', codeDeclarationStore)()
             }
 
             if (type === 'function') {
-                code += getParentStoreMethod('propsToString', 1, ps)()
+                code += getParentStoreMethod('propsToString', codeDeclarationStore)()
             }
 
-            code += `${getParentStoreMethod('returnTypeFormatted', 0, ps)(returnType)} ${getStartSymbol()} `
+            code += `${getParentStoreMethod('returnTypeFormatted', codeDeclarationStore)(returnType)} ${getStartSymbol()} `
 
             if (!isEmpty(properties)) {
                 if (type !== 'interface') {
@@ -146,28 +153,9 @@ export const usePrototypeStore = (id: string) => defineEppsStore<PrototypeStore,
         codeSlots.value = ['typeScript']
         declarationSymbols.value = declarationsSymbols[type]
 
-        const ps = parentsStores && parentsStores()
-
-        if (!Array.isArray(ps)) {
-            throw new Error('Prototype store requires TypeDeclarationStore and PropsDeclarationStore as parents')
-        }
-
-        const typesStore = ps[0]
-        const propsStore = ps[1]
-
-        getParentStoreMethod('addTypesToSeeFromParameters', typesStore)(properties)
-        getParentStoreMethod('initProps', propsStore)(
-            props,
-            (prop: ParameterPrototype) => getParentStoreMethod('addTypesToSeeFromParameters', typesStore)(prop),
-            indent
-        )
-        getParentStoreMethod('initTypes', typesStore)(declaration.value)
-
         if (typesNeedJsCode.includes(type)) {
             codeSlots.value.push('javascript')
         }
-        if (returnType) { getParentStoreMethod('addTypesToSee', typesStore)(returnType) }
-        if (value) { getParentStoreMethod('addTypesToSee', typesStore)(value) }
     }
 
 

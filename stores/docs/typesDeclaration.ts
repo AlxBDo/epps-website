@@ -20,8 +20,10 @@ export interface TypeDeclarationStore {
 }
 
 interface TypesProps {
+    properties?: ParameterPrototype[]
     requiredTypes?: TypeRequired[]
     returnType: string
+    value?: string
 }
 
 
@@ -104,11 +106,23 @@ export const useTypeDeclarationStore = (id: string) => defineStore(
         }
 
         function initTypes(types: TypesProps): void {
+            console.log('initTypes', [types])
+            if (!isEmpty(types.properties)) {
+                addTypesToSeeFromParameters(types.properties)
+            }
+
             if (!isEmpty(types.requiredTypes)) {
                 initRequiredType(types.requiredTypes)
             }
 
-            returnType.value = types.returnType
+            if (!isEmpty(types.returnType)) {
+                addTypesToSee(types.returnType)
+                returnType.value = types.returnType
+            }
+
+            if (!isEmpty(types.value)) {
+                addTypesToSee(types.value as string)
+            }
         }
 
         function requiredTypesToString(): string {

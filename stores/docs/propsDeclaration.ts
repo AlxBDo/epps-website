@@ -7,7 +7,11 @@ export interface PropsDeclarationState {
 }
 
 export interface PropsDeclarationStore {
-    initProps: (declarationProps?: ParameterPrototype[]) => void
+    initProps: (
+        declarationProps?: ParameterPrototype[],
+        propCallback?: (type: ParameterPrototype[]) => void,
+        indentNumber?: number
+    ) => void
     propsToString: () => string
 }
 
