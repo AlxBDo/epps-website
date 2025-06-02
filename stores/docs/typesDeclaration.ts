@@ -106,7 +106,6 @@ export const useTypeDeclarationStore = (id: string) => defineStore(
         }
 
         function initTypes(types: TypesProps): void {
-            console.log('initTypes', [types])
             if (!isEmpty(types.properties)) {
                 addTypesToSeeFromParameters(types.properties)
             }

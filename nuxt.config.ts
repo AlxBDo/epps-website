@@ -11,6 +11,8 @@ export default defineNuxtConfig({
 
   css: ['~/assets/css/main.css'],
 
+  debug: true,
+
   devtools: { enabled: true },
 
   modules: [
@@ -24,5 +26,10 @@ export default defineNuxtConfig({
       cryptKey: process.env.CRYPT_KEY,
       cryptIv: process.env.CRYPT_IV
     }
+  },
+
+  sourcemap: {
+    server: false,
+    client: true
   }
 })

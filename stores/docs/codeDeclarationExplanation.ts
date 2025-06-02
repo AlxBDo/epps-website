@@ -66,10 +66,10 @@ export const useCodeDeclarationExplanationStore = (id: string) => defineEppsStor
             if (!Array.isArray(ps)) {
                 throw new Error('TypeDeclarationStore and PropsDeclarationStore not found')
             }
+
             const typesStore = ps[0]
 
             getParentStoreMethod('addTypesToSee', typesStore)(prop.type)
-            getParentStoreMethod('addTypesToSeeFromParameters', typesStore)(prop)
             createParameterExplanation(prop)
         }
 

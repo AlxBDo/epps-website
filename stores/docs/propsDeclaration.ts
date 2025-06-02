@@ -9,7 +9,7 @@ export interface PropsDeclarationState {
 export interface PropsDeclarationStore {
     initProps: (
         declarationProps?: ParameterPrototype[],
-        propCallback?: (type: ParameterPrototype[]) => void,
+        propCallback?: (type: ParameterPrototype) => void,
         indentNumber?: number
     ) => void
     propsToString: () => string
@@ -22,7 +22,7 @@ export const usePropsDeclarationStore = (id: string) => defineStore(`${id}PropsS
 
     function initProps(
         declarationProps: ParameterPrototype[],
-        propCallback?: (type: ParameterPrototype[]) => void,
+        propCallback?: (type: ParameterPrototype) => void,
         indentNumber: number = 0
     ): void {
         if (!isEmpty(declarationProps)) {
@@ -39,7 +39,7 @@ export const usePropsDeclarationStore = (id: string) => defineStore(`${id}PropsS
 
                 acc += `${rtn}${curr.name}: ${curr.type}`
 
-                propCallback && propCallback([curr])
+                propCallback && propCallback(curr)
                 index++
 
                 if (propsLength === index && propsLength > 1) {
