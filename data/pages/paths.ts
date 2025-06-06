@@ -16,6 +16,7 @@ export const home = '/'
  */
 
 export const installation = pathFromArray([docs, 'install'])
+export const testing = pathFromArray([docs, 'testing'])
 export const usage = pathFromArray([docs, 'usage'])
 
 /**

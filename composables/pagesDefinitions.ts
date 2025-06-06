@@ -1,4 +1,3 @@
-import { capitalize } from "vue"
 import { createDefinition } from "~/utils/pages/createDefinition"
 import { createPageResume } from "~/utils/create-resume"
 import { firstCharToLowerCase } from "~/utils/string"
@@ -16,6 +15,7 @@ import homeDefinition from "~/data/pages/home"
 import installationDefinition from "~/data/pages/docs/installation"
 import persistedStateDefinition from "~/data/types/persistedState"
 import persistedStoreDefinition from "~/data/types/persistedStore"
+import testingStoresDefinition from "~/data/pages/docs/testing"
 import usageDefinition from "~/data/pages/docs/usage"
 import useCollectionStoreDefinition from "~/data/stores/useCollectionStore"
 import useListsStoreDefinition from "~/data/pages/examples/useListsStore"
@@ -37,6 +37,7 @@ export function usePagesDefinitions() {
      */
 
     const install = createPageResume(installationDefinition)
+    const testing = createPageResume(testingStoresDefinition)
     const usage = createPageResume(usageDefinition)
 
     // Funtions
@@ -91,6 +92,8 @@ export function usePagesDefinitions() {
                 persistedStore
             } as Record<string, PageResume>,
 
+            testing,
+
             stores: {
                 useCollectionStore
             } as Record<string, PageResume>
@@ -130,6 +133,7 @@ export function usePagesDefinitions() {
         pages,
         persistedState,
         persistedStore,
+        testing,
         usage,
         useCollectionStore,
         useListsStoreDefinition,

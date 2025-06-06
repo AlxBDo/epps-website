@@ -6,6 +6,7 @@ import type { ComponentResume } from '~/types/components'
 import type { PageResume } from '~/types/pages'
 
 import UNavigationMenu from '@nuxt/ui/components/NavigationMenu.vue'
+import { isEmpty } from '~/utils/validation'
 
 
 const { pages } = usePagesDefinitions()
@@ -50,7 +51,7 @@ const items = ref<NavigationMenuItem[]>(
 
 
 function displayChildren(parent: NavigationMenuItem) {
-    return Array.isArray(parent.children) && parent.label !== parent.children[0].label
+    return Array.isArray(parent.children)
 }
 
 function menuDescription(menu: NavigationMenuItem): string {
@@ -77,7 +78,7 @@ function menuLabel(menu: NavigationMenuItem): string {
 </script>
 
 <template>
-    <UDropdownMenu class="md:hidden" :items="items">
+    <UDropdownMenu class="md:hidden" :items="(items as DropdownMenuItem[])">
         <UButton icon="i-lucide-menu" color="neutral" variant="outline" />
     </UDropdownMenu>
     <UNavigationMenu class="w-full justify-center hidden md:flex" :items="items">
