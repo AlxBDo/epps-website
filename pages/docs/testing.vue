@@ -35,7 +35,7 @@ export function beforeEachPiniaPlugin() {
         <ExplanationContainer :code-sections="['js']" :id="`${testing.id}-explanation-ctn`">
             <template #explanation>
                 <p>
-                    To test Pinia stores using <b>epps</b>, you need to use the createPluginMock function.
+                    To test Pinia stores using <b>epps</b>, you need to use the <b>createPluginMock</b> function.
                     This function provides a mock implementation of epps plugin, allowing you to simulate its
                     behavior during testing.
                 </p>
