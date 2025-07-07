@@ -49,18 +49,20 @@ const slots = useSlots()
         </section>
 
         <template v-if="!isEmpty(codeSections)">
-            <template v-if="numberDisplay !== slotsNames.length">
-                <UTabs color="neutral" :content="false"
-                    :items="selections.map((selection) => ({ label: capitalize(selection) }))" size="xs"
-                    :value="selectedSlot" variant="link"
-                    @update:model-value="(payload) => setSelectedSlot(payload as number)">
-                </UTabs>
-            </template>
+            <div class="mt-2">
+                <template v-if="numberDisplay !== slotsNames.length">
+                    <UTabs color="neutral" :content="false"
+                        :items="selections.map((selection) => ({ label: capitalize(selection) }))" size="xs"
+                        :value="selectedSlot" variant="link"
+                        @update:model-value="(payload) => setSelectedSlot(payload as number)">
+                    </UTabs>
+                </template>
 
-            <template v-for="(slot, index) in codeSlots">
-                <slot v-if="display(index)" :key="`slot-ctn-${slot.type}-${slot.name}${index}`" :name="slot.name">
-                </slot>
-            </template>
+                <template v-for="(slot, index) in codeSlots">
+                    <slot v-if="display(index)" :key="`slot-ctn-${slot.type}-${slot.name}${index}`" :name="slot.name">
+                    </slot>
+                </template>
+            </div>
         </template>
 
         <section v-if="$slots?.detailedExplanations">

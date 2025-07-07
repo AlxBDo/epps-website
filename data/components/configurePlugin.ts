@@ -16,7 +16,6 @@ export default defineNuxtPlugin({
         ($pinia as Pinia).use(
             createPlugin(
                 'localStorage', // define another database name to use IndexedDB 
-                useRuntimeConfig().public.cryptIv, 
                 useRuntimeConfig().public.cryptKey 
             )
         )
@@ -31,7 +30,6 @@ const pinia = createPinia()
 
 const epps = createPlugin(
     'localStorage', // define another database name to use IndexedDB 
-    import.meta.env.VITE_CRYPT_IV, 
     import.meta.env.VITE_CRYPT_KEY
 ) 
 

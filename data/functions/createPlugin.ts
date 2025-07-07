@@ -15,8 +15,7 @@ export const name: string = 'createPlugin'
 
 export const props: ParameterPrototype[] = [
     createParameterPrototype('dbName', 'string', true, dbNameDescription),
-    createParameterPrototype('cryptIv', 'string', false, cryptoJsParameterDescription('iv')),
-    createParameterPrototype('cryptKey', 'string', false, cryptoJsParameterDescription('key'))
+    createParameterPrototype('cryptKey', 'string', false, 'Used to encrypt data')
 ]
 
 export const requiredTypes: TypeRequired[] = []

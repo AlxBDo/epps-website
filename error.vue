@@ -1,20 +1,34 @@
 <script setup lang="ts">
 import type { NuxtError } from '#app'
 
+definePageMeta({
+    layout: "default"
+})
+
 const props = defineProps({
     error: Object as () => NuxtError
 })
 
-console.table(props.error);
+const isDev: boolean = process.env.NODE_ENV === 'development'
+
+if (isDev) {
+    console.table(props.error);
+}
 </script>
 
 <template>
     <div>
-        <h1>Oups !</h1>
+        <h1 class="text-4xl font-bold">Oups !</h1>
         <h2>Une erreur est survenue...</h2>
-        <p>L'erreur en question : </p>
-        <p>{{ error?.statusMessage }}</p>
-        <p>{{ error?.message }}</p>
-        <NuxtLink to="/">Retour à l'accueil</NuxtLink>
+
+        <div class="mb-4" v-if="isDev">
+            <p>L'erreur en question : </p>
+            <div class="mt-2">
+                <p>{{ error?.statusMessage }}</p>
+                <p>{{ error?.message }}</p>
+            </div>
+        </div>
+
+        <ULink to="/">Retour à l'accueil</ULink>
     </div>
 </template>

@@ -14,9 +14,10 @@ const { id, title } = configurePlugin
     <ExplanationContainer :id :codeSections="['vue', 'nuxt']" :title>
         <template #explanation>
             <p>To use the plugin, simply import it and add it to your Pinia instance.</p>
+            <p>All createPlugin function parameters are optional.</p>
             <p class="text-sm mt-2">
-                In the examples below, the environment variables CRYPT_IV and CRYPT_KEY must be replaced with strings.
-                These variables are used for encrypting data persisted in the browser.
+                In the examples below, the environment variable CRYPT_KEY must be replaced with string.
+                It's used for encrypting data persisted in the browser.
             </p>
         </template>
         <template #vue>

@@ -16,7 +16,7 @@ defineProps({
 </script>
 
 <template>
-    <ULink v-if="path" :to="path">
+    <ULink v-if="path" :to="`/${path}`">
         <p class="m-0 p-0">{{ title }}</p>
         <span v-if="description" class="italic font-light text-sm">
             {{ description }}
