@@ -1,4 +1,4 @@
-import type { CodeDeclarationTypes, TypePrototype, TypeRequired } from "~/types/components";
+import type { CodeDeclarationTypes, TypePrototype, TypeRequired } from "~/types/prototype";
 import { createTypeRequired } from "~/utils/components/code-declaration";
 
 

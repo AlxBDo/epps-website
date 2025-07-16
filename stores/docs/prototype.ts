@@ -1,9 +1,9 @@
 import type { CodeDeclarationState, CodeDeclarationStore } from "./codeDeclarationExplanation";
-import type { CodeDeclarationTypes, FunctionReturn, ParameterPrototype, TypeRequired } from "~/types/components"
+import type { CodeDeclarationTypes, FunctionReturn, ParameterPrototype, TypeRequired } from "~/types/prototype"
 
 import { defineEppsStore, extendedState, getParentStoreMethod } from "epps";
-import { useCodeDeclarationExplanationStore } from "./codeDeclarationExplanation";
 import { isEmpty } from "~/utils/validation";
+import { useCodeDeclarationExplanationStore } from "./codeDeclarationExplanation";
 
 
 interface InitDeclarationProps {

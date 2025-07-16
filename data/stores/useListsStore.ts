@@ -5,5 +5,5 @@ const definition = getStoreDefinition('lists')
 
 export const { description, id, name, title } = definition
 
-export default definition
+export default { ...definition, isEppsStore: false }
 

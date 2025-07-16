@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { ParameterPrototype } from '~/types/components';
+import type { ParameterPrototype } from '~/types/prototype';
 
 defineProps({
     params: {

@@ -6,7 +6,7 @@ import CodeBlock from '~/components/dependencies/CodeBlock.vue'
 import ExplanationContainer from '../../common/ExplanationContainer.vue'
 
 import type { PropType } from 'vue'
-import type { StorePrototype } from '~/types/components'
+import type { StorePrototype } from '~/types/prototype'
 
 
 const componentProps = defineProps({

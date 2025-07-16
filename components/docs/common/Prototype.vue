@@ -6,7 +6,7 @@ import ExplanationContainer from '../../common/ExplanationContainer.vue'
 
 import type { EppsStore } from 'epps'
 import type { PropType } from 'vue'
-import type { CodeDeclarationTypes, FunctionReturn, ParameterPrototype, TypeRequired } from '~/types/components'
+import type { CodeDeclarationTypes, FunctionReturn, ParameterPrototype, TypeRequired } from '~/types/prototype'
 
 
 const componentProps = defineProps({

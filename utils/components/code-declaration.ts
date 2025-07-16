@@ -1,4 +1,4 @@
-import type { ParameterPrototype, FunctionPrototype, FunctionReturn, TypeRequired } from "~/types/components"
+import type { ParameterPrototype, FunctionPrototype, FunctionReturn, TypeRequired } from "~/types/prototype"
 
 
 export function createParameterPrototype(name: string, type: string, required: boolean, description?: string): ParameterPrototype {

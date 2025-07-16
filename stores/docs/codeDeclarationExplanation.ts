@@ -3,7 +3,7 @@ import { isEmpty } from "~/utils/validation";
 import { usePropsDeclarationStore } from "./propsDeclaration";
 import { useTypeDeclarationStore } from "./typesDeclaration";
 
-import type { CodeDeclarationTypes, CodeDeclarationPrototype, ParameterPrototype, TypeRequired } from "~/types/components";
+import type { CodeDeclarationTypes, CodeDeclarationPrototype, ParameterPrototype, TypeRequired } from "~/types/prototype";
 import type { PropsDeclarationState, PropsDeclarationStore } from "./propsDeclaration";
 import type { TypeDeclarationState, TypeDeclarationStore } from "./typesDeclaration";
 

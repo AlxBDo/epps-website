@@ -1,4 +1,4 @@
-import type { ParameterPrototype } from "~/types/components"
+import type { ParameterPrototype } from "~/types/prototype"
 import { isEmpty } from "~/utils/validation"
 
 

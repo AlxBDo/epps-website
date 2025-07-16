@@ -1,7 +1,7 @@
 import { isEmpty } from "~/utils/validation"
 
 import type { AnyObject } from "epps";
-import type { ParameterPrototype, TypeRequired, FunctionReturn } from "~/types/components";
+import type { ParameterPrototype, TypeRequired, FunctionReturn } from "~/types/prototype";
 
 
 export interface TypeDeclarationState {
@@ -145,6 +145,7 @@ export const useTypeDeclarationStore = (id: string) => defineStore(
             hasTypesToSee,
             initRequiredType,
             initTypes,
+            requiredTypes,
             requiredTypesToString,
             returnType,
             returnTypeFormatted,

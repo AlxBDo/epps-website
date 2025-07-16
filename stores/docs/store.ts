@@ -1,6 +1,6 @@
 import { capitalize } from "vue"
 import { isEmpty } from "~/utils/validation"
-import type { ParameterPrototype, TypeRequired } from "~/types/components"
+import type { ParameterPrototype, TypeRequired } from "~/types/prototype"
 
 
 interface StoreState {

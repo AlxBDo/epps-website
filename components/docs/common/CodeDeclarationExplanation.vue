@@ -9,7 +9,7 @@ import Prototype from './Prototype.vue'
 import type { EppsStore } from 'epps'
 import type { PropType } from 'vue'
 import type { CodeDeclarationState, CodeDeclarationStore } from '~/stores/docs/codeDeclarationExplanation'
-import type { FunctionPrototype, InterfacePrototype, TypePrototype } from '~/types/components'
+import type { FunctionPrototype, InterfacePrototype, ParameterPrototype, TypePrototype } from '~/types/prototype'
 
 
 const componentProps = defineProps({
@@ -47,7 +47,9 @@ onBeforeUnmount(() => codeDeclarationExplanationStore.$reset())
                 :return-type="(prototype as FunctionPrototype)?.returnType" :type
                 :value="(prototype as TypePrototype)?.value"></Prototype>
 
-            <ParametersList v-if="hasPropsExplanation()" :params="propsExplanation" title="Parameters"></ParametersList>
+            <ParametersList v-if="hasPropsExplanation()"
+                :params="(propsExplanation as Pick<ParameterPrototype, 'description' | 'name'>[])" title="Parameters">
+            </ParametersList>
             <div v-else-if="$slots?.propsExplanation">
                 <h4>Parameters</h4>
                 <slot name="propsExplanation"></slot>

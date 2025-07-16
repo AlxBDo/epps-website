@@ -1,4 +1,4 @@
-import type { CodeDeclarationTypes, InterfacePrototype, ParameterPrototype } from "~/types/components";
+import type { CodeDeclarationTypes, InterfacePrototype, ParameterPrototype } from "~/types/prototype";
 import { createParameterPrototype } from "~/utils/components/code-declaration";
 
 

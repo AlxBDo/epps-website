@@ -1,6 +1,6 @@
 import { capitalize } from "vue"
 import type { Item } from "../models/item"
-import type { FunctionPrototype, ParameterPrototype } from "~/types/components"
+import type { FunctionPrototype, ParameterPrototype } from "~/types/prototype"
 
 
 export function getStoreDefinition(

@@ -1,13 +1,13 @@
 import { capitalize } from "vue"
 import { dynamicImport } from "../data"
 
+import type { ComponentResume } from "~/types/components"
 import type {
-    ComponentResume,
     FunctionPrototype,
     InterfacePrototype,
     StorePrototype,
     TypePrototype
-} from "~/types/components"
+} from "~/types/prototype"
 import type { PageDefinitionTypes } from '~/types/pages'
 import type { AnyObject } from "epps"
 

@@ -15,15 +15,17 @@ import homeDefinition from "~/data/pages/home"
 import installationDefinition from "~/data/pages/docs/installation"
 import persistedStateDefinition from "~/data/types/persistedState"
 import persistedStoreDefinition from "~/data/types/persistedStore"
+import resourceIdDefinition from '~/data/types/resourceId'
 import testingStoresDefinition from "~/data/pages/docs/testing"
 import usageDefinition from "~/data/pages/docs/usage"
 import useCollectionStoreDefinition from "~/data/stores/useCollectionStore"
 import useListsStoreDefinition from "~/data/pages/examples/useListsStore"
+import useResourceIdStoreDefinition from '~/data/stores/useResourceIdStore'
 import useUserStoreDefinition from "~/data/pages/examples/useUserStore"
+import useWebUserStoreDefinition from "~/data/stores/useWebUserStore"
 
-import type { PageDefinitionTypes, PageResume, PagesResumes } from "~/types/pages"
-import type { ComponentResume, FunctionPrototype, InterfacePrototype, StorePrototype, TypePrototype } from "~/types/components"
 import type { AnyObject } from "epps"
+import type { PageDefinitionTypes, PageResume, PagesResumes } from "~/types/pages"
 
 
 export function usePagesDefinitions() {
@@ -49,6 +51,8 @@ export function usePagesDefinitions() {
 
     // Stores
     const useCollectionStore = createDefinition('stores', useCollectionStoreDefinition)
+    const useResourceIdStore = createDefinition('stores', useResourceIdStoreDefinition)
+    const useWebUserStore = createDefinition('stores', useWebUserStoreDefinition)
 
     // Types
     const eppsStoreType = createDefinition('types', eppsStoreDefinition)
@@ -57,6 +61,7 @@ export function usePagesDefinitions() {
     const extendedStore = createDefinition('types', extendedStoreDefinition)
     const persistedState = createDefinition('types', persistedStateDefinition)
     const persistedStore = createDefinition('types', persistedStoreDefinition)
+    const resourceId = createDefinition('types', resourceIdDefinition)
 
 
     /**
@@ -89,13 +94,16 @@ export function usePagesDefinitions() {
                 extendedStateOptions,
                 extendedStore,
                 persistedState,
-                persistedStore
+                persistedStore,
+                resourceId
             } as Record<string, PageResume>,
 
             testing,
 
             stores: {
-                useCollectionStore
+                useCollectionStore,
+                useResourceIdStore,
+                useWebUserStore
             } as Record<string, PageResume>
         },
 

@@ -3,7 +3,7 @@ import CodeBlock from '~/components/dependencies/CodeBlock.vue'
 import ExplanationContainer from '~/components/common/ExplanationContainer.vue'
 
 import type { PropType } from 'vue'
-import type { ParameterPrototype, TypeRequired } from '~/types/components'
+import type { ParameterPrototype, TypeRequired } from '~/types/prototype'
 import { useStoreStore } from '~/stores/docs/store'
 import { isEmpty } from '~/utils/validation'
 

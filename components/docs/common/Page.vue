@@ -4,7 +4,7 @@ import Page from '~/components/common/Page.vue'
 import StorePrototype from './StorePrototype.vue'
 
 import type { PageDefinitionTypes, PageResume } from '~/types/pages'
-import type { FunctionPrototype, InterfacePrototype, StorePrototype as StorePrototypeInterface } from '~/types/components'
+import type { FunctionPrototype, InterfacePrototype, StorePrototype as StorePrototypeInterface } from '~/types/prototype'
 
 
 const pageProps = defineProps({

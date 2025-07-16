@@ -1,4 +1,10 @@
-import type { CodeDeclarationTypes, ParameterPrototype, FunctionReturn, TypeRequired, FunctionPrototype } from "~/types/components";
+import type {
+    CodeDeclarationTypes,
+    ParameterPrototype,
+    FunctionReturn,
+    TypeRequired,
+    FunctionPrototype
+} from "~/types/prototype";
 import { createParameterPrototype } from "~/utils/components/code-declaration";
 
 

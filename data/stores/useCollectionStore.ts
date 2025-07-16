@@ -1,4 +1,4 @@
-import type { FunctionPrototype, ParameterPrototype, StorePrototype } from "~/types/components"
+import type { FunctionPrototype, ParameterPrototype, StorePrototype } from "~/types/prototype"
 import { getStoreDefinition } from "~/utils/store"
 
 
@@ -118,4 +118,4 @@ const definition = getStoreDefinition('collection', state, methods)
 
 export const { id, name, title, type } = definition
 
-export default { ...definition, description } as StorePrototype
+export default { ...definition, description, isEppsStore: false } as StorePrototype

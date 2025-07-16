@@ -4,7 +4,7 @@ import { defineAEppsStore } from '~/utils/components/resumes'
 import ExplanationContainer from '../common/ExplanationContainer.vue'
 import Links from '../common/Links.vue'
 import Store from '../examples/common/Store.vue'
-import type { ParameterPrototype, TypeRequired } from '~/types/components'
+import type { ParameterPrototype, TypeRequired } from '~/types/prototype'
 
 
 const { defineEppsStore, extendedState } = usePagesDefinitions()
