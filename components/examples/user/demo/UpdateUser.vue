@@ -13,7 +13,6 @@ const property = ref<string>()
 const value = ref<string>()
 
 function getResult() {
-    console.log('UpdateUser.vue getResult', property.value, value.value)
     if (property.value && value.value) {
         (connectedUser.$state as AnyObject)[property.value] = value.value
         property.value = undefined

@@ -17,7 +17,7 @@ export interface StorePrototypeState extends TypeDeclarationState {
 
 export interface StorePrototypeStore extends TypeDeclarationStore {
     methodsHasDescription: () => boolean
-    prototypeToString: (syntax: StoreSyntax, isJs: boolean) => string
+    prototypeToString: (syntax?: StoreSyntax, isJs?: boolean) => string
     setPrototype: (data: StorePrototype) => void
     stateHasDescription: () => boolean
 }
@@ -94,7 +94,7 @@ export const useStorePrototype = (id: string) => defineEppsStore<StorePrototypeS
     function extendedStateDefinition(parentsStores: string[], actionsToExtends?: string[]) {
         addStoreReturnItem('parentsStores')
         let code = `extendedState(
-                parentsStores: ['${parentsStores.join("', '")}']`
+                parentsStores: [${parentsStores.join(", ")}]`
 
         if (actionsToExtends) {
             addStoreReturnItem('actionsToExtends')

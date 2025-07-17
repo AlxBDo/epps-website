@@ -1,12 +1,13 @@
 <script setup lang="ts">
 import { isEmpty } from '~/utils/validation'
-import { useStorePrototype } from '~/stores/docs/storePrototype'
+import { useStorePrototype, type StorePrototypeState, type StorePrototypeStore } from '~/stores/docs/storePrototype'
 
 import CodeBlock from '~/components/dependencies/CodeBlock.vue'
 import ExplanationContainer from '../../common/ExplanationContainer.vue'
 
 import type { PropType } from 'vue'
 import type { StorePrototype } from '~/types/prototype'
+import type { EppsStore } from 'epps'
 
 
 const componentProps = defineProps({
@@ -18,7 +19,7 @@ const componentProps = defineProps({
 
 const { id, methods, state } = componentProps.prototype
 
-const storePrototype = useStorePrototype(id)
+const storePrototype = useStorePrototype(id) as EppsStore<StorePrototypeStore, StorePrototypeState>
 storePrototype.setPrototype(componentProps.prototype)
 
 const methodsHasDescription = storePrototype.methodsHasDescription()
@@ -80,6 +81,13 @@ const setupStorePrototype = storePrototype.prototypeToString()
                     </li>
                 </ul>
             </article>
+        </template>
+
+        <template v-if="storePrototype.hasTypesToSee && storePrototype.hasTypesToSee()" #toSee>
+            <Links icon="material-symbols:link-rounded" :links="storePrototype.typesToSee.reduce((acc: Record<string, string>, curr: string) => {
+                acc[curr] = `/docs/types/${curr}`
+                return acc
+            }, {})"></Links>
         </template>
     </ExplanationContainer>
 </template>

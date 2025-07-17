@@ -2,13 +2,12 @@ import type { CodeDeclarationTypes, InterfacePrototype, ParameterPrototype } fro
 import { createParameterPrototype } from "~/utils/components/code-declaration";
 
 
-export const description: string = 'Represents the identifiers of a resource extracted from a database or API.'
+export const description: string = 'Represents useWebUserStore methods.'
 
-export const name: string = 'ResourceId'
+export const name: string = 'WebUserStore'
 
 export const properties: ParameterPrototype[] = [
-    createParameterPrototype('id', 'string', false),
-    createParameterPrototype('@id', 'string', false)
+    createParameterPrototype('setData', '(WebUserState) => void', false),
 ]
 
 export const type: CodeDeclarationTypes = 'interface'
