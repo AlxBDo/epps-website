@@ -2,13 +2,14 @@ import type { CodeDeclarationTypes, InterfacePrototype, ParameterPrototype } fro
 import { createParameterPrototype } from "~/utils/components/code-declaration";
 
 
-export const description: string = 'Represents the identifiers of a resource extracted from a database or API.'
+export const description: string = 'Represents an error.'
 
-export const name: string = 'ResourceId'
+export const name: string = 'Error'
 
 export const properties: ParameterPrototype[] = [
-    createParameterPrototype('id', 'number | string', false),
-    createParameterPrototype('@id', 'string', false)
+    createParameterPrototype('id', 'string', true),
+    createParameterPrototype('level', 'number', false),
+    createParameterPrototype('message', 'string', true)
 ]
 
 export const type: CodeDeclarationTypes = 'interface'

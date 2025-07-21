@@ -5,15 +5,17 @@ import DisplayResult from '~/components/examples/common/DisplayResult.vue'
 
 import type { EppsStore } from 'epps'
 import type { UserStore, UserState } from '~/stores/demo/user'
+import type { ContactState, ContactStore } from '~/stores/demo/contact'
 
 
-const connectedUser = useConnectedUserStore() as EppsStore<UserStore, UserState>
+const connectedUser = useConnectedUserStore() as EppsStore<ContactStore, ContactState>
 
 connectedUser.remember().then(() => {
     if (!connectedUser.id) {
         connectedUser.setData({
             id: 1,
             email: 'connecteduser@mail.com',
+            username: 'mathiewzerhname',
             firstname: 'Mathiew',
             lastname: 'Zerh',
             password: 'C4Nn€cT2D@!12'
@@ -26,7 +28,8 @@ const user = computed(() => ({
     email: connectedUser.email,
     firstname: connectedUser.firstname,
     lastname: connectedUser.lastname,
-    password: connectedUser.password
+    password: connectedUser.password,
+    username: connectedUser.username
 }))
 </script>
 

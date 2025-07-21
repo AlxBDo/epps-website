@@ -35,6 +35,8 @@ export interface StorePrototype extends PrototypeWithTypeParams {
     methods?: FunctionPrototype[]
     parentsStores?: string[]
     state: ParameterPrototype[]
+    stateType?: string
+    storeType?: string
     type: 'store'
     watchMutation?: boolean
 }

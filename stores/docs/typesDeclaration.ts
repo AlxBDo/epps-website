@@ -19,7 +19,7 @@ export interface TypeDeclarationStore {
     returnTypeFormatted: (returnType?: FunctionReturn) => string
 }
 
-interface TypesProps {
+export interface TypesProps {
     properties?: ParameterPrototype[]
     requiredTypes?: TypeRequired[]
     returnType: string

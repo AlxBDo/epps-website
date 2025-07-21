@@ -1,5 +1,5 @@
 import { computed, ref } from "vue"
-import { defineEppsStore, extendedState, getParentStorePropertyValue, type ExtendState } from "epps"
+import { defineEppsStore, extendedState, getParentStorePropertyValue } from "epps"
 
 import { useContactStore } from "./contact"
 
@@ -10,12 +10,11 @@ import type { User } from "../../models/user"
 
 export interface UserStore {
     isPassword: (password: string) => boolean
-    modifyPassword: (oldPassword: string, newPassword: string) => void
     setData: (data: UserState) => void
     user: User
 }
 
-export type UserState = ExtendState<Contact, User>
+export type UserState = Contact & User
 
 export const useUserStore = (id?: string) => defineEppsStore<UserStore, UserState>(
     id ?? 'contact',

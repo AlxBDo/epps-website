@@ -4,6 +4,7 @@ import { useStorePrototype, type StorePrototypeState, type StorePrototypeStore }
 
 import CodeBlock from '~/components/dependencies/CodeBlock.vue'
 import ExplanationContainer from '../../common/ExplanationContainer.vue'
+import Links from '~/components/common/Links.vue'
 
 import type { PropType } from 'vue'
 import type { StorePrototype } from '~/types/prototype'

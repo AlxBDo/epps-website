@@ -2,9 +2,14 @@ import { createDefinition } from "~/utils/pages/createDefinition"
 import { createPageResume } from "~/utils/create-resume"
 import { firstCharToLowerCase } from "~/utils/string"
 
+import collectionStateDefinition from "~/data/types/collectionState"
+import collectionStoreDefinition from "~/data/types/collectionStore"
 import createPluginDefinition from "~/data/functions/createPlugin"
 import defineEppsStoreDefinition from "~/data/pages/docs/defineEppsStore"
 import eppsStoreDefinition from "~/data/types/eppsStore"
+import errorDefinition from "~/data/types/error"
+import errorsStateDefinition from "~/data/types/errorsState"
+import errorsStoreDefinition from "~/data/types/errorsStore"
 import extendedStateDefinition from "~/data/pages/docs/extendedState"
 import extendedStateInterfaceDefinition from "~/data/types/extendedState"
 import extendedStateOptionsDefinition from "~/data/types/extendedStateOptions"
@@ -19,10 +24,13 @@ import resourceIdDefinition from '~/data/types/resourceId'
 import testingStoresDefinition from "~/data/pages/docs/testing"
 import usageDefinition from "~/data/pages/docs/usage"
 import useCollectionStoreDefinition from "~/data/stores/useCollectionStore"
+import useErrorsStoreDefinition from "~/data/stores/useErrorsStore"
 import useListsStoreDefinition from "~/data/pages/examples/useListsStore"
 import useResourceIdStoreDefinition from '~/data/stores/useResourceIdStore'
 import useUserStoreDefinition from "~/data/pages/examples/useUserStore"
 import useWebUserStoreDefinition from "~/data/stores/useWebUserStore"
+import webUserStateDefinition from "~/data/types/webUserState"
+import webUserStoreDefinition from "~/data/types/webUserStore"
 
 import type { AnyObject } from "epps"
 import type { PageDefinitionTypes, PageResume, PagesResumes } from "~/types/pages"
@@ -51,17 +59,25 @@ export function usePagesDefinitions() {
 
     // Stores
     const useCollectionStore = createDefinition('stores', useCollectionStoreDefinition)
+    const useErrorsStore = createDefinition('stores', useErrorsStoreDefinition)
     const useResourceIdStore = createDefinition('stores', useResourceIdStoreDefinition)
     const useWebUserStore = createDefinition('stores', useWebUserStoreDefinition)
 
     // Types
+    const collectionState = createDefinition('types', collectionStateDefinition)
+    const collectionStore = createDefinition('types', collectionStoreDefinition)
     const eppsStoreType = createDefinition('types', eppsStoreDefinition)
+    const errorInterface = createDefinition('types', errorDefinition)
+    const errorsState = createDefinition('types', errorsStateDefinition)
+    const errorsStore = createDefinition('types', errorsStoreDefinition)
     const extendedStateInterface = createDefinition('types', extendedStateInterfaceDefinition)
     const extendedStateOptions = createDefinition('types', extendedStateOptionsDefinition)
     const extendedStore = createDefinition('types', extendedStoreDefinition)
     const persistedState = createDefinition('types', persistedStateDefinition)
     const persistedStore = createDefinition('types', persistedStoreDefinition)
     const resourceId = createDefinition('types', resourceIdDefinition)
+    const webUserState = createDefinition('types', webUserStateDefinition)
+    const webUserStore = createDefinition('types', webUserStoreDefinition)
 
 
     /**
@@ -89,19 +105,27 @@ export function usePagesDefinitions() {
             } as Record<string, PageResume>,
 
             types: {
+                collectionState,
+                collectionStore,
                 eppsStore: eppsStoreType,
+                error: errorInterface,
+                errorsState,
+                errorsStore,
                 extendedState: extendedStateInterface,
                 extendedStateOptions,
                 extendedStore,
                 persistedState,
                 persistedStore,
-                resourceId
+                resourceId,
+                webUserState,
+                webUserStore
             } as Record<string, PageResume>,
 
             testing,
 
             stores: {
                 useCollectionStore,
+                useErrorsStore,
                 useResourceIdStore,
                 useWebUserStore
             } as Record<string, PageResume>
@@ -141,10 +165,13 @@ export function usePagesDefinitions() {
         pages,
         persistedState,
         persistedStore,
+        resourceId,
         testing,
         usage,
         useCollectionStore,
         useListsStoreDefinition,
-        user
+        user,
+        webUserState,
+        webUserStore
     }
 }

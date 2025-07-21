@@ -5,8 +5,9 @@ import { usePrototypeStore, type PrototypeState, type PrototypeStore } from './p
 
 import type { FunctionPrototype, ParameterPrototype, StorePrototype } from '~/types/prototype'
 import type { StoreSyntax } from '~/types/stores';
-import { defineEppsStore, extendedState, getParentStoreMethod, getParentStorePropertyValue, type EppsStore } from 'epps';
-import { useTypeDeclarationStore, type TypeDeclarationState, type TypeDeclarationStore } from './typesDeclaration';
+import { defineEppsStore, extendedState, getParentStoreMethod, type EppsStore } from 'epps';
+import type { TypeDeclarationState, TypeDeclarationStore } from './typesDeclaration';
+import { useStoreTypesDeclaration } from './storeTypesDeclaration';
 
 
 export interface StorePrototypeState extends TypeDeclarationState {
@@ -25,14 +26,14 @@ export interface StorePrototypeStore extends TypeDeclarationStore {
 
 export const useStorePrototype = (id: string) => defineEppsStore<StorePrototypeStore, StorePrototypeState>(`${id}StorePrototype`, () => {
     const { parentsStores } = extendedState(
-        [useTypeDeclarationStore(id)]
+        [useStoreTypesDeclaration(id)]
     )
     const prototype = ref<StorePrototype>()
     const storeReturn: string[] = []
 
     const defineStoreDefinition = computed(
         () => prototype.value?.isEppsStore
-            ? `defineEppsStore${getRequiredTypes.value}`
+            ? `defineEppsStore<${prototype.value.storeType}, ${prototype.value.stateType}>`
             : 'defineStore'
     )
     const description = computed(() => prototype.value?.description)
@@ -152,7 +153,7 @@ export const useStorePrototype = (id: string) => defineEppsStore<StorePrototypeS
         let code: string = `export const use${capitalize(storeName)} = `
 
         if (idIsParam) {
-            code += `(id: string) => `
+            code += `${getRequiredTypes.value}(id: string) => `
         }
 
         code += `${defineStoreDefinition.value}(
@@ -257,6 +258,7 @@ ${indent(property.name, indentNumber)} : ${property.type}`
         description,
         methodsHasDescription,
         prototype,
+        parentsStores,
         prototypeToString,
         setPrototype,
         stateHasDescription

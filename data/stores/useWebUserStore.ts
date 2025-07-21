@@ -38,11 +38,6 @@ export const isEppsStore = true
 
 export const parentsStores: string[] = ['useResourceIdStore(id)']
 
-export const requiredTypes: TypeRequired[] = [
-    createTypeRequired('WebUserStore', 'Defines the methods available in the store'),
-    createTypeRequired('WebUserState', 'Defines the state properties of the store')
-]
-
 
 export default {
     ...definition,
@@ -51,5 +46,6 @@ export default {
     idIsParam,
     isEppsStore,
     parentsStores,
-    requiredTypes
+    stateType: 'WebUserState',
+    storeType: 'WebUserStore'
 } as StorePrototype

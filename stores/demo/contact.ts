@@ -1,19 +1,26 @@
 import type { Contact } from "../../models/contact"
 import { useItemStore } from "./item"
 import type { Item } from "../../models/item"
-import { defineEppsStore, extendedState, getParentStorePropertyValue, type ExtendState } from "epps";
+import {
+    defineEppsStore,
+    extendedState,
+    getParentStorePropertyValue,
+    useWebUserStore,
+    type WebUserState,
+    type WebUserStore
+} from "epps";
 import { computed, ref } from "vue";
 import type { Store } from "pinia";
 
 
-export interface ContactStore {
+export interface ContactStore extends WebUserStore {
     isPassword: (password: string) => boolean
-    modifyPassword: (oldPassword: string, newPassword: string) => void
     setData: (data: ContactState) => void
     contact: Contact
 }
 
-export type ContactState = ExtendState<Item, Contact>
+export interface ContactState extends WebUserState, Contact {
+}
 
 export const useContactStore = (id?: string) => defineEppsStore<ContactStore, ContactState>(
     id ?? 'contact',
@@ -29,7 +36,7 @@ export const useContactStore = (id?: string) => defineEppsStore<ContactStore, Co
             persist,
             persistedPropertiesToEncrypt
         } = extendedState(
-            [useItemStore(id ? `${id}-item` : 'contact-item')],
+            [useWebUserStore(id ? `${id}-item` : 'contact-item')],
             { actionsToExtends: ['setData'] }
         )
 

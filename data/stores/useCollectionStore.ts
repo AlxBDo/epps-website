@@ -12,6 +12,13 @@ const addItem: FunctionPrototype = {
     returnType: 'void', type: 'function'
 }
 
+const clear: FunctionPrototype = {
+    description: 'Add new item to collection',
+    name: 'addItem',
+    props: addItemProps,
+    returnType: 'void', type: 'function'
+}
+
 const getItemProps: ParameterPrototype[] = [
     {
         description: 'use any properties of the “item” object as selection criteria.',
@@ -100,6 +107,7 @@ const updateItem: FunctionPrototype = {
 
 const methods: FunctionPrototype[] = [
     addItem,
+    clear,
     getItem,
     getItems,
     removeItem,
