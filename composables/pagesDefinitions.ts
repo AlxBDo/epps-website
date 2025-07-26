@@ -14,6 +14,7 @@ import extendedStateDefinition from "~/data/pages/docs/extendedState"
 import extendedStateInterfaceDefinition from "~/data/types/extendedState"
 import extendedStateOptionsDefinition from "~/data/types/extendedStateOptions"
 import extendedStoreDefinition from "~/data/types/extendedStore"
+import getParentStoreDefinition from "~/data/functions/getParentStore"
 import getParentStoreMethodDefinition from "~/data/functions/getParentStoreMethod"
 import getParentStorePropertyValueDefinition from "~/data/functions/getParentStorePropertyValue"
 import homeDefinition from "~/data/pages/home"
@@ -54,6 +55,7 @@ export function usePagesDefinitions() {
     const createPlugin = createDefinition('functions', createPluginDefinition)
     const defineEppsStore = createPageResume(defineEppsStoreDefinition)
     const extendedState = createPageResume(extendedStateDefinition)
+    const getParentStore = createDefinition('functions', getParentStoreDefinition)
     const getParentStoreMethod = createDefinition('functions', getParentStoreMethodDefinition)
     const getParentStorePropertyValue = createDefinition('functions', getParentStorePropertyValueDefinition)
 
@@ -100,8 +102,16 @@ export function usePagesDefinitions() {
                 createPlugin,
                 defineEppsStore,
                 extendedState,
+                getParentStore,
                 getParentStoreMethod,
                 getParentStorePropertyValue
+            } as Record<string, PageResume>,
+
+            stores: {
+                useCollectionStore,
+                useErrorsStore,
+                useResourceIdStore,
+                useWebUserStore
             } as Record<string, PageResume>,
 
             types: {
@@ -121,14 +131,7 @@ export function usePagesDefinitions() {
                 webUserStore
             } as Record<string, PageResume>,
 
-            testing,
-
-            stores: {
-                useCollectionStore,
-                useErrorsStore,
-                useResourceIdStore,
-                useWebUserStore
-            } as Record<string, PageResume>
+            testing
         },
 
         examples: { lists, user }
@@ -157,6 +160,7 @@ export function usePagesDefinitions() {
         extendedStateOptions,
         extendedStore,
         getPageDefinition,
+        getParentStore,
         getParentStoreMethod,
         getParentStorePropertyValue,
         home,

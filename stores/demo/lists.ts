@@ -1,4 +1,4 @@
-import { defineEppsStore, extendedState, getParentStoreMethod, useCollectionStore, type CollectionState, type CollectionStoreMethods, type EppsStore } from "epps"
+import { defineEppsStore, extendedState, getParentStore, getParentStoreMethod, useCollectionStore, type CollectionState, type CollectionStoreMethods, type EppsStore } from "epps"
 
 import type { ListTypes } from "~/types/list"
 
@@ -28,13 +28,11 @@ export const useListsStore = (
         )
 
         function newList(name: string, type: ListTypes): void {
-            const stores = parentsStores && parentsStores()
-            const collectionStore = Array.isArray(stores) && stores[0] as EppsStore<CollectionStoreMethods, CollectionState<List>>
+            const collectionStore = getParentStore<CollectionStoreMethods, CollectionState<List>>(0, parentsStores)
 
             if (!collectionStore) { return }
 
-            // TODO delete third parameter after epps update > 0.8.1
-            getParentStoreMethod('addItem', collectionStore, parentsStores && parentsStores())({
+            collectionStore.addItem({
                 id: collectionStore.items.length + 1,
                 name,
                 type

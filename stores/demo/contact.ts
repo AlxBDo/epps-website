@@ -1,20 +1,17 @@
 import type { Contact } from "../../models/contact"
-import { useItemStore } from "./item"
-import type { Item } from "../../models/item"
 import {
     defineEppsStore,
     extendedState,
-    getParentStorePropertyValue,
+    getParentStore,
     useWebUserStore,
+    type EppsStore,
     type WebUserState,
     type WebUserStore
 } from "epps";
 import { computed, ref } from "vue";
-import type { Store } from "pinia";
 
 
 export interface ContactStore extends WebUserStore {
-    isPassword: (password: string) => boolean
     setData: (data: ContactState) => void
     contact: Contact
 }
@@ -41,13 +38,25 @@ export const useContactStore = (id?: string) => defineEppsStore<ContactStore, Co
         )
 
 
-        const contact = computed(() => ({
-            '@id': parentsStores && getParentStorePropertyValue('@id', 0, parentsStores() ?? ([] as Store[])),
-            id: parentsStores && getParentStorePropertyValue('id', 0, parentsStores()),
-            email: email.value,
-            firstname: firstname.value,
-            lastname: lastname.value
-        }))
+        const contact = computed(() => {
+            const webUserStore = getWebUserStore.value
+
+            if (!webUserStore) {
+                return
+            }
+
+            return {
+                '@id': webUserStore["@id"],
+                id: webUserStore.id,
+                email: email.value,
+                firstname: firstname.value,
+                lastname: lastname.value,
+                password: webUserStore.password,
+                username: webUserStore.username
+            }
+        })
+
+        const getWebUserStore = computed(() => getParentStore<WebUserStore, WebUserState>(0, parentsStores))
 
 
         function setData(data: ContactState) {
