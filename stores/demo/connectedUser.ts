@@ -12,7 +12,7 @@ export const useConnectedUserStore = defineEppsStore<ContactStore, ContactState>
             [useContactStore('connected-user')],
             {
                 persist: {
-                    persistedPropertiesToEncrypt: ref(['email', 'password', 'username']),
+                    persistedPropertiesToEncrypt: ref(['email', 'password']),
                     watchMutation: ref(true)
                 }
             }
