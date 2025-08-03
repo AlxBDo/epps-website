@@ -23,13 +23,22 @@ connectedUser.remember().then(() => {
     }
     isloading.value = false
 })
+
+const contact = computed(() => ({
+    id: connectedUser.id,
+    firstname: connectedUser.firstname,
+    email: connectedUser.email,
+    lastname: connectedUser.lastname,
+    password: connectedUser.password,
+    username: connectedUser.username
+}))
 </script>
 
 <template>
     <div>
         <h3>User</h3>
 
-        <DisplayResult v-if="!isloading" :result="connectedUser.contact" />
+        <DisplayResult v-if="!isloading" :result="contact" />
 
         <UButton class="mt-4 cursor-pointer" color="neutral" icon="iconamoon:close-bold"
             @click="() => connectedUser.$reset()" variant="outline">

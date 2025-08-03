@@ -1,25 +1,18 @@
-import { ref } from "vue";
-import { defineEppsStore, extendedState } from "epps";
-import { useUserStore, type UserStore, type UserState } from "../demo/user";
+import { defineEppsStore, Epps, ParentStore } from "epps";
 import { useContactStore, type ContactState, type ContactStore } from "./contact";
-import type { MutationType, SubscriptionCallbackMutationDirect, SubscriptionCallbackMutationPatchObject } from "pinia";
 
+
+const epps = new Epps({
+    parentsStores: [new ParentStore<ContactStore, ContactState>('connectedContact', useContactStore)],
+    persist: {
+        persistedPropertiesToEncrypt: ['email', 'password'],
+        watchMutation: true
+    }
+})
 
 export const useConnectedUserStore = defineEppsStore<ContactStore, ContactState>(
     'connectedUser',
-    () => ({
-        ...extendedState(
-            [useContactStore('connected-user')],
-            {
-                persist: {
-                    persistedPropertiesToEncrypt: ref(['email', 'password']),
-                    watchMutation: ref(true)
-                }
-            }
-        ),
-        mutationCallback: (mutation: SubscriptionCallbackMutationPatchObject<ContactState>) => {
-            mutation && console.log('useConnectedUserStore - mutationCallback', mutation)
-        }
-    })
+    () => ({}),
+    epps
 )
 

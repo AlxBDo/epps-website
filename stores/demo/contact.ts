@@ -1,8 +1,10 @@
 import type { Contact } from "../../models/contact"
 import {
     defineEppsStore,
+    Epps,
     extendedState,
     getParentStore,
+    ParentStore,
     useWebUserStore,
     type EppsStore,
     type WebUserState,
@@ -19,6 +21,12 @@ export interface ContactStore extends WebUserStore {
 export interface ContactState extends WebUserState, Contact {
 }
 
+
+const epps = new Epps({
+    actionsToExtends: ['setData'],
+    parentsStores: [new ParentStore<WebUserStore, WebUserState>('webUser', useWebUserStore)]
+})
+
 export const useContactStore = (id?: string) => defineEppsStore<ContactStore, ContactState>(
     id ?? 'contact',
     () => {
@@ -26,6 +34,8 @@ export const useContactStore = (id?: string) => defineEppsStore<ContactStore, Co
         const firstname = ref<string>()
         const lastname = ref<string>()
 
+        /**
+         
         const {
             excludedKeys,
             actionsToExtends,
@@ -36,10 +46,11 @@ export const useContactStore = (id?: string) => defineEppsStore<ContactStore, Co
             [useWebUserStore(id ? `${id}-item` : 'contact-item')],
             { actionsToExtends: ['setData'] }
         )
+         */
 
 
         const contact = computed(() => {
-            const webUserStore = getWebUserStore.value
+            const webUserStore = epps.getStore<WebUserStore, WebUserState>('webUser', id ?? 'contact')
 
             if (!webUserStore) {
                 return
@@ -56,7 +67,9 @@ export const useContactStore = (id?: string) => defineEppsStore<ContactStore, Co
             }
         })
 
-        const getWebUserStore = computed(() => getParentStore<WebUserStore, WebUserState>(0, parentsStores))
+        const getWebUserStore = computed(
+            () => epps.getStore<WebUserStore, WebUserState>('webUser', id ?? 'contact') //getParentStore<WebUserStore, WebUserState>(0, parentsStores)
+        )
 
 
         function setData(data: ContactState) {
@@ -66,16 +79,17 @@ export const useContactStore = (id?: string) => defineEppsStore<ContactStore, Co
         }
 
         return {
-            actionsToExtends,
+            //actionsToExtends,
             contact,
             email,
             firstname,
-            excludedKeys,
+            //excludedKeys,
             lastname,
-            parentsStores,
-            persist,
-            persistedPropertiesToEncrypt,
+            //parentsStores,
+            //persist,
+            //persistedPropertiesToEncrypt,
             setData
         }
-    }
+    },
+    epps
 )()
