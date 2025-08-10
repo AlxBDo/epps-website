@@ -7,7 +7,7 @@ import Store from '../examples/common/Store.vue'
 import type { ParameterPrototype, TypeRequired } from '~/types/prototype'
 
 
-const { defineEppsStore, extendedState } = usePagesDefinitions()
+const { defineEppsStore } = usePagesDefinitions()
 const { id, title } = defineAEppsStore
 
 const eppsDefinition = `const epps = new Epps({
@@ -122,12 +122,6 @@ const personMethods: TypeRequired = { name: 'UserMethods', description: 'Methods
             <Store :definition-parameter="personStoreDefParams" :is-epps-store="false" :name="'person'"
                 :store-definitions="personStoreDefinitions" :types-definition="personTypesDefinition">
             </Store>
-        </template>
-
-        <template #toSee>
-            <Links
-                :links="{ [defineEppsStore.title]: `/${defineEppsStore.path}`, [extendedState.title]: `/${extendedState.path}` }">
-            </Links>
         </template>
     </ExplanationContainer>
 </template>

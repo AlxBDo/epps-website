@@ -2,7 +2,7 @@ import type { CodeDeclarationTypes, InterfacePrototype, ParameterPrototype } fro
 import { createParameterPrototype } from "~/utils/components/code-declaration";
 
 
-export const description: string = 'Defines the optional configuration for the "extendedState" function.'
+export const description: string = 'Defines the optional configuration for Epps Store.'
 
 export const name: string = 'EppsStoreOptions'
 
