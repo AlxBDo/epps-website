@@ -17,6 +17,7 @@ interface StoreDefinitions {
 const componentProps = defineProps({
     definitionParameter: { type: Object as PropType<ParameterPrototype>, default: () => { } },
     displayNameAs: { type: String as PropType<'subtitle' | 'title'>, default: undefined },
+    eppsDefinition: { type: String, default: '' },
     isEppsStore: { type: Boolean, default: true },
     name: { type: String, required: true },
     requiredTypes: { type: Array as PropType<TypeRequired[]>, default: () => [] },
@@ -29,10 +30,14 @@ storeStore.init(componentProps)
 
 const { definitionParameterToString, defineStoreToString, requiredTypesToString, storeName } = storeStore
 
-const definition = (withTypes: boolean) => `const ${storeName} = ${definitionParameterToString() + defineStoreToString() + (withTypes ? requiredTypesToString() : '')}(
+const definition = (withTypes: boolean) => `${componentProps.eppsDefinition}const ${storeName} = ${definitionParameterToString() + defineStoreToString() + (withTypes ? requiredTypesToString() : '')}(
     ${!isEmpty(componentProps.definitionParameter) ? componentProps.definitionParameter.name : "'" + (componentProps.name + 'Store') + "'"},
     () => `
-const endDefinition = `
+
+const eppsEndDefinition = componentProps.isEppsStore ? `,
+    epps` : ''
+
+const endDefinition = `${eppsEndDefinition}
 )`
 
 const title = componentProps.displayNameAs === 'title' ? storeName : undefined

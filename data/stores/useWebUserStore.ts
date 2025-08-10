@@ -1,4 +1,5 @@
 import type { FunctionPrototype, ParameterPrototype, StorePrototype, TypeRequired } from "~/types/prototype"
+import type { ParentsStoresEppsOption } from "~/types/stores"
 import { createTypeRequired } from "~/utils/components/code-declaration"
 import { getStoreDefinition } from "~/utils/store"
 
@@ -36,7 +37,7 @@ export const idIsParam = true
 
 export const isEppsStore = true
 
-export const parentsStores: string[] = ['useResourceIdStore(id)']
+export const parentsStores: ParentsStoresEppsOption = [{ id: 'webUserId', name: 'useResourceIdStore' }]
 
 
 export default {

@@ -3,7 +3,7 @@ import { useContactStore, type ContactState, type ContactStore } from "./contact
 
 
 const epps = new Epps({
-    parentsStores: [new ParentStore<ContactStore, ContactState>('connectedContact', useContactStore)],
+    parentsStores: [new ParentStore('connectedContact', useContactStore)],
     persist: {
         persistedPropertiesToEncrypt: ['email', 'password'],
         watchMutation: true

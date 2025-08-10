@@ -9,11 +9,15 @@ import type { ParameterPrototype, TypeRequired } from '~/types/prototype'
 
 const { defineEppsStore, extendedState } = usePagesDefinitions()
 const { id, title } = defineAEppsStore
+
+const eppsDefinition = `const epps = new Epps({
+    actionsToExtends: ['setData'],
+    parentsStores: [ new ParentStore('userPersonStore', usePersonStore) ]
+})
+
+`
+
 const typeScriptStoreDefinition = `({
-        ...extendedState(
-            [usePersonStore('userPersonStore')],
-            { actionsToExtends: ['setData'] }
-        ),
         password: ref<string>(),
         setData: (userData: User): void => {
             if(userData.password) {
@@ -22,10 +26,6 @@ const typeScriptStoreDefinition = `({
         }
     })`
 const javascriptScriptStoreDefinition = `({
-        ...extendedState(
-            [usePersonStore('userPersonStore')],
-            { actionsToExtends: ['setData'] }
-        ),
         password: ref(),
         setData: (userData) => {
             if(userData.password) {
@@ -104,8 +104,8 @@ const personMethods: TypeRequired = { name: 'UserMethods', description: 'Methods
         </template>
 
         <template #userStore>
-            <Store :name="'user'" :store-definitions="storeDefinitions" :required-types="[userState, personMethods]"
-                :types-definition="userTypesDefinition">
+            <Store :name="'user'" :epps-definition :store-definitions="storeDefinitions"
+                :required-types="[userState, personMethods]" :types-definition="userTypesDefinition">
                 <template #explanation>
                     <p class="text-sm">
                         To define a Store that will extend the State and methods of other Stores, use the

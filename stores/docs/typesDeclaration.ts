@@ -15,6 +15,7 @@ export interface TypeDeclarationStore {
     addTypesToSeeFromParameters: (params?: ParameterPrototype[]) => void
     hasTypesToSee: () => boolean
     initRequiredType: (declarationRequiredTypes?: TypeRequired[]) => void
+    initTypes: (types: TypesProps) => void
     requiredTypesToString: () => Ref<string>
     returnTypeFormatted: (returnType?: FunctionReturn) => string
 }

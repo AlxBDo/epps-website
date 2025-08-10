@@ -1,4 +1,5 @@
 import type { FunctionPrototype, ParameterPrototype, StorePrototype, TypeRequired } from "~/types/prototype"
+import type { ParentsStoresEppsOption } from "~/types/stores"
 import { createTypeRequired } from "~/utils/components/code-declaration"
 import { getStoreDefinition } from "~/utils/store"
 
@@ -73,8 +74,6 @@ const state: ParameterPrototype[] = [
     { name: 'errors', required: false, type: 'TErrors[] | Errors[]' }
 ]
 
-//export const actionsToExtends: string[] = ['setData']
-
 export const description = `useErrorsStore represents a collection of errors and the basic actions 
 for selecting or deleting them. 
 
@@ -89,7 +88,7 @@ export const idIsParam = true
 
 export const isEppsStore = true
 
-export const parentsStores: string[] = ['useCollectionStore(id)']
+export const parentsStores: ParentsStoresEppsOption = [{ id: 'errorCollection', name: 'useCollectionStore' }]
 
 export const requiredTypes: TypeRequired[] = [
     createTypeRequired('TError | Error', 'Optional - custom error type')

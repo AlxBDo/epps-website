@@ -1,7 +1,7 @@
 import type { CodeDeclarationState, CodeDeclarationStore } from "./codeDeclarationExplanation";
 import type { CodeDeclarationTypes, FunctionReturn, ParameterPrototype, TypeRequired } from "~/types/prototype"
 
-import { defineEppsStore, extendedState, getParentStoreMethod } from "epps";
+import { defineEppsStore, Epps, ParentStore } from "epps";
 import { isEmpty } from "~/utils/validation";
 import { useCodeDeclarationExplanationStore } from "./codeDeclarationExplanation";
 
@@ -60,14 +60,17 @@ function symbolsObject(start: string, end?: string) {
 }
 
 
+const epps = new Epps({
+    actionsToExtends: ['initDeclaration'],
+    parentsStores: [
+        new ParentStore('prototype', useCodeDeclarationExplanationStore)
+    ]
+})
+
 export const usePrototypeStore = (id: string) => defineEppsStore<PrototypeStore, PrototypeState>(`${id}PrototypeStore`, () => {
     const codeSlots = ref<string[]>()
     const declaration = ref<InitDeclarationProps>()
     const declarationSymbols = ref<SymbolsObject>()
-    const { parentsStores } = extendedState(
-        [useCodeDeclarationExplanationStore(id)],
-        { actionsToExtends: ['initDeclaration'] }
-    )
 
 
     function displayJsSlot(): boolean {
@@ -78,26 +81,20 @@ export const usePrototypeStore = (id: string) => defineEppsStore<PrototypeStore,
         let code: string = ''
 
         if (declaration.value) {
-            const ps = parentsStores && parentsStores()
-
-            if (!Array.isArray(ps)) {
-                throw new Error('Prototype store requires CodeDeclarationExplanationStore as parent')
-            }
-
-            const codeDeclarationStore = ps[0]
+            const codeDeclarationStore = epps.getStore<CodeDeclarationStore, CodeDeclarationState>(0, `${id}PrototypeStore`)
             const { name, properties, returnType, type, value } = declaration.value
 
             code = `${type} ${name}`
 
             if (lang === 'typeScript') {
-                code += getParentStoreMethod('requiredTypesToString', codeDeclarationStore)()
+                code += codeDeclarationStore?.requiredTypesToString()
             }
 
             if (type === 'function') {
-                code += getParentStoreMethod('propsToString', codeDeclarationStore)()
+                code += codeDeclarationStore?.propsToString()
             }
 
-            code += `${getParentStoreMethod('returnTypeFormatted', codeDeclarationStore)(returnType)} ${getStartSymbol()} `
+            code += `${codeDeclarationStore?.returnTypeFormatted(returnType)} ${getStartSymbol()} `
 
             if (!isEmpty(properties)) {
                 if (type !== 'interface') {
@@ -165,7 +162,6 @@ export const usePrototypeStore = (id: string) => defineEppsStore<PrototypeStore,
         getCode,
         getEndSymbol,
         getStartSymbol,
-        initDeclaration,
-        parentsStores
+        initDeclaration
     }
-})()
+}, epps)()

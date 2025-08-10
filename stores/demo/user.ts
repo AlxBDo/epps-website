@@ -1,5 +1,5 @@
-import { computed, ref } from "vue"
-import { defineEppsStore, extendedState, getParentStorePropertyValue } from "epps"
+import { ref } from "vue"
+import { defineEppsStore, Epps, ParentStore } from "epps"
 
 import { useContactStore } from "./contact"
 
@@ -16,22 +16,16 @@ export interface UserStore {
 
 export type UserState = Contact & User
 
+const epps = new Epps({
+    actionsToExtends: ['setData'],
+    parentsStores: [new ParentStore('userContact', useContactStore)]
+})
+
 export const useUserStore = (id?: string) => defineEppsStore<UserStore, UserState>(
     id ?? 'contact',
     () => {
         const lists = ref<List[]>()
         const password = ref<string>()
-
-        const {
-            excludedKeys,
-            actionsToExtends,
-            parentsStores,
-            persist,
-            persistedPropertiesToEncrypt
-        } = extendedState(
-            [useContactStore(id ? `${id}-contact` : 'user-contact')],
-            { actionsToExtends: ['setData'] }
-        )
 
 
         function setData(data: UserState) {
@@ -40,14 +34,10 @@ export const useUserStore = (id?: string) => defineEppsStore<UserStore, UserStat
         }
 
         return {
-            actionsToExtends,
-            excludedKeys,
             lists,
-            parentsStores,
             password,
-            persist,
-            persistedPropertiesToEncrypt,
             setData
         }
-    }
+    },
+    epps
 )()

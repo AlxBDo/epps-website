@@ -1,3 +1,5 @@
+import type { ParentsStoresEppsOption } from "./stores"
+
 interface PrototypeBase { description?: string, name: string, type: string }
 
 interface PrototypeWithTypeParams extends Omit<PrototypeBase, 'type'> {
@@ -33,7 +35,7 @@ export interface StorePrototype extends PrototypeWithTypeParams {
     idIsParam?: true
     isEppsStore: boolean
     methods?: FunctionPrototype[]
-    parentsStores?: string[]
+    parentsStores?: string[] | ParentsStoresEppsOption
     state: ParameterPrototype[]
     stateType?: string
     storeType?: string

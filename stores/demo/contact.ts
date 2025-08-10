@@ -2,11 +2,8 @@ import type { Contact } from "../../models/contact"
 import {
     defineEppsStore,
     Epps,
-    extendedState,
-    getParentStore,
     ParentStore,
     useWebUserStore,
-    type EppsStore,
     type WebUserState,
     type WebUserStore
 } from "epps";
@@ -24,7 +21,7 @@ export interface ContactState extends WebUserState, Contact {
 
 const epps = new Epps({
     actionsToExtends: ['setData'],
-    parentsStores: [new ParentStore<WebUserStore, WebUserState>('webUser', useWebUserStore)]
+    parentsStores: [new ParentStore('webUser', useWebUserStore)]
 })
 
 export const useContactStore = (id?: string) => defineEppsStore<ContactStore, ContactState>(
@@ -33,20 +30,6 @@ export const useContactStore = (id?: string) => defineEppsStore<ContactStore, Co
         const email = ref<string>()
         const firstname = ref<string>()
         const lastname = ref<string>()
-
-        /**
-         
-        const {
-            excludedKeys,
-            actionsToExtends,
-            parentsStores,
-            persist,
-            persistedPropertiesToEncrypt
-        } = extendedState(
-            [useWebUserStore(id ? `${id}-item` : 'contact-item')],
-            { actionsToExtends: ['setData'] }
-        )
-         */
 
 
         const contact = computed(() => {
@@ -67,10 +50,6 @@ export const useContactStore = (id?: string) => defineEppsStore<ContactStore, Co
             }
         })
 
-        const getWebUserStore = computed(
-            () => epps.getStore<WebUserStore, WebUserState>('webUser', id ?? 'contact') //getParentStore<WebUserStore, WebUserState>(0, parentsStores)
-        )
-
 
         function setData(data: ContactState) {
             if (data.email) { email.value = data.email; }
@@ -79,15 +58,10 @@ export const useContactStore = (id?: string) => defineEppsStore<ContactStore, Co
         }
 
         return {
-            //actionsToExtends,
             contact,
             email,
             firstname,
-            //excludedKeys,
             lastname,
-            //parentsStores,
-            //persist,
-            //persistedPropertiesToEncrypt,
             setData
         }
     },

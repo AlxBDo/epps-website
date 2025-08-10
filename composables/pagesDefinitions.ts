@@ -7,16 +7,12 @@ import collectionStoreDefinition from "~/data/types/collectionStore"
 import createPluginDefinition from "~/data/functions/createPlugin"
 import defineEppsStoreDefinition from "~/data/pages/docs/defineEppsStore"
 import eppsStoreDefinition from "~/data/types/eppsStore"
+import eppsStoreOptionsDefinition from "~/data/types/eppsStoreOptions"
 import errorDefinition from "~/data/types/error"
 import errorsStateDefinition from "~/data/types/errorsState"
 import errorsStoreDefinition from "~/data/types/errorsStore"
-import extendedStateDefinition from "~/data/pages/docs/extendedState"
 import extendedStateInterfaceDefinition from "~/data/types/extendedState"
-import extendedStateOptionsDefinition from "~/data/types/extendedStateOptions"
 import extendedStoreDefinition from "~/data/types/extendedStore"
-import getParentStoreDefinition from "~/data/functions/getParentStore"
-import getParentStoreMethodDefinition from "~/data/functions/getParentStoreMethod"
-import getParentStorePropertyValueDefinition from "~/data/functions/getParentStorePropertyValue"
 import homeDefinition from "~/data/pages/home"
 import installationDefinition from "~/data/pages/docs/installation"
 import persistedStateDefinition from "~/data/types/persistedState"
@@ -54,10 +50,6 @@ export function usePagesDefinitions() {
     // Funtions
     const createPlugin = createDefinition('functions', createPluginDefinition)
     const defineEppsStore = createPageResume(defineEppsStoreDefinition)
-    const extendedState = createPageResume(extendedStateDefinition)
-    const getParentStore = createDefinition('functions', getParentStoreDefinition)
-    const getParentStoreMethod = createDefinition('functions', getParentStoreMethodDefinition)
-    const getParentStorePropertyValue = createDefinition('functions', getParentStorePropertyValueDefinition)
 
     // Stores
     const useCollectionStore = createDefinition('stores', useCollectionStoreDefinition)
@@ -69,11 +61,11 @@ export function usePagesDefinitions() {
     const collectionState = createDefinition('types', collectionStateDefinition)
     const collectionStore = createDefinition('types', collectionStoreDefinition)
     const eppsStoreType = createDefinition('types', eppsStoreDefinition)
+    const eppsStoreOptions = createDefinition('types', eppsStoreOptionsDefinition)
     const errorInterface = createDefinition('types', errorDefinition)
     const errorsState = createDefinition('types', errorsStateDefinition)
     const errorsStore = createDefinition('types', errorsStoreDefinition)
     const extendedStateInterface = createDefinition('types', extendedStateInterfaceDefinition)
-    const extendedStateOptions = createDefinition('types', extendedStateOptionsDefinition)
     const extendedStore = createDefinition('types', extendedStoreDefinition)
     const persistedState = createDefinition('types', persistedStateDefinition)
     const persistedStore = createDefinition('types', persistedStoreDefinition)
@@ -101,10 +93,6 @@ export function usePagesDefinitions() {
             functions: {
                 createPlugin,
                 defineEppsStore,
-                extendedState,
-                getParentStore,
-                getParentStoreMethod,
-                getParentStorePropertyValue
             } as Record<string, PageResume>,
 
             stores: {
@@ -118,11 +106,11 @@ export function usePagesDefinitions() {
                 collectionState,
                 collectionStore,
                 eppsStore: eppsStoreType,
+                eppsStoreOptions,
                 error: errorInterface,
                 errorsState,
                 errorsStore,
                 extendedState: extendedStateInterface,
-                extendedStateOptions,
                 extendedStore,
                 persistedState,
                 persistedStore,
@@ -154,15 +142,11 @@ export function usePagesDefinitions() {
         createPlugin,
         defineEppsStore,
         eppsStoreType,
+        eppsStoreOptions,
         error,
-        extendedState,
         extendedStateInterface,
-        extendedStateOptions,
         extendedStore,
         getPageDefinition,
-        getParentStore,
-        getParentStoreMethod,
-        getParentStorePropertyValue,
         home,
         install,
         lists,

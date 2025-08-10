@@ -8,7 +8,8 @@ export const name: string = 'defineEppsStore'
 
 export const props: ParameterPrototype[] = [
     createParameterPrototype('storeId', 'string', true, 'Store id'),
-    createParameterPrototype('storeDefinition', 'function', true, 'Store definition - use setup syntax')
+    createParameterPrototype('storeDefinition', 'function', true, 'Store definition'),
+    createParameterPrototype('eppsOptions', 'EppsStoreOptions', true, 'use Epps class to define options')
 ]
 
 export const requiredTypes: TypeRequired[] = [

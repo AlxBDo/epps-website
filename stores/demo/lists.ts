@@ -1,4 +1,4 @@
-import { defineEppsStore, extendedState, getParentStore, getParentStoreMethod, useCollectionStore, type CollectionState, type CollectionStoreMethods, type EppsStore } from "epps"
+import { defineEppsStore, Epps, ParentStore, useCollectionStore, type CollectionState, type CollectionStoreMethods } from "epps"
 
 import type { ListTypes } from "~/types/list"
 
@@ -12,23 +12,28 @@ export interface List {
     type: string
 }
 
+export interface ListsState {
+    lists: List[]
+}
 
 export interface ListsStoreMethods extends CollectionStoreMethods {
     newList: (name: string, type: string) => void
 }
+
+
+const epps = new Epps({
+    parentsStores: [new ParentStore<CollectionStoreMethods, CollectionState<List>>('listCollection', useCollectionStore)],
+    persist: { watchMutation: true },
+    propertiesToRename: { items: 'lists' }
+})
 
 export const useListsStore = (
     id?: string
 ) => defineEppsStore<ListsStoreMethods, CollectionState<List>>(
     id ?? defaultStoreId,
     () => {
-        const { parentsStores, persist, watchMutation } = extendedState(
-            [useCollectionStore('listsCollection')],
-            { persist: { watchMutation: ref(true) } }
-        )
-
         function newList(name: string, type: ListTypes): void {
-            const collectionStore = getParentStore<CollectionStoreMethods, CollectionState<List>>(0, parentsStores)
+            const collectionStore = epps.getStore<CollectionStoreMethods, CollectionState<List>>(0, id ?? defaultStoreId)
 
             if (!collectionStore) { return }
 
@@ -40,10 +45,8 @@ export const useListsStore = (
         }
 
         return {
-            newList,
-            parentsStores,
-            persist,
-            watchMutation
+            newList
         }
-    }
+    },
+    epps
 )()

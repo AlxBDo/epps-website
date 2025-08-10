@@ -1,11 +1,11 @@
-import { defineEppsStore, extendedState, getParentStoreMethod } from "epps";
+import { defineEppsStore, Epps, ParentStore } from "epps";
 import { isEmpty } from "~/utils/validation";
 import { usePropsDeclarationStore } from "./propsDeclaration";
 import { useTypeDeclarationStore } from "./typesDeclaration";
 
 import type { CodeDeclarationTypes, CodeDeclarationPrototype, ParameterPrototype, TypeRequired } from "~/types/prototype";
 import type { PropsDeclarationState, PropsDeclarationStore } from "./propsDeclaration";
-import type { TypeDeclarationState, TypeDeclarationStore } from "./typesDeclaration";
+import type { TypeDeclarationState, TypeDeclarationStore, TypesProps } from "./typesDeclaration";
 
 
 interface Prototype extends CodeDeclarationPrototype {
@@ -29,11 +29,16 @@ export interface CodeDeclarationStore extends PropsDeclarationStore, TypeDeclara
     initDeclaration: (prototype: Prototype) => void
 }
 
+const epps = new Epps({
+    parentsStores: [
+        new ParentStore('code', useTypeDeclarationStore),
+        new ParentStore('code', usePropsDeclarationStore)
+    ]
+})
 
 export const useCodeDeclarationExplanationStore = (id: string) => defineEppsStore<CodeDeclarationStore, CodeDeclarationState>(
     `${id}CodeDeclarationExplanantionStore`,
     () => {
-        const { parentsStores } = extendedState([useTypeDeclarationStore(id), usePropsDeclarationStore(id)])
         const propsExplanation = ref<ParameterPrototype[]>([])
 
 
@@ -43,56 +48,57 @@ export const useCodeDeclarationExplanationStore = (id: string) => defineEppsStor
             }
         }
 
+        function getPropsDeclarationStore() {
+            return epps.getStore<PropsDeclarationStore, PropsDeclarationState>(
+                1, `${id}CodeDeclarationExplanantionStore`
+            )
+        }
+
+        function getTypesDeclarationStore() {
+            return epps.getStore<TypeDeclarationStore, TypeDeclarationState>(
+                0, `${id}CodeDeclarationExplanantionStore`
+            )
+        }
+
         function hasPropsExplanation(): boolean {
             return !isEmpty(propsExplanation.value)
         }
 
         function initDeclaration(prototype: Prototype, indent: number = 0): void {
             propsExplanation.value = []
-            const ps = parentsStores && parentsStores()
 
-            if (!Array.isArray(ps)) {
-                throw new Error('TypeDeclarationStore and PropsDeclarationStore not found')
-            }
+            const typesStore = getTypesDeclarationStore()
+            const propsStore = getPropsDeclarationStore()
 
-            const typesStore = ps[0]
-            const propsStore = ps[1]
-            getParentStoreMethod('initProps', propsStore)(prototype.props, propCallback, indent)
-            getParentStoreMethod('initTypes', typesStore)(prototype)
+            typesStore?.initTypes(prototype as TypesProps)
+            propsStore?.initProps(prototype.props, propCallback, indent)
         }
 
         function propCallback(prop: ParameterPrototype): void {
-            const ps = parentsStores && parentsStores()
-            if (!Array.isArray(ps)) {
-                throw new Error('TypeDeclarationStore and PropsDeclarationStore not found')
-            }
-
-            const typesStore = ps[0]
-
-            getParentStoreMethod('addTypesToSee', typesStore)(prop.type)
+            const typesStore = getTypesDeclarationStore()
+            typesStore?.addTypesToSee(prop.type)
             createParameterExplanation(prop)
         }
 
         function propsToString(): string {
-            return getParentStoreMethod('propsToString', 1, parentsStores && parentsStores())()
+            return getPropsDeclarationStore()?.propsToString() as string
         }
 
-        function requiredTypesToString(): string {
-            return getParentStoreMethod('requiredTypesToString', 0, parentsStores && parentsStores())()
+        function requiredTypesToString() {
+            return getTypesDeclarationStore()?.requiredTypesToString()
         }
 
         function returnTypeFormatted(returnType?: string): string {
-            return getParentStoreMethod('returnTypeFormatted', 0, parentsStores && parentsStores())(returnType)
+            return getTypesDeclarationStore()?.returnTypeFormatted(returnType) as string
         }
 
 
         return {
             hasPropsExplanation,
             initDeclaration,
-            parentsStores,
             propsExplanation,
             propsToString,
             requiredTypesToString,
             returnTypeFormatted
         }
-    })()
+    }, epps)()

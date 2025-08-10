@@ -1,44 +1,35 @@
 <script setup lang="ts">
 import { listsStoreCreation } from '~/utils/components/resumes'
-
-import Alert from '~/components/dependencies/Alert.vue'
 import CodeBlock from '~/components/dependencies/CodeBlock.vue'
 import ExplanationContainer from '~/components/common/ExplanationContainer.vue'
 
 
-const { extendedState, useCollectionStore } = usePagesDefinitions()
+const { useCollectionStore } = usePagesDefinitions()
 const { id, title } = listsStoreCreation
 
-const storeDefinition = `export const useListsStore = (
+const storeDefinition = `const epps = new Epps({
+    parentsStores: [ new ParentStore('listsCollection', useCollectionStore) ],
+    persist: { watchMutation: true }
+})
+
+export const useListsStore = (
     id?: string
 ) => defineEppsStore<CollectionStoreMethods, CollectionState<List>>(
     id ?? defaultStoreId, 
     () => {
-        const { parentsStores, persist } = extendedState(
-            [useCollectionStore('listsCollection')],
-            { persist: { watchMutation: ref(true) } }
-        )
-
         function newList(name: string, type: ListTypes): void {
-            const collectionStore = parentsStores && parentsStores()[0] as EppsStore<
-                CollectionStoreMethods, CollectionState<List>
-            >
-
-            if (!collectionStore) { return }
-
-            getParentStoreMethod('addItem', collectionStore)({
+            const collectionStore = epps.getStore<CollectionStoreMethods, CollectionState<List>>(0, id ?? defaultStoreId)
+            collectionStore?.addItem({
                 id: collectionStore.items.length + 1,
                 name,
                 type
             })
         }
 
-        return {
-            newList,
-            parentsStores,
-            persist
-        }
-})()`
+        return { newList }
+    }, 
+    epps
+)()`
 </script>
 
 <template>
@@ -61,22 +52,8 @@ const storeDefinition = `export const useListsStore = (
             <CodeBlock :code="storeDefinition" lang="typeScript" />
         </template>
 
-        <template #store-creation-tip>
-            <Alert type="tip">
-                <template #description>
-                    <p>
-                        Uses the <code>extendedState</code> function to obtain default and required state properties
-                        for the plugin.
-                    </p>
-                    <ULink class="text-yellow-50" :to="`/${extendedState.path}`">
-                        See <code>extendedState</code> function documentation
-                    </ULink>
-                </template>
-            </Alert>
-        </template>
-
         <template #toSee>
-            <ULink :to="`/${useCollectionStore.path}`">{{ useCollectionStore.id }}</ULink>
+            <ULink :to="`/${useCollectionStore?.path}`">{{ useCollectionStore?.id }}</ULink>
         </template>
     </ExplanationContainer>
 </template>

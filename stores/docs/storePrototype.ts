@@ -4,9 +4,9 @@ import { isEmpty } from '~/utils/validation';
 import { usePrototypeStore, type PrototypeState, type PrototypeStore } from './prototype';
 
 import type { FunctionPrototype, ParameterPrototype, StorePrototype } from '~/types/prototype'
-import type { StoreSyntax } from '~/types/stores';
-import { defineEppsStore, extendedState, getParentStoreMethod, type EppsStore } from 'epps';
-import type { TypeDeclarationState, TypeDeclarationStore } from './typesDeclaration';
+import type { ParentsStoresEppsOption, ParentStoreEppsOption, StoreSyntax } from '~/types/stores';
+import { defineEppsStore, Epps, ParentStore, type EppsStore } from 'epps';
+import type { TypeDeclarationState, TypeDeclarationStore, TypesProps } from './typesDeclaration';
 import { useStoreTypesDeclaration } from './storeTypesDeclaration';
 
 
@@ -24,10 +24,12 @@ export interface StorePrototypeStore extends TypeDeclarationStore {
 }
 
 
+const epps = new Epps({
+    parentsStores: [new ParentStore('prototype', useStoreTypesDeclaration)]
+})
+
+
 export const useStorePrototype = (id: string) => defineEppsStore<StorePrototypeStore, StorePrototypeState>(`${id}StorePrototype`, () => {
-    const { parentsStores } = extendedState(
-        [useStoreTypesDeclaration(id)]
-    )
     const prototype = ref<StorePrototype>()
     const storeReturn: string[] = []
 
@@ -38,11 +40,7 @@ export const useStorePrototype = (id: string) => defineEppsStore<StorePrototypeS
     )
     const description = computed(() => prototype.value?.description)
     const getRequiredTypes = computed(() => {
-        if (!parentsStores) { return '' }
-
-        const [typesStores] = parentsStores()
-
-        return getParentStoreMethod('requiredTypesToString', typesStores)()
+        return getTypesStore()?.requiredTypesToString()
     })
 
 
@@ -92,21 +90,50 @@ export const useStorePrototype = (id: string) => defineEppsStore<StorePrototypeS
         }
     }
 
-    function extendedStateDefinition(parentsStores: string[], actionsToExtends?: string[]) {
+    function eppsDefinition(
+        parentsStores: ParentsStoresEppsOption,
+        actionsToExtends?: string[],
+        persist?: { persist?: boolean, watchMutation?: boolean }
+    ) {
         addStoreReturnItem('parentsStores')
-        let code = `extendedState(
-                parentsStores: [${parentsStores.join(", ")}]`
+        let code = `const epps = new Epps({`
 
         if (actionsToExtends) {
             addStoreReturnItem('actionsToExtends')
-            code += `,
-                persist: { actionsToExtends: ['${actionsToExtends.join("', '")}']}`
+            code += `
+    actionsToExtends: ['${actionsToExtends.join("', '")}'],`
         }
 
         code += `
-            )`
+    parentsStores: ${parentsStoresDefinition(parentsStores)}`
+
+        if (persist) {
+            let persistDef: string | undefined
+
+            if (persist?.persist) {
+                persistDef = 'persist: true'
+            }
+
+            if (persist.watchMutation) {
+                if (persistDef) {
+                    persistDef += ', '
+                }
+                persistDef += 'watchMutation: true '
+            }
+            code += `,
+    persist: { ${persistDef} }`
+        }
+
+        code += `
+})
+
+`
 
         return code
+    }
+
+    function getTypesStore() {
+        return epps.getStore<TypeDeclarationStore, TypeDeclarationState>(0, `${id}StorePrototype`)
     }
 
     function listProperties(
@@ -141,6 +168,24 @@ export const useStorePrototype = (id: string) => defineEppsStore<StorePrototypeS
             && !!(methods as FunctionPrototype[]).find(property => property?.description)
     }
 
+    function parentStoreDefinition(parentStore: ParentStoreEppsOption) {
+        return `new ParentStore('${parentStore.id}', ${parentStore.name})`
+    }
+
+    function parentsStoresDefinition(parentsStores: ParentsStoresEppsOption) {
+        const separator = parentsStores.length < 3 ? ' ' : `
+        `
+        const parentsStoresString = parentsStores.reduce((acc: string, curr: ParentStoreEppsOption) => {
+            if (acc !== '') { acc += ',' + separator }
+
+            acc += parentStoreDefinition(curr)
+
+            return acc
+        }, '')
+
+        return `[${separator}${parentsStoresString}${separator}]`
+    }
+
     function prototypeToString(syntax: StoreSyntax = 'setup', isJs: boolean = false): string {
         if (!prototype.value) return ''
 
@@ -150,7 +195,9 @@ export const useStorePrototype = (id: string) => defineEppsStore<StorePrototypeS
 
         const storeName = `${name}Store`
 
-        let code: string = `export const use${capitalize(storeName)} = `
+        let code: string = isEppsStore ? eppsDefinition(parentsStores as ParentsStoresEppsOption, actionsToExtends) : ''
+
+        code += `export const use${capitalize(storeName)} = `
 
         if (idIsParam) {
             code += `${getRequiredTypes.value}(id: string) => `
@@ -162,18 +209,8 @@ export const useStorePrototype = (id: string) => defineEppsStore<StorePrototypeS
         if (isOptionApi) {
             code += `{
         state: () => ({`
-
-            if (isEppsStore && parentsStores) {
-                code += `
-            ...${extendedStateDefinition(parentsStores, actionsToExtends)}`
-            }
         } else {
             code += `() => {`
-
-            if (isEppsStore && parentsStores) {
-                code += `
-        const { parentsStores${actionsToExtends ? ', actionsToExtends' : ''} } = ${extendedStateDefinition(parentsStores, actionsToExtends)}`
-            }
         }
 
         code += listProperties(state, syntax, isJs, true, indentNumber)
@@ -208,7 +245,14 @@ ${indent('}', indentNumber)}
 `
         }
 
-        code += `   }
+        code += `   }`
+
+        if (isEppsStore) {
+            code += `, 
+    epps`
+        }
+
+        code += `
 )`
 
         return code
@@ -217,9 +261,8 @@ ${indent('}', indentNumber)}
     function setPrototype(data: StorePrototype): void {
         prototype.value = data
 
-        if (data.requiredTypes && parentsStores) {
-            const [typesStore] = parentsStores()
-            getParentStoreMethod('initTypes', typesStore)(data)
+        if (data.requiredTypes) {
+            getTypesStore()?.initTypes(data as unknown as TypesProps)
         }
     }
 
@@ -258,9 +301,8 @@ ${indent(property.name, indentNumber)} : ${property.type}`
         description,
         methodsHasDescription,
         prototype,
-        parentsStores,
         prototypeToString,
         setPrototype,
         stateHasDescription
     }
-})()
+}, epps)()

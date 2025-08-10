@@ -2,53 +2,33 @@
 import { storesRepoPath } from '~/utils/constantes';
 import { userStoreCreation } from '~/utils/components/resumes'
 
-import Alert from '~/components/dependencies/Alert.vue'
 import CodeBlock from '~/components/dependencies/CodeBlock.vue'
 import ExplanationContainer from '~/components/common/ExplanationContainer.vue'
 
 
-const { extendedState } = usePagesDefinitions()
 const { id, title } = userStoreCreation
 
-const definition = `export const useUserStore = (id?: string) => defineEppsStore<UserStore, UserState>(
+const definition = `const epps = new Epps({
+    actionsToExtends: ['setData'],
+    parentsStores: [ new ParentStore('userContact', useContactStore) ], 
+    persist: {
+        persistedPropertiesToEncrypt: ['email', 'password'],
+        watchMutation: true
+    }
+})
+
+export const useUserStore = (id?: string) => defineEppsStore<UserStore, UserState>(
     id ?? 'userStore',
     () => {
         const password = ref<string>()
 
-        const {
-            excludedKeys,
-            actionsToExtends,
-            parentsStores,
-            persist,
-            persistedPropertiesToEncrypt
-        } = extendedState(
-            [useContactStore(id ?? 'userContactStore')],
-            { 
-                actionsToExtends: ['setData'], 
-                persist: {
-                    persistedPropertiesToEncrypt: ref(['email', 'password']),
-                    watchMutation: ref(true)
-                }
-            }
-        )
-
-
         function setData(data: UserState) {
-            if (data.lists) { lists.value = data.lists; }
             if (data.password) { password.value = data.password; }
         }
 
-        return {
-            actionsToExtends,
-            excludedKeys,
-            lists,
-            parentsStores,
-            password,
-            persist,
-            persistedPropertiesToEncrypt,
-            setData
-        }
-    }
+        return { password, setData }
+    },
+    epps
 )()`
 </script>
 
@@ -60,14 +40,11 @@ const definition = `export const useUserStore = (id?: string) => defineEppsStore
             </p>
             <p class="text-sm">
                 In addition, the Store extends the setData method also declared in the parent Store useItemStore.
-                For the setData method to be extended, it must be declared in the
-                extendedState.options.actionsToExtends parameter.
             </p>
             <p class="text-sm">
                 The store is also persisted every time its state is modified, thanks to the
-                extendedState.options.watchMutation option, and sensitive data is encrypted thanks to the
-                extendedState.options.persist.persistedPropertiesToEncrypt option (see localStorage "connectedUser"
-                key).
+                persist.watchMutation option, and sensitive data is encrypted thanks to the
+                persist.persistedPropertiesToEncrypt option (see localStorage "connectedUser" key).
             </p>
         </template>
 
@@ -86,20 +63,6 @@ const definition = `export const useUserStore = (id?: string) => defineEppsStore
                     </ULink>
                 </p>
             </div>
-        </template>
-
-        <template #store-creation-tip>
-            <Alert type="tip">
-                <template #description>
-                    <p>
-                        Uses the <code>extendedState</code> function to obtain default and required state properties
-                        for the plugin.
-                    </p>
-                    <ULink class="text-yellow-50" :to="`/${extendedState.path}`">
-                        See <code>extendedState</code> function documentation
-                    </ULink>
-                </template>
-            </Alert>
         </template>
     </ExplanationContainer>
 </template>
