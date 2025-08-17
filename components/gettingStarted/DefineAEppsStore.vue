@@ -123,5 +123,9 @@ const personMethods: TypeRequired = { name: 'UserMethods', description: 'Methods
                 :store-definitions="personStoreDefinitions" :types-definition="personTypesDefinition">
             </Store>
         </template>
+
+        <template #toSee>
+            <Links :links="{ Epps: '/docs/class/epps', ParentStore: '/docs/class/ParentStore' }"></Links>
+        </template>
     </ExplanationContainer>
 </template>

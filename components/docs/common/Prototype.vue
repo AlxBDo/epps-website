@@ -6,10 +6,15 @@ import ExplanationContainer from '../../common/ExplanationContainer.vue'
 
 import type { EppsStore } from 'epps'
 import type { PropType } from 'vue'
-import type { CodeDeclarationTypes, FunctionReturn, ParameterPrototype, TypeRequired } from '~/types/prototype'
+import type { CodeDeclarationTypes, FunctionPrototype, FunctionReturn, ParameterPrototype, TypeRequired } from '~/types/prototype'
+import { constructorProps, methods } from '~/data/class/epps'
 
 
 const componentProps = defineProps({
+    constructorProps: {
+        type: Array as PropType<ParameterPrototype[]>,
+        default: () => []
+    },
     name: {
         type: String,
         required: true,
@@ -17,6 +22,10 @@ const componentProps = defineProps({
     description: {
         type: String,
         default: undefined,
+    },
+    methods: {
+        type: Array as PropType<FunctionPrototype[]>,
+        default: () => []
     },
     properties: {
         type: Array as PropType<ParameterPrototype[]>,

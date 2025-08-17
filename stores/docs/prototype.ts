@@ -1,13 +1,15 @@
 import type { CodeDeclarationState, CodeDeclarationStore } from "./codeDeclarationExplanation";
-import type { CodeDeclarationTypes, FunctionReturn, ParameterPrototype, TypeRequired } from "~/types/prototype"
+import type { CodeDeclarationTypes, FunctionPrototype, FunctionReturn, ParameterPrototype, TypeRequired } from "~/types/prototype"
 
-import { defineEppsStore, Epps, ParentStore } from "epps";
+import { defineEppsStore, Epps, ParentStore, type EppsStore } from "epps";
 import { isEmpty } from "~/utils/validation";
 import { useCodeDeclarationExplanationStore } from "./codeDeclarationExplanation";
 
 
 interface InitDeclarationProps {
+    constructorProps?: ParameterPrototype[]
     description?: string
+    methods?: FunctionPrototype[]
     name: string
     properties?: ParameterPrototype[]
     props?: ParameterPrototype[]
@@ -82,7 +84,7 @@ export const usePrototypeStore = (id: string) => defineEppsStore<PrototypeStore,
 
         if (declaration.value) {
             const codeDeclarationStore = epps.getStore<CodeDeclarationStore, CodeDeclarationState>(0, `${id}PrototypeStore`)
-            const { name, properties, returnType, type, value } = declaration.value
+            const { methods, name, properties, returnType, type, value } = declaration.value
 
             code = `${type} ${name}`
 
@@ -96,6 +98,11 @@ export const usePrototypeStore = (id: string) => defineEppsStore<PrototypeStore,
 
             code += `${codeDeclarationStore?.returnTypeFormatted(returnType)} ${getStartSymbol()} `
 
+            if (type === 'class') {
+                code += `
+    constructor${codeDeclarationStore?.propsToString()}: void`
+            }
+
             if (!isEmpty(properties)) {
                 if (type !== 'interface') {
                     code += `
@@ -106,6 +113,27 @@ export const usePrototypeStore = (id: string) => defineEppsStore<PrototypeStore,
                     code += `
     ${property.name + (property.required ? '' : '?')}: ${property.type}`
                 })
+
+                code += `
+`
+            }
+
+            if (!isEmpty(methods)) {
+                code += methods?.reduce((acc: string, curr: FunctionPrototype) => {
+                    const prototypeStore = usePrototypeStore(curr.name) as EppsStore<PrototypeStore, PrototypeState>
+                    prototypeStore.initDeclaration(curr as FunctionPrototype)
+                    prototypeStore.initProps((curr as FunctionPrototype).props, undefined, 2)
+
+                    acc += `
+
+${indent(curr.name, 1)}`
+                    if (lang === 'typeScript') {
+                        acc += prototypeStore.requiredTypesToString()
+                    }
+
+                    acc += `${prototypeStore.propsToString()}: ${(curr as FunctionPrototype)?.returnType}`
+                    return acc
+                }, '')
 
                 code += `
 `
@@ -135,7 +163,9 @@ export const usePrototypeStore = (id: string) => defineEppsStore<PrototypeStore,
 
     function initDeclaration(
         {
+            constructorProps,
             description,
+            methods,
             name,
             properties,
             props,
@@ -146,7 +176,7 @@ export const usePrototypeStore = (id: string) => defineEppsStore<PrototypeStore,
         }: InitDeclarationProps,
         indent: number = 0
     ): void {
-        declaration.value = { description, name, properties, props, requiredTypes, returnType, type, value }
+        declaration.value = { constructorProps, description, methods, name, properties, props, requiredTypes, returnType, type, value }
         codeSlots.value = ['typeScript']
         declarationSymbols.value = declarationsSymbols[type]
 

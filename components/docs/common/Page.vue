@@ -4,7 +4,7 @@ import Page from '~/components/common/Page.vue'
 import StorePrototype from './StorePrototype.vue'
 
 import type { PageDefinitionTypes, PageResume } from '~/types/pages'
-import type { FunctionPrototype, InterfacePrototype, StorePrototype as StorePrototypeInterface } from '~/types/prototype'
+import type { ClassPrototype, FunctionPrototype, InterfacePrototype, StorePrototype as StorePrototypeInterface } from '~/types/prototype'
 
 
 const pageProps = defineProps({
@@ -22,7 +22,7 @@ const { getPageDefinition } = usePagesDefinitions()
 
 const definition = getPageDefinition(
     pageProps.type, pageProps.name
-) as PageResume & (FunctionPrototype | InterfacePrototype | StorePrototypeInterface)
+) as PageResume & (ClassPrototype | FunctionPrototype | InterfacePrototype | StorePrototypeInterface)
 </script>
 
 <template>
@@ -32,7 +32,7 @@ const definition = getPageDefinition(
                 <StorePrototype v-if="type === 'stores'" :prototype="(definition as StorePrototypeInterface)">
                 </StorePrototype>
                 <CodeDeclarationExplanation v-else :display-title="false"
-                    :prototype="(definition as FunctionPrototype | InterfacePrototype)" />
+                    :prototype="(definition as ClassPrototype | FunctionPrototype | InterfacePrototype)" />
             </Page>
         </template>
         <template #fallback>

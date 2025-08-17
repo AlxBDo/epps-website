@@ -3,12 +3,14 @@ import { isEmpty } from "~/utils/validation";
 import { usePropsDeclarationStore } from "./propsDeclaration";
 import { useTypeDeclarationStore } from "./typesDeclaration";
 
-import type { CodeDeclarationTypes, CodeDeclarationPrototype, ParameterPrototype, TypeRequired } from "~/types/prototype";
+import type { CodeDeclarationTypes, CodeDeclarationPrototype, ParameterPrototype, TypeRequired, FunctionPrototype } from "~/types/prototype";
 import type { PropsDeclarationState, PropsDeclarationStore } from "./propsDeclaration";
 import type { TypeDeclarationState, TypeDeclarationStore, TypesProps } from "./typesDeclaration";
 
 
 interface Prototype extends CodeDeclarationPrototype {
+    constructorProps?: ParameterPrototype[]
+    methods?: FunctionPrototype[]
     properties?: ParameterPrototype[]
     props?: ParameterPrototype[]
     requiredTypes?: TypeRequired[]
@@ -71,7 +73,11 @@ export const useCodeDeclarationExplanationStore = (id: string) => defineEppsStor
             const propsStore = getPropsDeclarationStore()
 
             typesStore?.initTypes(prototype as TypesProps)
-            propsStore?.initProps(prototype.props, propCallback, indent)
+            propsStore?.initProps(
+                !isEmpty(prototype.props) ? prototype.props : prototype.constructorProps,
+                propCallback,
+                prototype.type === 'class' ? (indent + 1) : indent
+            )
         }
 
         function propCallback(prop: ParameterPrototype): void {

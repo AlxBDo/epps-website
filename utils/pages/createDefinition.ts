@@ -3,6 +3,7 @@ import { dynamicImport } from "../data"
 
 import type { ComponentResume } from "~/types/components"
 import type {
+    ClassPrototype,
     FunctionPrototype,
     InterfacePrototype,
     StorePrototype,
@@ -13,7 +14,7 @@ import type { AnyObject } from "epps"
 
 
 export function createDefinition(
-    definitionType: PageDefinitionTypes, prototype: FunctionPrototype | InterfacePrototype | StorePrototype | TypePrototype
+    definitionType: PageDefinitionTypes, prototype: ClassPrototype | FunctionPrototype | InterfacePrototype | StorePrototype | TypePrototype
 ) {
     try {
         const components = [] as ComponentResume[]

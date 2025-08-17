@@ -9,7 +9,7 @@ import Prototype from './Prototype.vue'
 import type { EppsStore } from 'epps'
 import type { PropType } from 'vue'
 import type { CodeDeclarationState, CodeDeclarationStore } from '~/stores/docs/codeDeclarationExplanation'
-import type { FunctionPrototype, InterfacePrototype, ParameterPrototype, TypePrototype } from '~/types/prototype'
+import type { ClassPrototype, FunctionPrototype, InterfacePrototype, ParameterPrototype, TypePrototype } from '~/types/prototype'
 
 
 const componentProps = defineProps({
@@ -18,7 +18,7 @@ const componentProps = defineProps({
         default: true,
     },
     prototype: {
-        type: Object as PropType<FunctionPrototype | InterfacePrototype | TypePrototype>,
+        type: Object as PropType<ClassPrototype | FunctionPrototype | InterfacePrototype | TypePrototype>,
         required: true,
     }
 })
@@ -42,7 +42,9 @@ onBeforeUnmount(() => codeDeclarationExplanationStore.$reset())
                 <slot name="description"></slot>
             </div>
 
-            <Prototype :description :name :properties="(prototype as InterfacePrototype)?.properties"
+            <Prototype :constructor-props="(prototype as ClassPrototype).constructorProps" :description
+                :methods="(prototype as ClassPrototype).methods" :name
+                :properties="(prototype as InterfacePrototype)?.properties"
                 :props="(prototype as FunctionPrototype)?.props" :required-types
                 :return-type="(prototype as FunctionPrototype)?.returnType" :type
                 :value="(prototype as TypePrototype)?.value"></Prototype>

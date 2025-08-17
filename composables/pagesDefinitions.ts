@@ -6,6 +6,7 @@ import collectionStateDefinition from "~/data/types/collectionState"
 import collectionStoreDefinition from "~/data/types/collectionStore"
 import createPluginDefinition from "~/data/functions/createPlugin"
 import defineEppsStoreDefinition from "~/data/pages/docs/defineEppsStore"
+import eppsDefinition from "~/data/class/epps"
 import eppsStoreDefinition from "~/data/types/eppsStore"
 import eppsStoreOptionsDefinition from "~/data/types/eppsStoreOptions"
 import errorDefinition from "~/data/types/error"
@@ -15,6 +16,7 @@ import extendedStateInterfaceDefinition from "~/data/types/extendedState"
 import extendedStoreDefinition from "~/data/types/extendedStore"
 import homeDefinition from "~/data/pages/home"
 import installationDefinition from "~/data/pages/docs/installation"
+import parentStoreDefinition from "~/data/class/parentStore"
 import persistedStateDefinition from "~/data/types/persistedState"
 import persistedStoreDefinition from "~/data/types/persistedStore"
 import resourceIdDefinition from '~/data/types/resourceId'
@@ -46,6 +48,10 @@ export function usePagesDefinitions() {
     const install = createPageResume(installationDefinition)
     const testing = createPageResume(testingStoresDefinition)
     const usage = createPageResume(usageDefinition)
+
+    // Class
+    const epps = createDefinition('class', eppsDefinition)
+    const parentStore = createDefinition('class', parentStoreDefinition)
 
     // Funtions
     const createPlugin = createDefinition('functions', createPluginDefinition)
@@ -89,6 +95,11 @@ export function usePagesDefinitions() {
         docs: {
             install,
             usage,
+
+            class: {
+                epps,
+                parentStore
+            } as Record<string, PageResume>,
 
             functions: {
                 createPlugin,

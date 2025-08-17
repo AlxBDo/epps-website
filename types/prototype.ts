@@ -7,6 +7,12 @@ interface PrototypeWithTypeParams extends Omit<PrototypeBase, 'type'> {
     type: 'class' | 'function' | 'interface' | 'object' | 'store' | 'type'
 }
 
+export interface ClassPrototype extends ObjectPrototype {
+    constructorProps?: ParameterPrototype[]
+    methods?: FunctionPrototype[]
+    type: 'class'
+}
+
 export interface CodeDeclarationPrototype extends Omit<PrototypeBase, 'type'> {
     type: CodeDeclarationTypes
 }
@@ -22,7 +28,7 @@ export interface InterfacePrototype extends Omit<ObjectPrototype, 'type'> {
 }
 
 export interface ObjectPrototype extends PrototypeWithTypeParams {
-    properties: ParameterPrototype[]
+    properties?: ParameterPrototype[]
 }
 
 export interface ParameterPrototype extends PrototypeBase {
