@@ -109,10 +109,7 @@ const personMethods: TypeRequired = { name: 'UserMethods', description: 'Methods
                 <template #explanation>
                     <p class="text-sm">
                         To define a Store that will extend the State and methods of other Stores, use the
-                        defineEppsStore and extendedState functions.
-                    </p>
-                    <p class="text-sm mt-2">
-                        To benefit from the State's persistence function, only the extendedState function is required.
+                        defineEppsStore function, Epps and ParentStore class.
                     </p>
                 </template>
             </Store>
