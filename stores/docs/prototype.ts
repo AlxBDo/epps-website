@@ -176,7 +176,18 @@ ${indent(curr.name, 1)}`
         }: InitDeclarationProps,
         indent: number = 0
     ): void {
-        declaration.value = { constructorProps, description, methods, name, properties, props, requiredTypes, returnType, type, value }
+        declaration.value = {
+            constructorProps,
+            description,
+            methods,
+            name,
+            properties,
+            props,
+            requiredTypes,
+            returnType,
+            type,
+            value
+        }
         codeSlots.value = ['typeScript']
         declarationSymbols.value = declarationsSymbols[type]
 

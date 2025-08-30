@@ -44,6 +44,12 @@ export const useCodeDeclarationExplanationStore = (id: string) => defineEppsStor
         const propsExplanation = ref<ParameterPrototype[]>([])
 
 
+        function addPropsTypeAndExplanation(prop: ParameterPrototype): void {
+            const typesStore = getTypesDeclarationStore()
+            typesStore?.addTypesToSee(prop.type)
+            createParameterExplanation(prop)
+        }
+
         function createParameterExplanation(parameter: ParameterPrototype): void {
             if (parameter.description) {
                 propsExplanation.value.push(parameter)
@@ -75,36 +81,15 @@ export const useCodeDeclarationExplanationStore = (id: string) => defineEppsStor
             typesStore?.initTypes(prototype as TypesProps)
             propsStore?.initProps(
                 !isEmpty(prototype.props) ? prototype.props : prototype.constructorProps,
-                propCallback,
+                addPropsTypeAndExplanation,
                 prototype.type === 'class' ? (indent + 1) : indent
             )
-        }
-
-        function propCallback(prop: ParameterPrototype): void {
-            const typesStore = getTypesDeclarationStore()
-            typesStore?.addTypesToSee(prop.type)
-            createParameterExplanation(prop)
-        }
-
-        function propsToString(): string {
-            return getPropsDeclarationStore()?.propsToString() as string
-        }
-
-        function requiredTypesToString() {
-            return getTypesDeclarationStore()?.requiredTypesToString()
-        }
-
-        function returnTypeFormatted(returnType?: string): string {
-            return getTypesDeclarationStore()?.returnTypeFormatted(returnType) as string
         }
 
 
         return {
             hasPropsExplanation,
             initDeclaration,
-            propsExplanation,
-            propsToString,
-            requiredTypesToString,
-            returnTypeFormatted
+            propsExplanation
         }
     }, epps)()

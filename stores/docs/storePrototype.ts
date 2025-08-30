@@ -2,7 +2,6 @@ import { capitalize } from '~/utils/string'
 import { indent } from '~/utils/docs';
 import { isEmpty } from '~/utils/validation';
 import { usePrototypeStore, type PrototypeState, type PrototypeStore } from './prototype';
-
 import type { FunctionPrototype, ParameterPrototype, StorePrototype } from '~/types/prototype'
 import type { ParentsStoresEppsOption, ParentStoreEppsOption, StoreSyntax } from '~/types/stores';
 import { defineEppsStore, Epps, ParentStore, type EppsStore } from 'epps';
@@ -44,7 +43,7 @@ export const useStorePrototype = (id: string) => defineEppsStore<StorePrototypeS
     })
 
 
-    function actionsDefinition(
+    function actionDefinition(
         property: FunctionPrototype,
         indentNumber: number,
         isJs: boolean,
@@ -153,7 +152,7 @@ export const useStorePrototype = (id: string) => defineEppsStore<StorePrototypeS
             if (isState) {
                 code += stateDefinition(property as ParameterPrototype, indentNumber, isJs, isOptionApi)
             } else {
-                code += actionsDefinition(property as FunctionPrototype, indentNumber, isJs, isOptionApi)
+                code += actionDefinition(property as FunctionPrototype, indentNumber, isJs, isOptionApi)
             }
         })
 

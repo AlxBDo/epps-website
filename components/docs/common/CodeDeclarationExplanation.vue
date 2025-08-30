@@ -32,7 +32,7 @@ const { hasTypesToSee, hasPropsExplanation, propsExplanation, typesToSee } = cod
 const { description, name, requiredTypes, type } = componentProps.prototype
 const title = componentProps.displayTitle ? componentProps.prototype.name : undefined
 
-onBeforeUnmount(() => codeDeclarationExplanationStore.$reset())
+onUnmounted(() => codeDeclarationExplanationStore.$reset())
 </script>
 
 <template>

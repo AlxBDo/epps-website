@@ -7,10 +7,11 @@ export const description: string = 'Defines the optional configuration for Epps 
 export const name: string = 'EppsStoreOptions'
 
 const persistDefinition = ` {
-        excludedKeys?: string[];
-        persist?: boolean;
-        persistedPropertiesToEncrypt?: string[];
-        watchMutation?: boolean;
+        dbName?: string,
+        excludedKeys?: string[],
+        persist?: boolean,
+        persistedPropertiesToEncrypt?: string[],
+        watchMutation?: boolean
     }`
 
 export const properties: ParameterPrototype[] = [
