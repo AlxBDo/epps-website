@@ -17,7 +17,7 @@ const persistDefinition = ` {
 export const properties: ParameterPrototype[] = [
     createParameterPrototype('actionsToExtends', 'string[]', false),
     createParameterPrototype('parentsStores', 'ParentStore[]', false),
-    createParameterPrototype('persist', persistDefinition, false)
+    createParameterPrototype('persist', 'persistStoreOptions', false)
 ]
 
 export const type: CodeDeclarationTypes = 'interface'

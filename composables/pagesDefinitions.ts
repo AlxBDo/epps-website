@@ -17,7 +17,7 @@ import extendedStoreDefinition from "~/data/types/extendedStore"
 import homeDefinition from "~/data/pages/home"
 import installationDefinition from "~/data/pages/docs/installation"
 import parentStoreDefinition from "~/data/class/parentStore"
-import persistedStateDefinition from "~/data/types/persistedState"
+import persistStoreOptionsDefinition from "~/data/types/persistStoreOptions"
 import persistedStoreDefinition from "~/data/types/persistedStore"
 import resourceIdDefinition from '~/data/types/resourceId'
 import testingStoresDefinition from "~/data/pages/docs/testing"
@@ -73,7 +73,7 @@ export function usePagesDefinitions() {
     const errorsStore = createDefinition('types', errorsStoreDefinition)
     const extendedStateInterface = createDefinition('types', extendedStateInterfaceDefinition)
     const extendedStore = createDefinition('types', extendedStoreDefinition)
-    const persistedState = createDefinition('types', persistedStateDefinition)
+    const persistStoreOptions = createDefinition('types', persistStoreOptionsDefinition)
     const persistedStore = createDefinition('types', persistedStoreDefinition)
     const resourceId = createDefinition('types', resourceIdDefinition)
     const webUserState = createDefinition('types', webUserStateDefinition)
@@ -123,7 +123,7 @@ export function usePagesDefinitions() {
                 errorsStore,
                 extendedState: extendedStateInterface,
                 extendedStore,
-                persistedState,
+                persistStoreOptions,
                 persistedStore,
                 resourceId,
                 webUserState,
@@ -162,7 +162,7 @@ export function usePagesDefinitions() {
         install,
         lists,
         pages,
-        persistedState,
+        persistStoreOptions,
         persistedStore,
         resourceId,
         testing,

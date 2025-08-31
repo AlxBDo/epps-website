@@ -7,7 +7,6 @@ import Store from '../examples/common/Store.vue'
 import type { ParameterPrototype, TypeRequired } from '~/types/prototype'
 
 
-const { defineEppsStore } = usePagesDefinitions()
 const { id, title } = defineAEppsStore
 
 const eppsDefinition = `const epps = new Epps({

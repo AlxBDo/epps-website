@@ -31,6 +31,7 @@ codeDeclarationExplanationStore.initDeclaration(componentProps.prototype)
 const { hasTypesToSee, hasPropsExplanation, propsExplanation, typesToSee } = codeDeclarationExplanationStore
 const { description, name, requiredTypes, type } = componentProps.prototype
 const title = componentProps.displayTitle ? componentProps.prototype.name : undefined
+const properties = (componentProps.prototype as InterfacePrototype)?.properties
 
 onUnmounted(() => codeDeclarationExplanationStore.$reset())
 </script>
@@ -43,11 +44,15 @@ onUnmounted(() => codeDeclarationExplanationStore.$reset())
             </div>
 
             <Prototype :constructor-props="(prototype as ClassPrototype).constructorProps" :description
-                :methods="(prototype as ClassPrototype).methods" :name
-                :properties="(prototype as InterfacePrototype)?.properties"
+                :methods="(prototype as ClassPrototype).methods" :name :properties="properties"
                 :props="(prototype as FunctionPrototype)?.props" :required-types
                 :return-type="(prototype as FunctionPrototype)?.returnType" :type
                 :value="(prototype as TypePrototype)?.value"></Prototype>
+
+            <ParametersList
+                v-if="properties && properties.some((properties: ParameterPrototype) => properties.description)"
+                :params="(properties as Pick<ParameterPrototype, 'description' | 'name'>[])" title="Properties">
+            </ParametersList>
 
             <ParametersList v-if="hasPropsExplanation()"
                 :params="(propsExplanation as Pick<ParameterPrototype, 'description' | 'name'>[])" title="Parameters">
