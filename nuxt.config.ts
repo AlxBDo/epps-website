@@ -2,7 +2,7 @@
 export default defineNuxtConfig({
   app: {
     head: {
-      title: 'Epps!'
+      title: 'EPPS! Extend and Persist Pinia Stores'
     }
   },
 
@@ -28,5 +28,7 @@ export default defineNuxtConfig({
   sourcemap: {
     server: false,
     client: true
-  }
+  },
+
+  ssr: false
 })
