@@ -45,7 +45,7 @@ const getItemsProps: ParameterPrototype[] = [
 ]
 const getItems: FunctionPrototype = {
     description: 'Returns all items in the collection or those matching the criteria passed in parameter.',
-    name: 'getItem',
+    name: 'getItems',
     props: getItemsProps,
     returnType: 'object[]',
     type: 'function'

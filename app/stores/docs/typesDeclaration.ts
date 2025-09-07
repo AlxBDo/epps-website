@@ -58,7 +58,7 @@ export const useTypeDeclarationStore = (id: string) => defineStore(
 
             return types.reduce((acc: string[], type: string) => {
                 if (type.indexOf('<') >= 0) {
-                    type = type.split('<')[0]
+                    type = type.split('<')[0] as string
                 }
 
                 if (type.indexOf('[') >= 0) {

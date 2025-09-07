@@ -1,6 +1,6 @@
 import type { ParentsStoresEppsOption } from "./stores"
 
-interface PrototypeBase { description?: string, name: string, type: string }
+export interface PrototypeBase { description?: string, name: string, type: string }
 
 interface PrototypeWithTypeParams extends Omit<PrototypeBase, 'type'> {
     requiredTypes?: TypeRequired[]
