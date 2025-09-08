@@ -1,5 +1,5 @@
 import { ref } from "vue"
-import { defineEppsStore, Epps, ParentStore } from "epps"
+import { defineEppsStore, ParentStore } from "epps"
 
 import { useContactStore } from "./contact"
 
@@ -16,10 +16,6 @@ export interface UserStore {
 
 export type UserState = Contact & User
 
-const epps = new Epps({
-    actionsToExtends: ['setData'],
-    parentsStores: [new ParentStore('userContact', useContactStore)]
-})
 
 export const useUserStore = (id?: string) => defineEppsStore<UserStore, UserState>(
     id ?? 'contact',
@@ -39,5 +35,8 @@ export const useUserStore = (id?: string) => defineEppsStore<UserStore, UserStat
             setData
         }
     },
-    epps
+    {
+        actionsToExtends: ['setData'],
+        parentsStores: [new ParentStore('userContact', useContactStore)]
+    }
 )()

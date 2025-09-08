@@ -1,7 +1,7 @@
 import type { CodeDeclarationState, CodeDeclarationStore } from "./codeDeclarationExplanation";
 import type { CodeDeclarationTypes, FunctionPrototype, FunctionReturn, ParameterPrototype, TypeRequired } from "~/types/prototype"
 
-import { defineEppsStore, Epps, ParentStore, type EppsStore } from "epps";
+import { defineEppsStore, Epps, getEppsStore, ParentStore, type EppsStore } from "epps";
 import { isEmpty } from "~/utils/validation";
 import { useCodeDeclarationExplanationStore } from "./codeDeclarationExplanation";
 
@@ -61,14 +61,6 @@ function symbolsObject(start: string, end?: string) {
     return { start, end }
 }
 
-
-const epps = new Epps({
-    actionsToExtends: ['initDeclaration'],
-    parentsStores: [
-        new ParentStore('prototype', useCodeDeclarationExplanationStore)
-    ]
-})
-
 export const usePrototypeStore = (id: string) => defineEppsStore<PrototypeStore, PrototypeState>(`${id}PrototypeStore`, () => {
     const codeSlots = ref<string[]>()
     const declaration = ref<InitDeclarationProps>()
@@ -83,7 +75,7 @@ export const usePrototypeStore = (id: string) => defineEppsStore<PrototypeStore,
         let code: string = ''
 
         if (declaration.value) {
-            const codeDeclarationStore = epps.getStore<CodeDeclarationStore, CodeDeclarationState>(0, `${id}PrototypeStore`)
+            const codeDeclarationStore = getEppsStore<CodeDeclarationStore, CodeDeclarationState>(`${id}PrototypeStore`)
             const { methods, name, properties, returnType, type, value } = declaration.value
 
             code = `${type} ${name}`
@@ -205,4 +197,9 @@ ${indent(curr.name, 1)}`
         getStartSymbol,
         initDeclaration
     }
-}, epps)()
+},
+    {
+        actionsToExtends: ['initDeclaration'],
+        parentsStores: [new ParentStore('prototype', useCodeDeclarationExplanationStore)]
+    }
+)()

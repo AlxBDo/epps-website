@@ -4,7 +4,7 @@ import { isEmpty } from '~/utils/validation';
 import { usePrototypeStore, type PrototypeState, type PrototypeStore } from './prototype';
 import type { FunctionPrototype, ParameterPrototype, StorePrototype } from '~/types/prototype'
 import type { ParentsStoresEppsOption, ParentStoreEppsOption, StoreSyntax } from '~/types/stores';
-import { defineEppsStore, Epps, ParentStore, type EppsStore } from 'epps';
+import { defineEppsStore, getEppsStore, ParentStore, type EppsStore } from 'epps';
 import type { TypeDeclarationState, TypeDeclarationStore, TypesProps } from './typesDeclaration';
 import { useStoreTypesDeclaration } from './storeTypesDeclaration';
 
@@ -21,11 +21,6 @@ export interface StorePrototypeStore extends TypeDeclarationStore {
     setPrototype: (data: StorePrototype) => void
     stateHasDescription: () => boolean
 }
-
-
-const epps = new Epps({
-    parentsStores: [new ParentStore('prototype', useStoreTypesDeclaration)]
-})
 
 
 export const useStorePrototype = (id: string) => defineEppsStore<StorePrototypeStore, StorePrototypeState>(`${id}StorePrototype`, () => {
@@ -132,7 +127,7 @@ export const useStorePrototype = (id: string) => defineEppsStore<StorePrototypeS
     }
 
     function getTypesStore() {
-        return epps.getStore<TypeDeclarationStore, TypeDeclarationState>(0, `${id}StorePrototype`)
+        return getEppsStore<TypeDeclarationStore, TypeDeclarationState>(`${id}StorePrototype`)
     }
 
     function listProperties(
@@ -304,4 +299,4 @@ ${indent(property.name, indentNumber)} : ${property.type}`
         setPrototype,
         stateHasDescription
     }
-}, epps)()
+}, { parentsStores: [new ParentStore('prototype', useStoreTypesDeclaration)] })()

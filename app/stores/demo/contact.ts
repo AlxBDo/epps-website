@@ -1,7 +1,7 @@
 import type { Contact } from "../../models/contact"
 import {
     defineEppsStore,
-    Epps,
+    getEppsStore,
     ParentStore,
     useWebUserStore,
     type WebUserState,
@@ -19,11 +19,6 @@ export interface ContactState extends WebUserState, Contact {
 }
 
 
-const epps = new Epps({
-    actionsToExtends: ['setData'],
-    parentsStores: [new ParentStore('webUser', useWebUserStore)]
-})
-
 export const useContactStore = (id?: string) => defineEppsStore<ContactStore, ContactState>(
     id ?? 'contact',
     () => {
@@ -33,7 +28,7 @@ export const useContactStore = (id?: string) => defineEppsStore<ContactStore, Co
 
 
         const contact = computed(() => {
-            const webUserStore = epps.getStore<WebUserStore, WebUserState>('webUser', id ?? 'contact')
+            const webUserStore = getEppsStore<ContactStore, ContactState>(id ?? 'contact')
 
             if (!webUserStore) {
                 return
@@ -65,5 +60,8 @@ export const useContactStore = (id?: string) => defineEppsStore<ContactStore, Co
             setData
         }
     },
-    epps
+    {
+        actionsToExtends: ['setData'],
+        parentsStores: [new ParentStore('webUser', useWebUserStore)]
+    }
 )()

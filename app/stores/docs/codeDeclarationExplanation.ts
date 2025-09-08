@@ -1,4 +1,4 @@
-import { defineEppsStore, Epps, ParentStore } from "epps";
+import { defineEppsStore, Epps, getEppsStore, ParentStore } from "epps";
 import { isEmpty } from "~/utils/validation";
 import { usePropsDeclarationStore } from "./propsDeclaration";
 import { useTypeDeclarationStore } from "./typesDeclaration";
@@ -31,13 +31,6 @@ export interface CodeDeclarationStore extends PropsDeclarationStore, TypeDeclara
     initDeclaration: (prototype: Prototype) => void
 }
 
-const epps = new Epps({
-    parentsStores: [
-        new ParentStore('code', useTypeDeclarationStore),
-        new ParentStore('code', usePropsDeclarationStore)
-    ]
-})
-
 export const useCodeDeclarationExplanationStore = (id: string) => defineEppsStore<CodeDeclarationStore, CodeDeclarationState>(
     `${id}CodeDeclarationExplanantionStore`,
     () => {
@@ -45,7 +38,7 @@ export const useCodeDeclarationExplanationStore = (id: string) => defineEppsStor
 
 
         function addPropsTypeAndExplanation(prop: ParameterPrototype): void {
-            const typesStore = getTypesDeclarationStore()
+            const typesStore = getStore()
             typesStore?.addTypesToSee(prop.type)
             createParameterExplanation(prop)
         }
@@ -56,16 +49,8 @@ export const useCodeDeclarationExplanationStore = (id: string) => defineEppsStor
             }
         }
 
-        function getPropsDeclarationStore() {
-            return epps.getStore<PropsDeclarationStore, PropsDeclarationState>(
-                1, `${id}CodeDeclarationExplanantionStore`
-            )
-        }
-
-        function getTypesDeclarationStore() {
-            return epps.getStore<TypeDeclarationStore, TypeDeclarationState>(
-                0, `${id}CodeDeclarationExplanantionStore`
-            )
+        function getStore() {
+            return getEppsStore<CodeDeclarationStore, CodeDeclarationState>(`${id}CodeDeclarationExplanantionStore`)
         }
 
         function hasPropsExplanation(): boolean {
@@ -75,8 +60,8 @@ export const useCodeDeclarationExplanationStore = (id: string) => defineEppsStor
         function initDeclaration(prototype: Prototype, indent: number = 0): void {
             propsExplanation.value = []
 
-            const typesStore = getTypesDeclarationStore()
-            const propsStore = getPropsDeclarationStore()
+            const typesStore = getStore()
+            const propsStore = getStore()
 
             typesStore?.initTypes(prototype as TypesProps)
             propsStore?.initProps(
@@ -92,4 +77,11 @@ export const useCodeDeclarationExplanationStore = (id: string) => defineEppsStor
             initDeclaration,
             propsExplanation
         }
-    }, epps)()
+    },
+    {
+        parentsStores: [
+            new ParentStore('code', useTypeDeclarationStore),
+            new ParentStore('code', usePropsDeclarationStore)
+        ]
+    }
+)() 
