@@ -3,8 +3,8 @@ import type { ParentsStoresEppsOption } from "~/types/stores"
 import { createTypeRequired } from "~/utils/components/code-declaration"
 import { getStoreDefinition } from "~/utils/store"
 
-
-const addErrorProps: ParameterPrototype[] = [
+/**
+ const addErrorProps: ParameterPrototype[] = [
     { name: 'error', required: true, type: 'TError | Error' }
 ]
 const addError: FunctionPrototype = {
@@ -41,6 +41,25 @@ const getErrors: FunctionPrototype = {
     type: 'function'
 }
 
+const removeError: FunctionPrototype = {
+    description: 'Deletes the errors(s) corresponding to the criterion.',
+    name: 'removeError',
+    props: getErrorProps,
+    returnType: 'TError | Error',
+    type: 'function'
+}
+
+ */
+
+export const actionsToRename: string[] = [
+    'addItem: "addError"',
+    'clear: "clearErrors"',
+    'getItem: "getError"',
+    'getItems: "getErrors"',
+    'removeItem: "removeError"'
+]
+
+
 const hasErrorProps: ParameterPrototype[] = [
     { description: 'Minimum level of errors to be identified', name: 'level', required: true, type: 'number' }
 ]
@@ -52,22 +71,14 @@ const hasError: FunctionPrototype = {
     type: 'function'
 }
 
-const removeError: FunctionPrototype = {
-    description: 'Deletes the errors(s) corresponding to the criterion.',
-    name: 'removeError',
-    props: getErrorProps,
-    returnType: 'TError | Error',
-    type: 'function'
-}
-
 
 const methods: FunctionPrototype[] = [
-    addError,
-    clearErrors,
-    getError,
-    getErrors,
+    //addError,
+    //clearErrors,
+    //getError,
+    //getErrors,
     hasError,
-    removeError
+    //removeError
 ]
 
 const state: ParameterPrototype[] = [
@@ -90,6 +101,8 @@ export const isEppsStore = true
 
 export const parentsStores: ParentsStoresEppsOption = [{ id: 'errorCollection', name: 'useCollectionStore' }]
 
+export const propertiesToRename: string[] = ['items: "errors"']
+
 export const requiredTypes: TypeRequired[] = [
     createTypeRequired('TError | Error', 'Optional - custom error type')
 ]
@@ -97,10 +110,12 @@ export const requiredTypes: TypeRequired[] = [
 
 export default {
     ...definition,
+    actionsToRename,
     description,
     idIsParam,
     isEppsStore,
     parentsStores,
+    propertiesToRename,
     requiredTypes,
     stateType: 'ErrorsState',
     storeType: 'ErrorsStore'

@@ -37,16 +37,18 @@ export interface ParameterPrototype extends PrototypeBase {
 
 export interface StorePrototype extends PrototypeWithTypeParams {
     actionsToExtends?: string[]
+    actionsToRename?: string[]
     id: string
     idIsParam?: true
     isEppsStore: boolean
     methods?: FunctionPrototype[]
     parentsStores?: string[] | ParentsStoresEppsOption
+    persist?: { persist?: boolean, watchMutation?: boolean }
+    propertiesToRename?: string[]
     state: ParameterPrototype[]
     stateType?: string
     storeType?: string
     type: 'store'
-    watchMutation?: boolean
 }
 
 export interface TypePrototype extends Omit<PrototypeWithTypeParams, 'type'> {

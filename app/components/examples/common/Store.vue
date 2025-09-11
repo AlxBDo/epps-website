@@ -30,12 +30,12 @@ storeStore.init(componentProps)
 
 const { definitionParameterToString, defineStoreToString, requiredTypesToString, storeName } = storeStore
 
-const definition = (withTypes: boolean) => `${componentProps.eppsDefinition}const ${storeName} = ${definitionParameterToString() + defineStoreToString() + (withTypes ? requiredTypesToString() : '')}(
+const definition = (withTypes: boolean) => `const ${storeName} = ${definitionParameterToString() + defineStoreToString() + (withTypes ? requiredTypesToString() : '')}(
     ${!isEmpty(componentProps.definitionParameter) ? componentProps.definitionParameter.name : "'" + (componentProps.name + 'Store') + "'"},
     () => `
 
 const eppsEndDefinition = componentProps.isEppsStore ? `,
-    epps` : ''
+    ${componentProps.eppsDefinition}` : ''
 
 const endDefinition = `${eppsEndDefinition}
 )`

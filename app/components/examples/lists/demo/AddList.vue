@@ -5,7 +5,7 @@ import { useListsStore } from '~/stores/demo/lists'
 
 import MethodDemoForm from '../../../common/form/MethodDemoForm.vue'
 
-import type { CollectionState, CollectionStoreMethods, EppsStore } from 'epps'
+import type { CollectionState, EppsStore } from 'epps'
 import type { List } from '~/models/liste'
 import type { ListsStoreMethods } from '~/stores/demo/lists'
 

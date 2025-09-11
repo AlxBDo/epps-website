@@ -1,17 +1,14 @@
 <script lang="ts" setup>
-import { useListsStore, type ListsState } from '~/stores/demo/lists'
-
+import { useListsStore, type ListsState, type ListsStoreMethods } from '~/stores/demo/lists'
 import DisplayResult from '~/components/examples/common/DisplayResult.vue'
-
-import type { CollectionState, CollectionStoreMethods, EppsStore } from 'epps'
-import type { List } from '~/models/liste'
+import type { EppsStore } from 'epps'
 
 
-const listsStore = useListsStore() as EppsStore<CollectionStoreMethods, ListsState>
+const listsStore = useListsStore() as EppsStore<ListsStoreMethods, ListsState>
 
 listsStore.remember().then(() => {
     if (!listsStore.lists.length) {
-        listsStore.setItems([
+        listsStore.setLists([
             { id: 1, name: 'My first list', type: '0' },
             { id: 2, name: 'My second list', type: '1' },
             { id: 3, name: 'My third list', type: '2' }

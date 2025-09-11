@@ -34,7 +34,7 @@ export const useStorePrototype = (id: string) => defineEppsStore<StorePrototypeS
     )
     const description = computed(() => prototype.value?.description)
     const getRequiredTypes = computed(() => {
-        return getTypesStore()?.requiredTypesToString()
+        return getStore()?.requiredTypesToString()
     })
 
 
@@ -87,19 +87,24 @@ export const useStorePrototype = (id: string) => defineEppsStore<StorePrototypeS
     function eppsDefinition(
         parentsStores: ParentsStoresEppsOption,
         actionsToExtends?: string[],
-        persist?: { persist?: boolean, watchMutation?: boolean }
+        actionsToRename?: string[],
+        persist?: { persist?: boolean, watchMutation?: boolean },
+        propertiesToRename?: string[]
     ) {
-        addStoreReturnItem('parentsStores')
-        let code = `const epps = new Epps({`
+        let code = `{`
 
         if (actionsToExtends) {
-            addStoreReturnItem('actionsToExtends')
             code += `
-    actionsToExtends: ['${actionsToExtends.join("', '")}'],`
+        actionsToExtends: ['${actionsToExtends.join("', '")}'],`
+        }
+
+        if (actionsToRename) {
+            code += `
+        actionsToRename: { ${actionsToRename.join(", ")} },`
         }
 
         code += `
-    parentsStores: ${parentsStoresDefinition(parentsStores)}`
+        parentsStores: ${parentsStoresDefinition(parentsStores)}`
 
         if (persist) {
             let persistDef: string | undefined
@@ -115,19 +120,23 @@ export const useStorePrototype = (id: string) => defineEppsStore<StorePrototypeS
                 persistDef += 'watchMutation: true '
             }
             code += `,
-    persist: { ${persistDef} }`
+        persist: { ${persistDef} }`
+        }
+
+        if (propertiesToRename) {
+            code += `
+        propertiesToRename: { ${propertiesToRename.join(", ")} },`
         }
 
         code += `
-})
-
+    }
 `
 
         return code
     }
 
-    function getTypesStore() {
-        return getEppsStore<TypeDeclarationStore, TypeDeclarationState>(`${id}StorePrototype`)
+    function getStore() {
+        return getEppsStore<StorePrototypeStore, StorePrototypeState>(`${id}StorePrototype`)
     }
 
     function listProperties(
@@ -185,13 +194,14 @@ export const useStorePrototype = (id: string) => defineEppsStore<StorePrototypeS
 
         const isOptionApi = syntax === 'optionApi'
         const indentNumber = isOptionApi ? 3 : 2
-        const { actionsToExtends, idIsParam, isEppsStore, methods, name, parentsStores, state } = prototype.value
+        const {
+            actionsToExtends, actionsToRename, idIsParam, isEppsStore, methods,
+            name, parentsStores, persist, propertiesToRename, state
+        } = prototype.value
 
         const storeName = `${name}Store`
 
-        let code: string = isEppsStore ? eppsDefinition(parentsStores as ParentsStoresEppsOption, actionsToExtends) : ''
-
-        code += `export const use${capitalize(storeName)} = `
+        let code: string = `export const use${capitalize(storeName)} = `
 
         if (idIsParam) {
             code += `${getRequiredTypes.value}(id: string) => `
@@ -242,8 +252,9 @@ ${indent('}', indentNumber)}
         code += `   }`
 
         if (isEppsStore) {
+            getStore().addTypesToSee('EppsStoreOptions')
             code += `, 
-    epps`
+    ${eppsDefinition(parentsStores as ParentsStoresEppsOption, actionsToExtends, actionsToRename, persist, propertiesToRename)}`
         }
 
         code += `
@@ -256,7 +267,7 @@ ${indent('}', indentNumber)}
         prototype.value = data
 
         if (data.requiredTypes) {
-            getTypesStore()?.initTypes(data as unknown as TypesProps)
+            getStore()?.initTypes(data as unknown as TypesProps)
         }
     }
 

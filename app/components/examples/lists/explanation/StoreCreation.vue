@@ -7,28 +7,16 @@ import ExplanationContainer from '~/components/common/ExplanationContainer.vue'
 const { useCollectionStore } = usePagesDefinitions()
 const { id, title } = listsStoreCreation
 
-const storeDefinition = `const epps = new Epps({
-    parentsStores: [ new ParentStore('listsCollection', useCollectionStore) ],
-    persist: { watchMutation: true }
-})
-
-export const useListsStore = (
+const storeDefinition = `export const useListsStore = (
     id?: string
 ) => defineEppsStore<CollectionStoreMethods, CollectionState<List>>(
     id ?? defaultStoreId, 
-    () => {
-        function newList(name: string, type: ListTypes): void {
-            const collectionStore = epps.getStore<CollectionStoreMethods, CollectionState<List>>(0, id ?? defaultStoreId)
-            collectionStore?.addItem({
-                id: collectionStore.items.length + 1,
-                name,
-                type
-            })
-        }
-
-        return { newList }
-    }, 
-    epps
+    () => ({}), 
+    {
+        actionsToRename: { addItem: 'newList', getItem: 'getList', getItems: 'getLists' }
+        parentsStores: [ new ParentStore('listsCollection', useCollectionStore) ],
+        persist: { watchMutation: true }
+    }
 )()`
 </script>
 

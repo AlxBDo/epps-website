@@ -8,7 +8,7 @@ const defaultStoreId: string = 'lists'
 export interface List {
     id?: number
     name: string
-    items: string[]
+    items?: string[]
     type: string
 }
 
@@ -17,7 +17,12 @@ export interface ListsState {
 }
 
 export interface ListsStoreMethods extends CollectionStoreMethods {
+    addList: (item: List) => void;
+    getList: (criteria: Partial<List>) => List | undefined;
+    getLists: (criteria?: Partial<List>, comparisonMode?: string) => List[];
     newList: (name: string, type: string) => void
+    removeList: (criteria: Partial<List>) => void;
+    setLists: (lists: List[]) => void
 }
 
 
@@ -43,6 +48,9 @@ export const useListsStore = (
         }
     },
     {
+        actionsToRename: {
+            getItem: 'getList', getItems: 'getLists', removeItem: 'removeList'
+        },
         parentsStores: [new ParentStore('listCollection', useCollectionStore)],
         persist: { watchMutation: true },
         propertiesToRename: { items: 'lists' }

@@ -6,18 +6,12 @@ export const description: string = 'Defines the optional configuration for Epps 
 
 export const name: string = 'EppsStoreOptions'
 
-const persistDefinition = ` {
-        dbName?: string,
-        excludedKeys?: string[],
-        persist?: boolean,
-        persistedPropertiesToEncrypt?: string[],
-        watchMutation?: boolean
-    }`
-
 export const properties: ParameterPrototype[] = [
     createParameterPrototype('actionsToExtends', 'string[]', false),
+    createParameterPrototype('actionsToRename', '{ [key: string]: string }', false),
     createParameterPrototype('parentsStores', 'ParentStore[]', false),
-    createParameterPrototype('persist', 'persistStoreOptions', false)
+    createParameterPrototype('persist', 'persistStoreOptions', false),
+    createParameterPrototype('propertiesToRename', '{ [key: string]: string }', false)
 ]
 
 export const type: CodeDeclarationTypes = 'interface'

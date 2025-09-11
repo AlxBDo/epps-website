@@ -8,16 +8,7 @@ import ExplanationContainer from '~/components/common/ExplanationContainer.vue'
 
 const { id, title } = userStoreCreation
 
-const definition = `const epps = new Epps({
-    actionsToExtends: ['setData'],
-    parentsStores: [ new ParentStore('userContact', useContactStore) ], 
-    persist: {
-        persistedPropertiesToEncrypt: ['email', 'password'],
-        watchMutation: true
-    }
-})
-
-export const useUserStore = (id?: string) => defineEppsStore<UserStore, UserState>(
+const definition = `export const useUserStore = (id?: string) => defineEppsStore<UserStore, UserState>(
     id ?? 'userStore',
     () => {
         const password = ref<string>()
@@ -28,7 +19,14 @@ export const useUserStore = (id?: string) => defineEppsStore<UserStore, UserStat
 
         return { password, setData }
     },
-    epps
+    {
+        actionsToExtends: ['setData'],
+        parentsStores: [ new ParentStore('userContact', useContactStore) ], 
+        persist: {
+            persistedPropertiesToEncrypt: ['email', 'password'],
+            watchMutation: true
+        }
+    }
 )()`
 </script>
 

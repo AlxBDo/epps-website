@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { useListsStore } from '~/stores/demo/lists'
+import { useListsStore, type ListsState, type ListsStoreMethods } from '~/stores/demo/lists'
 
 import MethodDemoForm from '../../../common/form/MethodDemoForm.vue'
 
@@ -14,7 +14,7 @@ function getResult() {
     if (!listId.value) { return }
 
     return {
-        result: (useListsStore() as EppsStore<CollectionStoreMethods, CollectionState<List>>).getItem({
+        result: (useListsStore() as EppsStore<ListsStoreMethods, ListsState>).getList({
             id: parseInt(listId.value)
         }),
         name: `List - ${listId.value}`

@@ -9,12 +9,10 @@ import type { ParameterPrototype, TypeRequired } from '~/types/prototype'
 
 const { id, title } = defineAEppsStore
 
-const eppsDefinition = `const epps = new Epps({
-    actionsToExtends: ['setData'],
-    parentsStores: [ new ParentStore('userPersonStore', usePersonStore) ]
-})
-
-`
+const eppsDefinition = `{
+        actionsToExtends: ['setData'],
+        parentsStores: [ new ParentStore('userPersonStore', usePersonStore) ]
+    }`
 
 const typeScriptStoreDefinition = `({
         password: ref<string>(),

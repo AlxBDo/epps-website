@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { listTypeLabels } from '~/utils/lists'
-import { useListsStore } from '~/stores/demo/lists'
+import { useListsStore, type ListsState, type ListsStoreMethods } from '~/stores/demo/lists'
 
 import MethodDemoForm from '../../../common/form/MethodDemoForm.vue'
 
@@ -15,7 +15,7 @@ function getItemsByType() {
     if (!itemType.value) { return }
 
     return {
-        result: (useListsStore() as EppsStore<CollectionStoreMethods, CollectionState<List>>).getItems({
+        result: (useListsStore() as EppsStore<ListsStoreMethods, ListsState>).getLists({
             type: listTypeLabels.findIndex((type: string) => type === itemType.value)
         }),
         name: 'List'
