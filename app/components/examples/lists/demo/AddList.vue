@@ -11,7 +11,7 @@ import type { ListsStoreMethods } from '~/stores/demo/lists'
 
 const items = ref(listTypeLabels)
 const newListName = ref('')
-const newListType = ref('0')
+const newListType = ref('wish')
 
 async function addNewList() {
     const listsStore = useListsStore() as EppsStore<ListsStoreMethods, CollectionState<List>>
@@ -23,7 +23,7 @@ async function addNewList() {
 
 function initForm() {
     newListName.value = ''
-    newListType.value = ''
+    newListType.value = 'wish'
 }
 </script>
 

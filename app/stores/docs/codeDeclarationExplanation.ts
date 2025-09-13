@@ -1,4 +1,4 @@
-import { defineEppsStore, Epps, getEppsStore, ParentStore } from "epps";
+import { defineEppsStore, getEppsStore, ParentStore } from "epps";
 import { isEmpty } from "~/utils/validation";
 import { usePropsDeclarationStore } from "./propsDeclaration";
 import { useTypeDeclarationStore } from "./typesDeclaration";
@@ -38,8 +38,7 @@ export const useCodeDeclarationExplanationStore = (id: string) => defineEppsStor
 
 
         function addPropsTypeAndExplanation(prop: ParameterPrototype): void {
-            const typesStore = getStore()
-            typesStore?.addTypesToSee(prop.type)
+            getStore().addTypesToSee(prop.type)
             createParameterExplanation(prop)
         }
 
@@ -60,11 +59,10 @@ export const useCodeDeclarationExplanationStore = (id: string) => defineEppsStor
         function initDeclaration(prototype: Prototype, indent: number = 0): void {
             propsExplanation.value = []
 
-            const typesStore = getStore()
-            const propsStore = getStore()
+            const store = getStore()
 
-            typesStore?.initTypes(prototype as TypesProps)
-            propsStore?.initProps(
+            store.initTypes(prototype as TypesProps)
+            store.initProps(
                 !isEmpty(prototype.props) ? prototype.props : prototype.constructorProps,
                 addPropsTypeAndExplanation,
                 prototype.type === 'class' ? (indent + 1) : indent
@@ -79,9 +77,6 @@ export const useCodeDeclarationExplanationStore = (id: string) => defineEppsStor
         }
     },
     {
-        parentsStores: [
-            new ParentStore('code', useTypeDeclarationStore),
-            new ParentStore('code', usePropsDeclarationStore)
-        ]
+        parentsStores: [new ParentStore('code', useTypeDeclarationStore), new ParentStore('code', usePropsDeclarationStore)]
     }
 )() 

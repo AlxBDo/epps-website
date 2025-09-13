@@ -1,7 +1,7 @@
 import type { CodeDeclarationState, CodeDeclarationStore } from "./codeDeclarationExplanation";
 import type { CodeDeclarationTypes, FunctionPrototype, FunctionReturn, ParameterPrototype, TypeRequired } from "~/types/prototype"
 
-import { defineEppsStore, Epps, getEppsStore, ParentStore, type EppsStore } from "epps";
+import { defineEppsStore, getEppsStore, ParentStore, type EppsStore } from "epps";
 import { isEmpty } from "~/utils/validation";
 import { useCodeDeclarationExplanationStore } from "./codeDeclarationExplanation";
 
@@ -36,10 +36,7 @@ export interface PrototypeStore extends CodeDeclarationStore {
 
 type DeclarationSymbols = Record<string, SymbolsObject>
 
-type SymbolsObject = {
-    start: string,
-    end?: string
-}
+type SymbolsObject = { start: string, end?: string }
 
 
 const declarationsSymbols: DeclarationSymbols = {
@@ -55,7 +52,6 @@ const typesNeedJsCode = [
     'function',
     'object'
 ]
-
 
 function symbolsObject(start: string, end?: string) {
     return { start, end }

@@ -1,6 +1,5 @@
-import { defineEppsStore, Epps, getEppsStore, ParentStore } from 'epps';
+import { defineEppsStore, getEppsStore, ParentStore } from 'epps';
 import { useTypeDeclarationStore, type TypeDeclarationState, type TypeDeclarationStore, type TypesProps } from './typesDeclaration';
-import { parentsStores } from '~/data/stores/useErrorsStore';
 
 
 export interface StoreParameterTypes {
@@ -11,15 +10,11 @@ export interface StoreParameterTypes {
 
 export const useStoreTypesDeclaration = (id: string) => defineEppsStore<TypeDeclarationStore, TypeDeclarationState>(`${id}StoreTypesDeclaration`, () => {
     function getTypesStore() {
-        if (!parentsStores) { return }
         return getEppsStore<TypeDeclarationStore, TypeDeclarationState>(`${id}StoreTypesDeclaration`)
     }
 
     function initTypes(types: TypesProps & StoreParameterTypes) {
         const typesStore = getTypesStore()
-        if (!typesStore) {
-            return
-        }
 
         if (types.stateType) {
             typesStore.addTypesToSee(types.stateType)
@@ -30,9 +25,7 @@ export const useStoreTypesDeclaration = (id: string) => defineEppsStore<TypeDecl
         }
     }
 
-    return {
-        initTypes
-    }
+    return { initTypes }
 },
     {
         actionsToExtends: ['initTypes'],

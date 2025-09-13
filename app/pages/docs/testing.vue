@@ -20,7 +20,6 @@ export function beforeEachPiniaPlugin() {
             createPluginMock(
                 'localStorage', // Mock database name
                 'Replace_with_your_IV_string', // Mock encryption IV
-                'Replace_with_your_KEY_string' // Mock encryption key
             )
         );
 

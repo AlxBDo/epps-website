@@ -6,7 +6,7 @@ import Links from '../common/Links.vue'
 import Store from '../examples/common/Store.vue'
 import type { ParameterPrototype, TypeRequired } from '~/types/prototype'
 
-const { eppsStoreOptions, parentStore } = usePagesDefinitions()
+const { defineEppsStore, eppsStoreOptions, parentStore, persistStoreOptions } = usePagesDefinitions()
 const { id, title } = defineAEppsStore
 
 const eppsDefinition = `{
@@ -20,7 +20,8 @@ const typeScriptStoreDefinition = `({
             if(userData.password) {
                 password.value = userData.password
             }
-        }
+        },
+        user: computed(() => ({ ...getEppsStore<UserMethods, UserState>().person, password: password.value }))
     })`
 const javascriptScriptStoreDefinition = `({
         password: ref(),
@@ -28,12 +29,14 @@ const javascriptScriptStoreDefinition = `({
             if(userData.password) {
                 password.value = userData.password
             }
-        }
+        },
+        user: computed(() => ({ ...getEppsStore().person, password: password.value }))
     })`
 
 const typeScriptPersonStoreDefinition = `({
         firstname: ref<string>(),
         lastname: ref<string>(),
+        person: computed(() => ({ firstname: firstname.value, lastname: lastname.value })),
         setData: (personData: PersonState): void => {
             if(personData.firstname) {
                 firstname.value = personData.firstname
@@ -46,6 +49,7 @@ const typeScriptPersonStoreDefinition = `({
 const javascriptScriptPersonStoreDefinition = `({
         firstname: ref(),
         lastname: ref(),
+        person: computed(() => ({ firstname: firstname.value, lastname: lastname.value })),
         setData: (personData) => {
             if(personData.firstname) {
                 firstname.value = personData.firstname
@@ -71,6 +75,7 @@ const storeDefinitions = {
 const personTypesDefinition = `export interface PersonState {
     firstname: string
     lastname: string
+    person: { firstname: string, lastname: string }
 }
 
 `
@@ -81,6 +86,7 @@ const userTypesDefinition = `export interface UserState extends PersonState {
 
 export interface UserMethods {
     setData: (data: UserState) => void
+    user: { firstname: string, lastname: string, password: string }
 }
 
 `
@@ -108,6 +114,10 @@ const personMethods: TypeRequired = { name: 'UserMethods', description: 'Methods
                         To define a Store that will extend the State and methods of other Stores, use the
                         defineEppsStore function and ParentStore class.
                     </p>
+                    <p class="text-sm">
+                        To access the methods and properties of parent stores, or those extended by
+                        the plugin, use the getEppsStore function.
+                    </p>
                 </template>
             </Store>
         </template>
@@ -120,8 +130,10 @@ const personMethods: TypeRequired = { name: 'UserMethods', description: 'Methods
 
         <template #toSee>
             <Links :links="{
-                eppsStoreOptions: `/${eppsStoreOptions?.path}`,
-                ParentStore: `/${parentStore?.path}`
+                defineEppsStore: `/${defineEppsStore.path}`,
+                EppsStoreOptions: `/${eppsStoreOptions?.path}`,
+                ParentStore: `/${parentStore?.path}`,
+                PeristStoreOptions: `/${persistStoreOptions?.path}`
             }"></Links>
         </template>
     </ExplanationContainer>

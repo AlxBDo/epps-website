@@ -33,9 +33,7 @@ export const useStorePrototype = (id: string) => defineEppsStore<StorePrototypeS
             : 'defineStore'
     )
     const description = computed(() => prototype.value?.description)
-    const getRequiredTypes = computed(() => {
-        return getStore()?.requiredTypesToString()
-    })
+    const getRequiredTypes = computed(() => { return getStore()?.requiredTypesToString() })
 
 
     function actionDefinition(

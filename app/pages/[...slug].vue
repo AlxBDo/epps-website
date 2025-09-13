@@ -19,7 +19,7 @@ let pageDefinition: PageResume | undefined
 
 const route = useRoute()
 const [section, type, name] = route.params.slug as unknown as string[]
-const allowedPath = allowedSections.includes(section) && (!type || allowedTypes.includes(type) || type === section)
+const allowedPath = allowedSections.includes(section as string) && (!type || allowedTypes.includes(type) || type === section)
 
 const pageFound = (allowedPath && Array.isArray(route.params.slug))
     && route.params.slug.reduce((found: boolean, param: string) => {
@@ -47,7 +47,7 @@ if (!pageFound && !pageDefinition) {
             components: Object.keys(tempPage).map((page) => tempPage[page]),
             id: `${section}-${typeParam}`,
             path: `${section}/${typeParam}`,
-            title: `${capitalize(typeParam)} ${titleSectionMapping[section]}`,
+            title: `${capitalize(typeParam)} ${titleSectionMapping[section as string]}`,
         }
     } else {
         pageDefinition = {
@@ -83,7 +83,7 @@ if (!pageFound && !pageDefinition) {
             </ul>
             <p v-else>{{ pageDefinition.description }}</p>
         </Page>
-        <DynamicPage v-else :name :type="(type as PageDefinitionTypes)" />
+        <DynamicPage v-else :name="(name as string)" :type="(type as PageDefinitionTypes)" />
         <template #fallback>Loading</template>
     </Suspense>
 </template>
