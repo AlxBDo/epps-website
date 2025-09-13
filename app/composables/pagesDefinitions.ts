@@ -162,6 +162,7 @@ export function usePagesDefinitions() {
         install,
         lists,
         pages,
+        parentStore,
         persistStoreOptions,
         persistedStore,
         resourceId,

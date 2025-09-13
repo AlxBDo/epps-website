@@ -6,7 +6,7 @@ import Links from '../common/Links.vue'
 import Store from '../examples/common/Store.vue'
 import type { ParameterPrototype, TypeRequired } from '~/types/prototype'
 
-
+const { eppsStoreOptions, parentStore } = usePagesDefinitions()
 const { id, title } = defineAEppsStore
 
 const eppsDefinition = `{
@@ -106,7 +106,7 @@ const personMethods: TypeRequired = { name: 'UserMethods', description: 'Methods
                 <template #explanation>
                     <p class="text-sm">
                         To define a Store that will extend the State and methods of other Stores, use the
-                        defineEppsStore function, Epps and ParentStore class.
+                        defineEppsStore function and ParentStore class.
                     </p>
                 </template>
             </Store>
@@ -119,7 +119,10 @@ const personMethods: TypeRequired = { name: 'UserMethods', description: 'Methods
         </template>
 
         <template #toSee>
-            <Links :links="{ Epps: '/docs/class/epps', ParentStore: '/docs/class/ParentStore' }"></Links>
+            <Links :links="{
+                eppsStoreOptions: `/${eppsStoreOptions?.path}`,
+                ParentStore: `/${parentStore?.path}`
+            }"></Links>
         </template>
     </ExplanationContainer>
 </template>

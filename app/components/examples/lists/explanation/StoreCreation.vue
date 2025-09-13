@@ -2,9 +2,10 @@
 import { listsStoreCreation } from '~/utils/components/resumes'
 import CodeBlock from '~/components/dependencies/CodeBlock.vue'
 import ExplanationContainer from '~/components/common/ExplanationContainer.vue'
+import Links from '~/components/common/Links.vue'
 
 
-const { useCollectionStore } = usePagesDefinitions()
+const { eppsStoreOptions, parentStore, useCollectionStore } = usePagesDefinitions()
 const { id, title } = listsStoreCreation
 
 const storeDefinition = `export const useListsStore = (
@@ -13,7 +14,9 @@ const storeDefinition = `export const useListsStore = (
     id ?? defaultStoreId, 
     () => ({}), 
     {
-        actionsToRename: { addItem: 'newList', getItem: 'getList', getItems: 'getLists' }
+        actionsToRename: { 
+            addItem: 'newList', getItem: 'getList', getItems: 'getLists', removeItem: 'removeList', setItems: 'setLists' 
+        }, 
         parentsStores: [ new ParentStore('listsCollection', useCollectionStore) ],
         persist: { watchMutation: true }
     }
@@ -22,6 +25,20 @@ const storeDefinition = `export const useListsStore = (
 
 <template>
     <ExplanationContainer :code-sections="['setup']" :id :tip-sections="['store-creation-tip']" :title>
+        <template #detailedExplanations>
+            <p>
+                The actionsToRename property of EppsStoreOptions allows you to rename methods inherited
+                from the parent store.
+            </p>
+            <p>
+                The propertiesToRename property of EppsStoreOptions allows you to rename the state
+                properties inherited from the parent store.
+            </p>
+            <p>
+                The persist.watchMutation property of EppsStoreOptions allows the state to be persisted
+                each time one of its properties is modified.
+            </p>
+        </template>
         <template #optionApi>
             <div>
                 export const useListsStore = {{ '(' }}<br />
@@ -41,7 +58,11 @@ const storeDefinition = `export const useListsStore = (
         </template>
 
         <template #toSee>
-            <ULink :to="`/${useCollectionStore?.path}`">{{ useCollectionStore?.id }}</ULink>
+            <Links :links="{
+                EppsStoreOptions: `/${eppsStoreOptions?.path}`,
+                ParentStore: `/${parentStore?.path}`,
+                useCollectionStore: `/${useCollectionStore?.path}`
+            }"></Links>
         </template>
     </ExplanationContainer>
 </template>

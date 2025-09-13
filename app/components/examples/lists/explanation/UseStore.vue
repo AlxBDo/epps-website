@@ -48,40 +48,40 @@ const useListsStoreDeclarationTypeScript = useListsStoreDeclaration
     <ExplanationContainer id="get-list" :code-sections="['vue']">
         <template #subtitle>Get a list</template>
         <template #explanation>
-            Use getItem method to get list. The “name” or “id” properties can be used as selection criteria.
+            Use getList method to get list. The “name” or “id” properties can be used as selection criteria.
         </template>
 
         <template #vue>
-            <CodeBlock code="listsStore.getItem({ id: 1 })" lang="javascript" />
+            <CodeBlock code="listsStore.getList({ id: 1 })" lang="javascript" />
         </template>
     </ExplanationContainer>
 
     <ExplanationContainer id="get-lists" :code-sections="['vue']">
         <template #subtitle>Get lists</template>
         <template #explanation>
-            Use the getItems method to obtain all lists or those corresponding to the criterion passed as a parameter.
+            Use the getLists method to obtain all lists or those corresponding to the criterion passed as a parameter.
         </template>
 
         <template #vue>
-            <CodeBlock code="listsStore.getItems({ type: 2 })" lang="javascript" />
+            <CodeBlock code="listsStore.getLists({ type: 2 })" lang="javascript" />
         </template>
     </ExplanationContainer>
 
     <ExplanationContainer id="remove-list" :code-sections="['vue']">
         <template #subtitle>Remove a list</template>
         <template #explanation>
-            We remove a list to <code>listsStore</code> using the <code>removeItem</code> method.
+            We remove a list to <code>listsStore</code> using the <code>removeList</code> method.
         </template>
 
         <template #vue>
-            <CodeBlock code="listsStore.removeItem({ id: 5 })" lang="javascript" />
+            <CodeBlock code="listsStore.removeList({ id: 5 })" lang="javascript" />
         </template>
     </ExplanationContainer>
 
     <ExplanationContainer id="set-lists" :code-sections="['vue']">
         <template #subtitle>Set lists</template>
         <template #explanation>
-            We initialize the store with some list items using the <code>setItems</code> method.
+            We initialize the store with some list items using the <code>setLists</code> method.
         </template>
 
         <template #vue>

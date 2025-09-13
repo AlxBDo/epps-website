@@ -13,6 +13,10 @@ const componentProps = defineProps({
         type: Array as PropType<ParameterPrototype[]>,
         default: () => []
     },
+    displayTitle: {
+        type: Boolean,
+        default: true
+    },
     name: {
         type: String,
         required: true,
@@ -65,7 +69,7 @@ onUnmounted(() => store.$reset())
 
 <template>
     <ExplanationContainer :id="name" :code-sections="codeSlots">
-        <template #subtitle>Prototype</template>
+        <template v-if="displayTitle" #subtitle>Prototype</template>
 
         <template v-if="description" #explanation>
             <p class="text-sm">{{ description }}</p>
