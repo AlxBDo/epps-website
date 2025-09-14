@@ -3,16 +3,14 @@ import defineEppsStore from '~/data/functions/defineEppsStore';
 import eppsStoreOptions from '~/data/types/eppsStoreOptions';
 import { useCodeDeclarationExplanationStore, type CodeDeclarationState, type CodeDeclarationStore } from '~/stores/docs/codeDeclarationExplanation';
 import ExplanationContainer from '../common/ExplanationContainer.vue';
-import ParametersList from '../docs/common/ParametersList.vue';
 import Prototype from '../docs/common/Prototype.vue';
-import type { FunctionPrototype, ParameterPrototype } from '~/types/prototype';
 import type { EppsStore } from 'epps';
 
 
-const codeDeclarationStore = useCodeDeclarationExplanationStore(defineEppsStore.name) as EppsStore<CodeDeclarationStore, CodeDeclarationState>
+const codeDeclarationStore = useCodeDeclarationExplanationStore('usingDefineEppsStore') as EppsStore<CodeDeclarationStore, CodeDeclarationState>
 codeDeclarationStore.initDeclaration(defineEppsStore)
 
-const { description, name, props, requiredTypes, returnType, type } = defineEppsStore
+const { name, props, requiredTypes, returnType, type } = defineEppsStore
 </script>
 
 <template>
@@ -30,7 +28,8 @@ const { description, name, props, requiredTypes, returnType, type } = defineEpps
 
             <div>
                 <h5 class="ml-4 mt-4 text-sm underline">- defineEppsStore prototype -</h5>
-                <Prototype :display-title="false" :name :props :required-types :return-type :type></Prototype>
+                <Prototype :display-title="false" name="usingDefineEppsStore" :props :required-types :return-type :type>
+                </Prototype>
             </div>
 
             <div>
