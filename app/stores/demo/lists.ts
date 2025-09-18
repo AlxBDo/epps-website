@@ -49,7 +49,7 @@ export const useListsStore = (
     },
     {
         actionsToRename: {
-            getItem: 'getList', getItems: 'getLists', removeItem: 'removeList'
+            getItem: 'getList', getItems: 'getLists', removeItem: 'removeList', setItems: 'setLists'
         },
         parentsStores: [new ParentStore('listCollection', useCollectionStore)],
         persist: { watchMutation: true },
