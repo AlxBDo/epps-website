@@ -2,6 +2,7 @@
 import defineEppsStore from '~/data/functions/defineEppsStore';
 import eppsStoreOptions from '~/data/types/eppsStoreOptions';
 import { useCodeDeclarationExplanationStore, type CodeDeclarationState, type CodeDeclarationStore } from '~/stores/docs/codeDeclarationExplanation';
+import { usingDefineEppsStore } from '~/utils/components/resumes';
 import ExplanationContainer from '../common/ExplanationContainer.vue';
 import Prototype from '../docs/common/Prototype.vue';
 import type { EppsStore } from 'epps';
@@ -14,7 +15,7 @@ const { name, props, requiredTypes, returnType, type } = defineEppsStore
 </script>
 
 <template>
-    <ExplanationContainer id="using-defineEppsStore">
+    <ExplanationContainer :id="usingDefineEppsStore.id">
         <template #subtitle>Using defineEppsStore</template>
         <template #explanation>
             <p>
@@ -28,7 +29,7 @@ const { name, props, requiredTypes, returnType, type } = defineEppsStore
 
             <div>
                 <h5 class="ml-4 mt-4 text-sm underline">- defineEppsStore prototype -</h5>
-                <Prototype :display-title="false" name="usingDefineEppsStore" :props :required-types :return-type :type>
+                <Prototype :display-title="false" :name :props :required-types :return-type :type>
                 </Prototype>
             </div>
 

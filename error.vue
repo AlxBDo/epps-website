@@ -1,9 +1,6 @@
 <script setup lang="ts">
-import type { NuxtError } from '#app'
+import type { NuxtError } from 'nuxt/app';
 
-definePageMeta({
-    layout: "default"
-})
 
 const props = defineProps({
     error: Object as () => NuxtError

@@ -10,6 +10,7 @@ import useAEppsStoreDefinition from "~/data/components/useAEppsStore"
 import useListsStoreDefinition from "~/data/components/useListsStore"
 import userStoreCreationDefinition from "~/data/components/userStoreCreation"
 import useUserStoreDefinition from "~/data/components/useUserStore"
+import usingDefineEppsStoreDefinition from "~/data/components/usingDefineEppsStore"
 
 
 export const configurePlugin = createResume(configurePluginDefinition)
@@ -22,3 +23,4 @@ export const useAEppsStore = createResume(useAEppsStoreDefinition)
 export const useListsStore = createResume(useListsStoreDefinition)
 export const userStoreCreation = createResume(userStoreCreationDefinition)
 export const useUserStore = createResume(useUserStoreDefinition)
+export const usingDefineEppsStore = createResume(usingDefineEppsStoreDefinition)

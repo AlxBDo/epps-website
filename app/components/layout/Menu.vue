@@ -6,7 +6,6 @@ import type { ComponentResume } from '~/types/components'
 import type { PageResume } from '~/types/pages'
 
 import UNavigationMenu from '@nuxt/ui/components/NavigationMenu.vue'
-import { isEmpty } from '~/utils/validation'
 
 
 const { pages } = usePagesDefinitions()
@@ -35,7 +34,7 @@ function createItem(label: string, item: PageResume | Record<string, PageResume>
         const slot = parent === 'docs' ? 'docs' as const : undefined
 
         return {
-            children: Object.keys(children).map((key: string) => createItem(key, children[key], parent ? `/${parent}/${key}` : key)),
+            children: Object.keys(children).map((key: string) => createItem(key, children[key] ?? {}, parent ? `/${parent}/${key}` : key)),
             label,
             slot,
             to

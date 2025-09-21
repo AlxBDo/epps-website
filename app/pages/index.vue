@@ -28,8 +28,11 @@ const appName = useRuntimeConfig().public.appName
                         <ul>
                             <li>
                                 <span>Inheritance-Based Design:</span> Child stores automatically inherit all methods
-                                and
-                                state from their parent stores.
+                                and state from their parent stores.
+                            </li>
+                            <li>
+                                <span>Customization:</span> inherited methods and properties can be renamed for better
+                                integration into the child store.
                             </li>
                             <li>
                                 <span>Method Extension:</span> Easily extend parent methods in child stores, ensuring
@@ -43,9 +46,8 @@ const appName = useRuntimeConfig().public.appName
 
                         <ul>
                             <li>
-                                <span>Flexible Storage Options:</span> Choose between localStorage and IndexedDB to
-                                persist
-                                your store's state.
+                                <span>Flexible Storage Options:</span> Choose between localStorage, sessionStorage and
+                                IndexedDB to persist your store's state.
                             </li>
                             <li>
                                 <span>Selective Persistence:</span> Exclude specific properties from being persisted.
