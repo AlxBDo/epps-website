@@ -74,13 +74,21 @@ function menuLabel(menu: NavigationMenuItem): string {
 
     return menu.label as string
 }
+
+const githubMenu = {
+    icon: 'mdi:github',
+    children: [
+        { label: 'Epps! package', to: 'https://github.com/AlxBDo/Epps' },
+        { label: 'Website', to: 'https://github.com/AlxBDo/epps-website' }
+    ]
+}
 </script>
 
 <template>
     <UDropdownMenu class="md:hidden" :items="(items as DropdownMenuItem[])">
         <UButton icon="i-lucide-menu" color="neutral" variant="outline" />
     </UDropdownMenu>
-    <UNavigationMenu class="w-full justify-center hidden md:flex" :items="items">
+    <UNavigationMenu class="w-full justify-center hidden md:flex" :items="[...items, githubMenu]">
         <template #docs-content="{ item }">
             <ul v-if="(item as NavigationMenuItem)?.children" class="flex flex-wrap">
                 <li v-for="child in (item as NavigationMenuItem).children" :key="child.label" class="w-5/12 p-3">

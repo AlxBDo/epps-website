@@ -41,6 +41,12 @@ const getItemsProps: ParameterPrototype[] = [
         name: 'item',
         required: false,
         type: 'object'
+    },
+    {
+        description: 'Define type of comparison - default is "strict"',
+        name: 'comparisonMode',
+        required: false,
+        type: '">" | "<" | ">=" | "<=" | "partial" | "strict"'
     }
 ]
 const getItems: FunctionPrototype = {
