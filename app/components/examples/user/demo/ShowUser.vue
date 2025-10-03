@@ -1,13 +1,9 @@
 <script setup lang="ts">
 import { useConnectedUserStore } from '~/stores/demo/connectedUser'
-
 import DisplayResult from '~/components/examples/common/DisplayResult.vue'
 
-import type { EppsStore } from 'epps'
-import type { ContactState, ContactStore } from '~/stores/demo/contact'
 
-
-const connectedUser = useConnectedUserStore() as EppsStore<ContactStore, ContactState>
+const connectedUser = useConnectedUserStore()
 const isloading = ref<boolean>(true)
 
 connectedUser.remember().then(() => {

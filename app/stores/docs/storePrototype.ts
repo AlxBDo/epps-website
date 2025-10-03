@@ -43,7 +43,7 @@ export const useStorePrototype = (id: string) => defineEppsStore<StorePrototypeS
         isOptionApi: boolean
     ): string {
         let code: string = ''
-        const prototypeStore = usePrototypeStore(property.name) as EppsStore<PrototypeStore, PrototypeState>
+        const prototypeStore = usePrototypeStore(property.name)
         prototypeStore.initDeclaration(property as FunctionPrototype, indentNumber)
         prototypeStore.initProps((property as FunctionPrototype).props, undefined, isOptionApi ? 3 : 2)
 

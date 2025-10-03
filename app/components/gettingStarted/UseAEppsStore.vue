@@ -8,12 +8,10 @@ import ExplanationContainer from '../common/ExplanationContainer.vue'
 const { id, title } = useAEppsStore
 
 function getCode(isJs: boolean = false): string {
-    return getScriptSetup(getScript(isJs), isJs) + getTemplate()
+    return getScriptSetup(getScript(), isJs) + getTemplate()
 }
 
-function getScript(isJs: boolean = false): string {
-    const asEppsStore = ' as EppsStore<UserStore, UserState>'
-
+function getScript(): string {
     const commonBottom = `
 
 userStore.setData({
@@ -28,12 +26,10 @@ const { firstname, lastname, password } = userStore`
 import { useUserStore } from '~/stores/userStore.ts'
 `
 
-    const importType = `import type { EppsStore } from 'epps'
-`
     const useStore = `
 const userStore = useUserStore()`
 
-    return commonTop + (isJs ? '' : importType) + useStore + (isJs ? '' : asEppsStore) + commonBottom
+    return commonTop + useStore + commonBottom
 }
 
 function getTemplate() {

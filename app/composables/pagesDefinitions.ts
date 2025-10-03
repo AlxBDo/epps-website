@@ -2,6 +2,8 @@ import { createDefinition } from "~/utils/pages/createDefinition"
 import { createPageResume } from "~/utils/create-resume"
 import { firstCharToLowerCase } from "~/utils/string"
 
+import actionFlowDefinition from "~/data/types/actionFlow"
+import actionFlowsDefinition from "~/data/types/actionFlows"
 import collectionStateDefinition from "~/data/types/collectionState"
 import collectionStoreDefinition from "~/data/types/collectionStore"
 import createPluginDefinition from "~/data/functions/createPlugin"
@@ -64,6 +66,8 @@ export function usePagesDefinitions() {
     const useWebUserStore = createDefinition('stores', useWebUserStoreDefinition)
 
     // Types
+    const actionFlow = createDefinition('types', actionFlowDefinition)
+    const actionFlows = createDefinition('types', actionFlowsDefinition)
     const collectionState = createDefinition('types', collectionStateDefinition)
     const collectionStore = createDefinition('types', collectionStoreDefinition)
     const eppsStoreType = createDefinition('types', eppsStoreDefinition)
@@ -114,6 +118,8 @@ export function usePagesDefinitions() {
             } as Record<string, PageResume>,
 
             types: {
+                actionFlow,
+                actionFlows,
                 collectionState,
                 collectionStore,
                 eppsStore: eppsStoreType,
@@ -150,6 +156,8 @@ export function usePagesDefinitions() {
 
 
     return {
+        actionFlow,
+        actionFlows,
         createPlugin,
         defineEppsStore,
         eppsStoreType,

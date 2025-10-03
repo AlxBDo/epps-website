@@ -1,11 +1,6 @@
 <script setup lang="ts">
-import { usePagesDefinitions } from '~/composables/pagesDefinitions'
-
-import type { DropdownMenuItem, NavigationMenuItem } from '@nuxt/ui'
-import type { ComponentResume } from '~/types/components'
-import type { PageResume } from '~/types/pages'
-
 import UNavigationMenu from '@nuxt/ui/components/NavigationMenu.vue'
+import type { NavigationMenuItem } from '@nuxt/ui'
 import type { PropType } from 'vue'
 
 defineProps({

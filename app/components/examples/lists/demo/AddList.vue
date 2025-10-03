@@ -5,16 +5,12 @@ import { useListsStore } from '~/stores/demo/lists'
 
 import MethodDemoForm from '../../../common/form/MethodDemoForm.vue'
 
-import type { CollectionState, EppsStore } from 'epps'
-import type { List } from '~/models/liste'
-import type { ListsStoreMethods } from '~/stores/demo/lists'
-
 const items = ref(listTypeLabels)
 const newListName = ref('')
 const newListType = ref('wish')
 
 async function addNewList() {
-    const listsStore = useListsStore() as EppsStore<ListsStoreMethods, CollectionState<List>>
+    const listsStore = useListsStore()
 
     listsStore.newList(newListName.value, `${listTypeLabels.findIndex((type: string) => newListType.value === type)}`)
 

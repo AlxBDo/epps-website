@@ -1,9 +1,8 @@
 <script setup lang="ts">
-import { usePrototypeStore, type PrototypeState, type PrototypeStore } from '~/stores/docs/prototype'
+import { usePrototypeStore } from '~/stores/docs/prototype'
 import CodeBlock from '~/components/dependencies/CodeBlock.vue'
 import ExplanationContainer from '../../common/ExplanationContainer.vue'
 
-import type { EppsStore } from 'epps'
 import type { PropType } from 'vue'
 import type { CodeDeclarationTypes, FunctionPrototype, FunctionReturn, ParameterPrototype, TypeRequired } from '~/types/prototype'
 
@@ -55,7 +54,7 @@ const componentProps = defineProps({
 })
 
 
-const store = usePrototypeStore(componentProps.name) as EppsStore<PrototypeStore, PrototypeState>
+const store = usePrototypeStore(componentProps.name)
 store.initDeclaration(componentProps)
 
 const {

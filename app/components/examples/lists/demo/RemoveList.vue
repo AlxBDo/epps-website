@@ -1,15 +1,12 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { isEmpty } from '~/utils/validation'
-import { useListsStore, type ListsState, type ListsStoreMethods } from '~/stores/demo/lists'
+import { useListsStore } from '~/stores/demo/lists'
 
 import MethodDemoForm from '../../../common/form/MethodDemoForm.vue'
 
-import type { CollectionState, CollectionStoreMethods, EppsStore } from 'epps'
-import type { List } from '../../../../models/liste'
 
-
-const listsStore = useListsStore() as EppsStore<ListsStoreMethods, ListsState>
+const listsStore = useListsStore()
 
 const list = ref<string>()
 

@@ -1,14 +1,11 @@
 <script setup lang="ts">
 import { useUserStore } from '~/utils/components/resumes'
-
 import CodeBlock from '~/components/dependencies/CodeBlock.vue';
 import ExplanationContainer from '~/components/common/ExplanationContainer.vue';
 
 const { id, title } = useUserStore
 
 const useUserStoreDeclaration = 'const userStore = useUserStore()'
-const useUserStoreDeclarationTypeScript = useUserStoreDeclaration
-    + ' as EppsStore<UserStore, UserState>'
 </script>
 
 <template>
@@ -16,10 +13,6 @@ const useUserStoreDeclarationTypeScript = useUserStoreDeclaration
         <template #explanation>
             We create an instance of the user store using <code>useUserStore</code> and type it
             with the appropriate methods and state.
-        </template>
-
-        <template #typescript>
-            <CodeBlock :code="useUserStoreDeclarationTypeScript" lang="typeScript" />
         </template>
 
         <template #javascript>

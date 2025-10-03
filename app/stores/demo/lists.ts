@@ -25,29 +25,45 @@ export interface ListsStoreMethods extends CollectionStoreMethods {
     setLists: (lists: List[]) => void
 }
 
+function saveList(list: List) {
+    console.log('saveList', list)
+}
 
 export const useListsStore = (
     id?: string
-) => defineEppsStore<ListsStoreMethods, CollectionState<List>>(
+) => defineEppsStore<ListsStoreMethods, ListsState>(
     id ?? defaultStoreId,
     () => {
-        function newList(name: string, type: ListTypes): void {
+        function newList(name: string, type: ListTypes): List | undefined {
             const collectionStore = getEppsStore<CollectionStoreMethods, ListsState>(id ?? defaultStoreId)
 
             if (!collectionStore) { return }
 
-            collectionStore.addItem({
+            const newList = {
                 id: collectionStore.lists.length + 1,
                 name,
                 type
-            })
+            }
+
+            collectionStore.addItem(newList)
+
+            return newList
+        }
+
+        function addIconToName(lists: List[]) {
+            if (lists[0]) {
+                const icons: Record<string, string> = { '0': '🎁', '1': '🛒', '2': '✅' }
+                lists[0].name = `${icons[lists[0].type]} ${lists[0].name}`
+            }
         }
 
         return {
+            addIconToName,
             newList
         }
     },
     {
+        actionFlows: { addItem: { before: 'addIconToName' }, newList: { after: saveList } },
         actionsToRename: {
             getItem: 'getList', getItems: 'getLists', removeItem: 'removeList', setItems: 'setLists'
         },

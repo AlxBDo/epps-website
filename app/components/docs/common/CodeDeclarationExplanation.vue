@@ -1,15 +1,16 @@
 <script setup lang="ts">
 import { useCodeDeclarationExplanationStore } from '~/stores/docs/codeDeclarationExplanation'
+import { capitalize } from '#imports'
 
+import Definition from './Definition.vue'
 import ExplanationContainer from '../../common/ExplanationContainer.vue'
 import Links from '~/components/common/Links.vue'
 import ParametersList from './ParametersList.vue'
 import Prototype from './Prototype.vue'
 
-import type { EppsStore } from 'epps'
 import type { PropType } from 'vue'
-import type { CodeDeclarationState, CodeDeclarationStore } from '~/stores/docs/codeDeclarationExplanation'
 import type { ClassPrototype, FunctionPrototype, InterfacePrototype, ParameterPrototype, TypePrototype } from '~/types/prototype'
+import { useVerticalMenuStore } from '~/stores/docs/verticalMenu'
 
 
 const componentProps = defineProps({
@@ -23,21 +24,26 @@ const componentProps = defineProps({
     }
 })
 
-const codeDeclarationExplanationStore = useCodeDeclarationExplanationStore(
-    componentProps.prototype.name
-) as EppsStore<CodeDeclarationStore, CodeDeclarationState>
+const codeDeclarationExplanationStore = useCodeDeclarationExplanationStore(componentProps.prototype.name)
 codeDeclarationExplanationStore.initDeclaration(componentProps.prototype)
 
 const { hasTypesToSee, hasPropsExplanation, propsExplanation, typesToSee } = codeDeclarationExplanationStore
 const { description, name, requiredTypes, type } = componentProps.prototype
-const title = componentProps.displayTitle ? componentProps.prototype.name : undefined
+const title = componentProps.displayTitle ? capitalize(componentProps.prototype.name) : undefined
 const properties = (componentProps.prototype as InterfacePrototype)?.properties
+
+const hasTypes = hasTypesToSee()
+
+if (hasTypes) {
+    const verticalMenuStore = useVerticalMenuStore()
+    verticalMenuStore.addItem(name)
+}
 
 onUnmounted(() => codeDeclarationExplanationStore.$reset())
 </script>
 
 <template>
-    <ExplanationContainer :id="name" :title>
+    <ExplanationContainer :id="name.toLowerCase()" :title>
         <template #explanation>
             <div>
                 <slot name="description"></slot>
@@ -71,11 +77,15 @@ onUnmounted(() => codeDeclarationExplanationStore.$reset())
             </ParametersList>
         </template>
 
-        <template v-if="hasTypesToSee()" #toSee>
+        <template v-if="hasTypes" #toSee>
             <Links icon="material-symbols:link-rounded" :links="typesToSee.reduce((acc: Record<string, string>, curr: string) => {
-                acc[curr] = `/docs/types/${curr}`
+                acc[curr] = `#${curr}`
                 return acc
             }, {})"></Links>
+        </template>
+
+        <template v-if="hasTypes" #more>
+            <Definition v-for="type in typesToSee" :name="type" type="types" displayTitle separator />
         </template>
     </ExplanationContainer>
 </template>

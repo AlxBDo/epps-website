@@ -79,6 +79,10 @@ const slots = useSlots()
             <h4>@see</h4>
             <slot name="toSee"></slot>
         </section>
+
+        <section v-if="slots?.more" class="to-see-section">
+            <slot name="more"></slot>
+        </section>
     </article>
 </template>
 

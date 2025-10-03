@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { isEmpty } from '~/utils/validation'
-import { useStorePrototype, type StorePrototypeState, type StorePrototypeStore } from '~/stores/docs/storePrototype'
+import { useStorePrototype } from '~/stores/docs/storePrototype'
 
 import CodeBlock from '~/components/dependencies/CodeBlock.vue'
 import ExplanationContainer from '../../common/ExplanationContainer.vue'
@@ -8,7 +8,6 @@ import Links from '~/components/common/Links.vue'
 
 import type { PropType } from 'vue'
 import type { StorePrototype } from '~/types/prototype'
-import type { EppsStore } from 'epps'
 
 
 const componentProps = defineProps({
@@ -20,7 +19,7 @@ const componentProps = defineProps({
 
 const { id, methods, state } = componentProps.prototype
 
-const storePrototype = useStorePrototype(id) as EppsStore<StorePrototypeStore, StorePrototypeState>
+const storePrototype = useStorePrototype(id)
 storePrototype.setPrototype(componentProps.prototype)
 
 const methodsHasDescription = storePrototype.methodsHasDescription()
@@ -84,7 +83,7 @@ const setupStorePrototype = storePrototype.prototypeToString()
             </article>
         </template>
 
-        <template v-if="storePrototype.hasTypesToSee && storePrototype.hasTypesToSee()" #toSee>
+        <template v-if="storePrototype.hasTypesToSee()" #toSee>
             <Links icon="material-symbols:link-rounded" :links="storePrototype.typesToSee.reduce((acc: Record<string, string>, curr: string) => {
                 acc[curr] = `/docs/types/${curr}`
                 return acc

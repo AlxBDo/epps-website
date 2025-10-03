@@ -14,7 +14,7 @@ function getResult() {
     if (!listId.value) { return }
 
     return {
-        result: (useListsStore() as EppsStore<ListsStoreMethods, ListsState>).getList({
+        result: useListsStore().getList({
             id: parseInt(listId.value)
         }),
         name: `List - ${listId.value}`

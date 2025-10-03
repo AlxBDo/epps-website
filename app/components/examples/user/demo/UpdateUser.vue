@@ -1,14 +1,10 @@
 <script setup lang="ts">
 import { useConnectedUserStore } from '~/stores/demo/connectedUser'
-
 import MethodDemoForm from '~/components/common/form/MethodDemoForm.vue'
-
-import type { EppsStore } from 'epps'
-import type { UserStore, UserState } from '~/stores/demo/user'
 import type { AnyObject } from 'epps'
 
 
-const connectedUser = useConnectedUserStore() as EppsStore<UserStore, UserState>
+const connectedUser = useConnectedUserStore()
 const property = ref<string>()
 const value = ref<string>()
 

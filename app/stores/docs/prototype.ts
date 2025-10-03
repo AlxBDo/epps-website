@@ -108,7 +108,7 @@ export const usePrototypeStore = (id: string) => defineEppsStore<PrototypeStore,
 
             if (!isEmpty(methods)) {
                 code += methods?.reduce((acc: string, curr: FunctionPrototype) => {
-                    const prototypeStore = usePrototypeStore(curr.name) as EppsStore<PrototypeStore, PrototypeState>
+                    const prototypeStore = usePrototypeStore(curr.name)
                     prototypeStore.initDeclaration(curr as FunctionPrototype)
                     prototypeStore.initProps((curr as FunctionPrototype).props, undefined, 2)
 

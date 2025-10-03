@@ -14,8 +14,6 @@ const setItemsDeclaration = `listsStore.setItems([
 ])`
 
 const useListsStoreDeclaration = 'const listsStore = useListsStore()'
-const useListsStoreDeclarationTypeScript = useListsStoreDeclaration
-    + ' as EppsStore<CollectionStoreMethods, CollectionState<List>>'
 </script>
 
 <template>
@@ -23,10 +21,6 @@ const useListsStoreDeclarationTypeScript = useListsStoreDeclaration
         <template #explanation>
             We create an instance of the lists store using <code>useListsStore</code> and type it
             with the appropriate methods and state.
-        </template>
-
-        <template #typescript>
-            <CodeBlock :code="useListsStoreDeclarationTypeScript" lang="typeScript" />
         </template>
 
         <template #javascript>

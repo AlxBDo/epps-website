@@ -2,7 +2,6 @@
 import type { PageResume } from '~/types/pages';
 import type { PropType } from 'vue';
 import VerticalMenu from '../pages/VerticalMenu.vue';
-import { isEmpty } from '~/utils/validation';
 
 const props = defineProps({
     definition: {
@@ -26,8 +25,7 @@ useHead({
 
 <template>
     <UContainer>
-        <VerticalMenu v-if="!isEmpty(definition.components) && definition.components.length > 1"
-            :items="definition.components" />
+        <VerticalMenu :items="definition.components" />
         <div>
             <h2 v-if="displayTitle">{{ definition.title }}</h2>
             <slot></slot>

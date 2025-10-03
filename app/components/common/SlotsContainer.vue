@@ -2,7 +2,6 @@
 import type { PropType } from 'vue';
 import { useSlotsContainer } from '~/composables/slotsContainer';
 import type { SlotCtn } from '~/types/components';
-import { isEmpty } from '~/utils/validation';
 
 
 const props = defineProps({

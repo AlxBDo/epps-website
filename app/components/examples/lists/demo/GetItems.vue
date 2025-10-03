@@ -15,8 +15,8 @@ function getItemsByType() {
     if (!itemType.value) { return }
 
     return {
-        result: (useListsStore() as EppsStore<ListsStoreMethods, ListsState>).getLists({
-            type: listTypeLabels.findIndex((type: string) => type === itemType.value)
+        result: useListsStore().getLists({
+            type: listTypeLabels.findIndex((type: string) => type === itemType.value).toString()
         }),
         name: 'List'
     }

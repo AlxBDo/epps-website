@@ -1,10 +1,9 @@
 <script lang="ts" setup>
-import { useListsStore, type ListsState, type ListsStoreMethods } from '~/stores/demo/lists'
+import { useListsStore } from '~/stores/demo/lists'
 import DisplayResult from '~/components/examples/common/DisplayResult.vue'
-import type { EppsStore } from 'epps'
 
 
-const listsStore = useListsStore() as EppsStore<ListsStoreMethods, ListsState>
+const listsStore = useListsStore()
 
 listsStore.remember().then(() => {
     if (!listsStore.lists.length) {

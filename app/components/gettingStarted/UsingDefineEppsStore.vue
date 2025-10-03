@@ -1,14 +1,13 @@
 <script setup lang="ts">
 import defineEppsStore from '~/data/functions/defineEppsStore';
 import eppsStoreOptions from '~/data/types/eppsStoreOptions';
-import { useCodeDeclarationExplanationStore, type CodeDeclarationState, type CodeDeclarationStore } from '~/stores/docs/codeDeclarationExplanation';
+import { useCodeDeclarationExplanationStore } from '~/stores/docs/codeDeclarationExplanation';
 import { usingDefineEppsStore } from '~/utils/components/resumes';
 import ExplanationContainer from '../common/ExplanationContainer.vue';
 import Prototype from '../docs/common/Prototype.vue';
-import type { EppsStore } from 'epps';
 
 
-const codeDeclarationStore = useCodeDeclarationExplanationStore('usingDefineEppsStore') as EppsStore<CodeDeclarationStore, CodeDeclarationState>
+const codeDeclarationStore = useCodeDeclarationExplanationStore('usingDefineEppsStore')
 codeDeclarationStore.initDeclaration(defineEppsStore)
 
 const { name, props, requiredTypes, returnType, type } = defineEppsStore
