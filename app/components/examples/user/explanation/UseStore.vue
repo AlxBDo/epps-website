@@ -9,7 +9,7 @@ const useUserStoreDeclaration = 'const userStore = useUserStore()'
 </script>
 
 <template>
-    <ExplanationContainer :id :title :code-sections="['typescript', 'javascript']">
+    <ExplanationContainer :id :title :code-sections="['javascript']">
         <template #explanation>
             We create an instance of the user store using <code>useUserStore</code> and type it
             with the appropriate methods and state.

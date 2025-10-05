@@ -17,7 +17,7 @@ const useListsStoreDeclaration = 'const listsStore = useListsStore()'
 </script>
 
 <template>
-    <ExplanationContainer :id :title :code-sections="['typescript', 'javascript']">
+    <ExplanationContainer :id :title :code-sections="['javascript']">
         <template #explanation>
             We create an instance of the lists store using <code>useListsStore</code> and type it
             with the appropriate methods and state.

@@ -4,6 +4,7 @@ import { userStoreCreation } from '~/utils/components/resumes'
 
 import CodeBlock from '~/components/dependencies/CodeBlock.vue'
 import ExplanationContainer from '~/components/common/ExplanationContainer.vue'
+import UsedEppsStoreOptionsExplanation from '../../common/UsedEppsStoreOptionsExplanation.vue'
 
 
 const { id, title } = userStoreCreation
@@ -28,10 +29,29 @@ const definition = `export const useUserStore = (id?: string) => defineEppsStore
         }
     }
 )()`
+
+const usedEppsStoreOptions = [
+    {
+        name: 'actionsToExtends',
+        explanation: 'Allows the parent store action to be executed after the child store action has been executed. The arguments provided to the child store action are provided to the parent store action'
+    },
+    {
+        name: 'parentsStores',
+        explanation: 'allows you to define stores to extends'
+    },
+    {
+        name: 'persistedPropertiesToEncrypt',
+        explanation: 'Allows you to encrypt the properties listed during persistence'
+    },
+    {
+        name: 'watchMutation',
+        explanation: 'allows the state to be persisted each time one of its properties is modified'
+    }
+]
 </script>
 
 <template>
-    <ExplanationContainer :code-sections="['setup']" :id :tip-sections="['store-creation-tip']" :title>
+    <ExplanationContainer :code-sections="['setup']" :id :title>
         <template #explanation>
             <p>
                 This store inherits from the useContactStore, which in turn inherits from the useItemStore.
@@ -50,6 +70,10 @@ const definition = `export const useUserStore = (id?: string) => defineEppsStore
             <div>
                 <CodeBlock :code="definition" lang="typeScript" />
             </div>
+        </template>
+
+        <template #detailedExplanations>
+            <UsedEppsStoreOptionsExplanation :options="usedEppsStoreOptions" />
         </template>
 
         <template #toSee>

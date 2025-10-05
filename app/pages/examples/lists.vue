@@ -16,11 +16,13 @@ const { lists: definition } = usePagesDefinitions()
         <StorePage :definition>
             <template #pageExplanation>
                 <p>
-                    This page is an example of creating a collection store of lists. The store called
-                    <code>useListsStore</code> extends the <code>useCollectionStore</code> store to
-                    benefit from its state properties and methods.
+                    This page is an example of creating a collection store of lists.
+                    Thanks to the Epps plugin, this store extends the useCollectionStore store to benefit from its state
+                    and actions. The item property is renamed, as are several actions, to better integrate with the
+                    child store's domain.
+                    Functions are executed before or after actions to modify or supplement their behavior.
                 </p>
-                <p class="text-sm mt-2">
+                <p class="text-sm my-6">
                     useCollectionStore is supplied with the epps plugin.
                 </p>
             </template>

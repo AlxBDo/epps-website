@@ -5,7 +5,7 @@ import { userStoreCreation, useUserStore } from "~/utils/components/resumes";
 
 export const components = [userStoreCreation, useUserStore]
 
-export const description = 'Create and use a user store'
+export const description = 'Extend multiple stores, extend a parent store action, persist the state and all its modifications, and define properties to encrypt.'
 
 export const id = useUserStoreId
 

@@ -80,7 +80,7 @@ const slots = useSlots()
             <slot name="toSee"></slot>
         </section>
 
-        <section v-if="slots?.more" class="to-see-section">
+        <section v-if="slots?.more" class="more-information-section">
             <slot name="more"></slot>
         </section>
     </article>

@@ -50,7 +50,7 @@ export const useListsStore = (
             return newList
         }
 
-        function addIconToName(lists: List[]) {
+        function addIcon(lists: List[]) {
             if (lists[0]) {
                 const icons: Record<string, string> = { '0': '🎁', '1': '🛒', '2': '✅' }
                 lists[0].name = `${icons[lists[0].type]} ${lists[0].name}`
@@ -58,12 +58,12 @@ export const useListsStore = (
         }
 
         return {
-            addIconToName,
+            addIcon,
             newList
         }
     },
     {
-        actionFlows: { addItem: { before: 'addIconToName' }, newList: { after: saveList } },
+        actionFlows: { addItem: { before: 'addIcon' }, newList: { after: saveList } },
         actionsToRename: {
             getItem: 'getList', getItems: 'getLists', removeItem: 'removeList', setItems: 'setLists'
         },

@@ -6,9 +6,14 @@ export const description: string = 'Experimental - interface used to define a fu
 
 export const name: string = 'actionFlow'
 
+const callbackArgs = {
+    after: 'This function receives as a parameter either an object containing the result returned by the initial function and its arguments, or an array of the arguments passed to the initial function.',
+    before: 'This receives as a parameter an array of arguments passed to the initial function.'
+}
+
 const propertiesDefinition = 'If the value is a string, it must correspond to the name of an action in the store.'
 
-const getDef = (when: string) => `Function executed ${when} the store action. ${propertiesDefinition}`
+const getDef = (when: 'after' | 'before') => `Function executed ${when} the store action. ${callbackArgs[when]} ${propertiesDefinition}`
 
 export const properties: ParameterPrototype[] = [
     createParameterPrototype('after', 'string | Function', false, getDef('after')),

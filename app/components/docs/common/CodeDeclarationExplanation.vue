@@ -18,6 +18,10 @@ const componentProps = defineProps({
         type: Boolean,
         default: true,
     },
+    isSubDeclaration: {
+        type: Boolean,
+        default: false
+    },
     prototype: {
         type: Object as PropType<ClassPrototype | FunctionPrototype | InterfacePrototype | TypePrototype>,
         required: true,
@@ -34,7 +38,7 @@ const properties = (componentProps.prototype as InterfacePrototype)?.properties
 
 const hasTypes = hasTypesToSee()
 
-if (hasTypes) {
+if (hasTypes && !componentProps.isSubDeclaration) {
     const verticalMenuStore = useVerticalMenuStore()
     verticalMenuStore.addItem(name)
 }

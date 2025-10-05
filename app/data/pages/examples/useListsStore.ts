@@ -5,7 +5,7 @@ import { lists as listsPath } from "../paths"
 
 export const components = [listsStoreCreation, useListsStore]
 
-export const description = 'Create and use a lists store'
+export const description = 'Extend a store, rename its state properties and actions, and create action flows.'
 
 export const id = useListsStoreId
 
