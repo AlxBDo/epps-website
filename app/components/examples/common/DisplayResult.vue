@@ -5,10 +5,11 @@ import { isEmpty } from '~/utils/validation';
 
 defineProps({
     name: { type: String },
+    noResultText: { type: String, default: '"No list found"' },
     result: { type: [Array, Boolean, Number, Object, String], required: true }
 })
 
-function getCode(text: any, name?: string) {
+function getCode(text: any, noResultText: string, name?: string) {
     text = varToString(text)
 
     if (name) {
@@ -16,13 +17,13 @@ function getCode(text: any, name?: string) {
 ${text}`
     }
 
-    return isEmpty(text) ? '"No list found"' : text
+    return isEmpty(text) ? noResultText : text
 }
 
 </script>
 
 <template>
-    <CodeBlock :code="getCode(result, name)" lang="typeScript" />
+    <CodeBlock :code="getCode(result, noResultText, name)" lang="typeScript" />
 </template>
 
 <style scoped>

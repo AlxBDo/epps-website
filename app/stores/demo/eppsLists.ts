@@ -1,4 +1,4 @@
-import { defineEppsStore, getEppsStore, ParentStore, useCollectionStore, type CollectionState, type CollectionStoreMethods } from "epps"
+import { defineEppsStore, getEppsStore, ParentStore, useCollectionStore, type CollectionStoreMethods } from "epps"
 
 import type { ListTypes } from "~/types/list"
 
@@ -25,13 +25,9 @@ export interface ListsStoreMethods extends CollectionStoreMethods {
     setLists: (lists: List[]) => void
 }
 
-function saveList(list: List) {
-    console.log('saveList', list)
-}
-
-export const useListsStore = (
+export const useEppsListsStore = (
     id?: string
-) => defineEppsStore<ListsStoreMethods, ListsState>(
+) => defineEppsStore<CollectionStoreMethods, ListsState>(
     id ?? defaultStoreId,
     () => {
         function newList(name: string, type: ListTypes): List | undefined {
@@ -63,12 +59,6 @@ export const useListsStore = (
         }
     },
     {
-        actionFlows: { newList: { before: 'addIcon', after: saveList } },
-        actionsToRename: {
-            getItem: 'getList', getItems: 'getLists', removeItem: 'removeList', setItems: 'setLists'
-        },
-        parentsStores: [new ParentStore('listCollection', useCollectionStore)],
-        persist: { watchMutation: true },
-        propertiesToRename: { items: 'lists' }
+        parentsStores: [new ParentStore('listCollection', useCollectionStore)]
     }
 )()

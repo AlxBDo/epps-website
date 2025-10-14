@@ -40,9 +40,8 @@ export function beforeEachPiniaPlugin() {
                 </p>
                 <p>
                     It creates a mock persistence layer and optionally supports encryption using the provided
-                    initialization vector (IV) and encryption key. By integrating this mock plugin into your
-                    Pinia instance, you can test your stores without relying on actual browser storage or encryption
-                    mechanisms.
+                    encryption key. By integrating this mock plugin into your Pinia instance, you can test your stores
+                    without relying on actual browser storage or encryption mechanisms.
                 </p>
                 <p>
                     Here is an example of how to use createPluginMock in a beforeEach setup function:

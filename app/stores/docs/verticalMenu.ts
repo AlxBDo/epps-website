@@ -7,13 +7,13 @@ export interface VerticalMenuStore extends Omit<CollectionStoreMethods, 'addItem
 }
 
 interface VerticalMenuItem {
-    id: string
+    id?: string
     label: string
     to: string
 }
 
 function createItem(item: string): VerticalMenuItem {
-    return { id: item, label: item, to: `#${item.toLowerCase()}` }
+    return { label: item, to: `#${item.toLowerCase()}` }
 }
 
 export const useVerticalMenuStore = defineEppsStore<VerticalMenuStore, CollectionState<VerticalMenuItem>>(
