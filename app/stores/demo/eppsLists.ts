@@ -1,4 +1,4 @@
-import { defineEppsStore, getEppsStore, ParentStore, useCollectionStore, type CollectionStoreMethods } from "epps"
+import { defineEppsStore, getEppsStore, ParentStore, useCollectionStore, type AnyObject, type CollectionState, type CollectionStoreMethods } from "epps"
 
 import type { ListTypes } from "~/types/list"
 
@@ -27,7 +27,7 @@ export interface ListsStoreMethods extends CollectionStoreMethods {
 
 export const useEppsListsStore = (
     id?: string
-) => defineEppsStore<CollectionStoreMethods, ListsState>(
+) => defineEppsStore<CollectionStoreMethods, CollectionState<AnyObject>>(
     id ?? defaultStoreId,
     () => {
         function newList(name: string, type: ListTypes): List | undefined {
