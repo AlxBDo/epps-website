@@ -20,6 +20,12 @@ const items = ref<TabsItem[]>([
     }
 ])
 
+if (useSlots()?.performance) {
+    items.value.push({
+        label: 'Performance',
+        slot: 'performance' as const
+    })
+}
 </script>
 
 <template>
@@ -34,6 +40,11 @@ const items = ref<TabsItem[]>([
             <template #demo>
                 <section id="demo">
                     <slot name="demo"></slot>
+                </section>
+            </template>
+            <template v-if="$slots?.performance" #performance>
+                <section id="performance">
+                    <slot name="performance"></slot>
                 </section>
             </template>
         </UTabs>

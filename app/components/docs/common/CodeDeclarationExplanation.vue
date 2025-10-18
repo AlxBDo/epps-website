@@ -83,7 +83,7 @@ onUnmounted(() => codeDeclarationExplanationStore.$reset())
 
         <template v-if="hasTypes" #toSee>
             <Links icon="material-symbols:link-rounded" :links="typesToSee.reduce((acc: Record<string, string>, curr: string) => {
-                acc[curr] = `#${curr}`
+                acc[curr] = `#${curr.toLowerCase()}`
                 return acc
             }, {})"></Links>
         </template>

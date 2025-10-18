@@ -2,33 +2,49 @@
 import { useListsStore, type List } from '~/stores/demo/lists'
 import { useEppsListsStore } from '~/stores/demo/eppsLists'
 import { usePiniaListsStore } from '~/stores/demo/piniaLists'
-import DisplayResult from '~/components/examples/common/DisplayResult.vue'
-import { isEmpty } from '~/utils/validation'
+import type { Store } from 'pinia'
+import type { AnyObject } from 'epps'
 
 
 const listsStore = useListsStore('largeListsStore')
 const eppsListsStore = useEppsListsStore('largeEppsListsStore')
 const piniaListsStore = usePiniaListsStore('largePiniaListsStore')
-const resultsStore = useEppsListsStore('resultsStore')
 
-const currentProcess = ref<string>()
-const isLoading = ref<boolean>(false)
+const eppsResultStore = useEppsListsStore('eppsResultStore')
+const generateListsStoreResult = useEppsListsStore('generateListsResultsStore')
+const listsStoreResult = useEppsListsStore('listsResultsStore')
+const piniaListsStoreResult = useEppsListsStore('piniaResultsStore')
+
 const listsLength = ref<number>(100)
 const result = ref<Record<string, number | string>>({})
 
 
-function createResult(text: string) {
-    return { id: resultsStore.items.length + 1, text }
+function createResult(text: string, store: AnyObject) {
+    return { id: store.items.length + 1, text }
+}
+
+function generateListItems(listItemsNumber: number) {
+    return Array.from({ length: listItemsNumber }, (val, index) => {
+        return `Item n°${index}`
+    })
 }
 
 function getLists(length: number): List[] {
-    resultsStore.addItem(
-        createResult(`Generating ${length} lists...`)
-    )
-    return Array.from({ length }, (val, index) => {
+    const startGenerateLists = performance.now()
+    const lists = Array.from({ length }, (val, index) => {
         const type = Math.floor(Math.random() * 3).toString()
-        return { id: index + 1, name: `List n°${index}`, type } as List
+        return {
+            id: index + 1,
+            items: generateListItems(Math.floor(Math.random() * 20) + 1),
+            name: `List n°${index}`,
+            type
+        } as List
     })
+    const endGenerateLists = performance.now()
+    generateListsStoreResult.addItem(
+        createResult(`${length} lists generated in ${endGenerateLists - startGenerateLists} ms`, generateListsStoreResult)
+    )
+    return lists
 }
 
 function setLength(event: Event) {
@@ -37,74 +53,64 @@ function setLength(event: Event) {
 }
 
 function generateLists() {
-    resultsStore.clear()
-    isLoading.value = true
+    resetStores()
     const lists = getLists(listsLength.value)
 
     console.log('----- PINIA LISTS STORE -----')
-    resultsStore.addItem(
-        createResult(`Setting Pinia store with ${listsLength.value} lists...`)
-    )
     const startSetPiniaListsStore = performance.now()
     piniaListsStore.setItems(lists)
     const endSetPiniaListsStore = performance.now()
     const setPiniaListsStorePerf = endSetPiniaListsStore - startSetPiniaListsStore
 
-    resultsStore.addItem(
-        createResult(`Pinia Store - set duration : ${setPiniaListsStorePerf} ms`)
+    piniaListsStoreResult.addItem(
+        createResult(`- setLists duration : ${setPiniaListsStorePerf} ms`, piniaListsStoreResult)
     )
-    console.log(`Pinia Store - set duration : ${setPiniaListsStorePerf} ms`)
+    console.log(`Pinia Store - setLists duration : ${setPiniaListsStorePerf} ms`)
     const startGetPiniaListsStore = performance.now()
     piniaListsStore.getItems({ type: '1' })
     const endGetPiniaListsStore = performance.now()
     const getPiniaListsStorePerf = endGetPiniaListsStore - startGetPiniaListsStore
-    resultsStore.addItem(
-        createResult(`Pinia Store - get duration : ${getPiniaListsStorePerf} ms`)
+    piniaListsStoreResult.addItem(
+        createResult(`- getLists duration : ${getPiniaListsStorePerf} ms`, piniaListsStoreResult)
     )
 
     let getListsStorePerf: string | number = 'N/A'
     let setListsStorePerf: string | number = 'N/A'
-    if (listsLength.value > 100000) {
+    if (listsLength.value <= 100000) {
         console.log('----- EPPS LISTS STORE WITH PERSISTANCE -----')
-        resultsStore.addItem(
-            createResult(`Setting persisted Epps store with ${listsLength.value} lists...`)
-        )
         const startSetListsStore = performance.now()
         listsStore.setLists(lists)
         const endSetListsStore = performance.now()
         setListsStorePerf = endSetListsStore - startSetListsStore
-        resultsStore.addItem(
-            createResult(`Persisted Epps Store - set duration : ${setListsStorePerf} ms`)
+        listsStoreResult.addItem(
+            createResult(`- setLists duration : ${setListsStorePerf} ms`, listsStoreResult)
         )
         console.log(`Lists Store: ${setListsStorePerf} ms`)
         const startGetListsStore = performance.now()
         piniaListsStore.getItems({ type: '1' })
         const endGetListsStore = performance.now()
         getListsStorePerf = endGetListsStore - startGetListsStore
-        resultsStore.addItem(
-            createResult(`Persisted Epps Store - get duration : ${getListsStorePerf} ms`)
+        listsStoreResult.addItem(
+            createResult(`- getLists duration : ${getListsStorePerf} ms`, listsStoreResult)
         )
     }
 
     console.log('----- EPPS LISTS STORE -----')
     eppsListsStore.getItems()
-    resultsStore.addItem(
-        createResult(`Setting not persisted Epps store with ${listsLength.value} lists...`)
-    )
     const startSetEppsListsStore = performance.now()
     eppsListsStore.setItems(lists)
     const endSetEppsListsStore = performance.now()
     const setEppsListsStorePerf = endSetEppsListsStore - startSetEppsListsStore
-    resultsStore.addItem(
-        createResult(`Epps Store - set duration : ${setEppsListsStorePerf} ms`)
+    eppsResultStore.addItem(
+        createResult(`- setLists duration : ${setEppsListsStorePerf} ms`, eppsResultStore)
     )
     console.log(`Lists Store: ${setEppsListsStorePerf} ms`)
     const startGetEppsListsStore = performance.now()
     piniaListsStore.getItems({ type: '1' })
     const endGetEppsListsStore = performance.now()
     const getEppsListsStorePerf = endGetEppsListsStore - startGetEppsListsStore
-    resultsStore.addItem(
-        createResult(`Epps Store - get duration : ${getEppsListsStorePerf} ms`)
+    eppsResultStore.addItem(
+        createResult(`- getLists duration : ${getEppsListsStorePerf} ms`, eppsResultStore)
     )
 
     console.log('----- PINIA LISTS STORE vs EPPS LISTS STORE -----', { setPiniaListsStorePerf, setEppsListsStorePerf, setListsStorePerf })
@@ -117,7 +123,6 @@ function generateLists() {
         setListsStorePerf,
         getListsStorePerf
     }
-    isLoading.value = false
 }
 
 function resetStores() {
@@ -125,36 +130,80 @@ function resetStores() {
     eppsListsStore.$reset()
     piniaListsStore.$reset()
     result.value = {}
-    resultsStore.clear()
+    eppsResultStore.clear()
+    generateListsStoreResult.clear()
+    listsStoreResult.clear()
+    piniaListsStoreResult.clear()
 }
 </script>
 
 <template>
     <div>
-        <h3>Performance Pinia vs Epps</h3>
+        <h3>Measure the performance of stores enhanced by the Epps plugin</h3>
 
         <div>
-            <label for="lists-length">List length:</label>
-            <input id="lists-length" class="text-right" type="number" :value="listsLength" @input="setLength" />
+            <p>Define the number of lists to generate and compare the performance of Epps and Pinia stores.</p>
+            <div class="text-sm">
+                <p>Example of generated list:</p>
+                <pre>{ id: 1, items: ['item1', 'item2', ...], name: 'List n°0', type: '0' }</pre>
+            </div>
         </div>
 
-        <div>
-            <UButton class="mt-4 cursor-pointer" color="neutral" :loading="isLoading" variant="outline"
-                @click="generateLists">
-                Generate {{ listsLength }} lists
-            </UButton>
+        <section class="my-8">
+            <div>
+                <label for="lists-length">Number of lists to generate:</label>
+                <input id="lists-length" class="text-right" type="number" :value="listsLength" @input="setLength" />
+            </div>
 
-            <UButton class="mt-4 cursor-pointer" color="neutral" :loading="isLoading" icon="iconamoon:close-bold"
-                variant="outline" @click="resetStores">
-                Reset Store
-            </UButton>
-        </div>
+            <div class="flex align-middle">
+                <UButton class="mt-4 mr-2 cursor-pointer" color="neutral" variant="outline" @click="generateLists">
+                    Generate {{ listsLength }} lists
+                </UButton>
 
-        <div v-if="resultsStore.items.length">
-            <p v-for="list of resultsStore.items" :key="`result-p-${list.id}`">
-                {{ list.text }}
-            </p>
-        </div>
-        <p v-else>Waiting for lists</p>
+                <UButton class="mt-4 cursor-pointer" color="neutral" icon="iconamoon:close-bold" variant="outline"
+                    @click="resetStores">
+                    Reset Store
+                </UButton>
+            </div>
+        </section>
+
+        <section class="flex w-full justify-center flex-wrap lg:justify-between align-top">
+            <div class="p-0 w-full" v-if="generateListsStoreResult.items.length">
+                <p v-for="list of generateListsStoreResult.items" :key="`result-pinia-p-${list.id}`" class="text-sm">
+                    {{ list.text }}
+                </p>
+            </div>
+
+            <div class="lg:flex-1 md:flex-2 w-full p-2 dark:text-yellow-200 text-yellow-500">
+                <h4>Pinia Store</h4>
+                <template v-if="piniaListsStoreResult.items.length">
+                    <p v-for="list of piniaListsStoreResult.items" :key="`result-pinia-p-${list.id}`" class="text-sm">
+                        {{ list.text }}
+                    </p>
+                </template>
+                <p v-else>Waiting for lists</p>
+            </div>
+
+            <div class="lg:flex-1 md:flex-2 w-full p-2 dark:text-lime-200 text-lime-500">
+                <h4>Epps Store</h4>
+                <template v-if="eppsResultStore.items.length">
+                    <p v-for="list of eppsResultStore.items" :key="`result-epps-p-${list.id}`" class="text-sm">
+                        {{ list.text }}
+                    </p>
+                </template>
+                <p v-else>Waiting for lists</p>
+            </div>
+
+            <div class="lg:flex-1 md:flex-2 w-full p-2 dark:text-blue-200 text-blue-500">
+                <h4>Epps Store with persistance</h4>
+                <template v-if="listsStoreResult.items.length">
+                    <p v-for="list of listsStoreResult.items" :key="`result-persisted-p-${list.id}`" class="text-sm">
+                        {{ list.text }}
+                    </p>
+                </template>
+                <p v-else-if="listsLength > 100000">Too many lists for a persistent store</p>
+                <p v-else>Waiting for lists</p>
+            </div>
+        </section>
     </div>
 </template>

@@ -32,7 +32,8 @@ const appName = useRuntimeConfig().public.appName
                             </li>
                             <li>
                                 <span>Customization:</span> inherited methods and properties can be renamed for better
-                                integration into the child store.
+                                integration into the child store. You can also define functions to be executed before
+                                and/or after a store action is performed.
                             </li>
                             <li>
                                 <span>Method Extension:</span> Easily extend parent methods in child stores, ensuring

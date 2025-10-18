@@ -42,6 +42,10 @@ const { lists: definition } = usePagesDefinitions()
                     <GetItems />
                 </div>
             </template>
+
+            <template #performance>
+                <ShowLargeListLists />
+            </template>
         </StorePage>
         <template #fallback>
             Loading...

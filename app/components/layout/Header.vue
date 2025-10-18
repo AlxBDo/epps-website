@@ -38,6 +38,7 @@ import Menu from '~/components/layout/Menu.vue';
 .logo {
     margin-right: 15px;
     width: 60px;
+    transition: filter allow-discrete 250ms;
 
     &:hover {
         filter: drop-shadow(0 0 2em #d4d250aa);
