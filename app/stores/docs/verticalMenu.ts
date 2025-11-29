@@ -34,6 +34,6 @@ export const useVerticalMenuStore = defineEppsStore<VerticalMenuStore, Collectio
     }),
     {
         actionFlows: { addItem: { before: 'beforeAddItem' }, setItems: { before: 'beforeSetItems' } },
-        parentsStores: [new ParentStore('verticalMenuItem', useCollectionStore)]
+        parentsStores: [new ParentStore('verticalMenuItemStore', useCollectionStore)]
     }
 )
