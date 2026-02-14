@@ -62,8 +62,6 @@ const {
     displayJsSlot,
     getCode
 } = store
-
-onUnmounted(() => store.$reset())
 </script>
 
 <template>
